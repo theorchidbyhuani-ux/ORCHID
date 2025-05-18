@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Orchid | Spa, Nail Salon, Massage & Beauty in Toronto</title>
+    <meta name="description" content="The Orchid offers luxury nail care, spa treatments, and beauty services in a serene, modern environment. Book your manicure, pedicure, or massage in Toronto today!">
+    <meta name="keywords" content="nail salon, spa, manicure, pedicure, massage, eyelash extensions, face treatments, body massage, beauty, The Orchid, Toronto">
+    <meta name="author" content="The Orchid">
+    <link rel="canonical" href="https://shoporchid.ca/">
+    <meta property="og:title" content="The Orchid | Spa, Nail Salon, Massage & Beauty in Toronto">
+    <meta property="og:description" content="Luxury nail care, spa treatments, and beauty services. Book your appointment at The Orchid in Toronto today!">
+    <meta property="og:image" content="logo.jpg">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://shoporchid.ca/">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="The Orchid | Spa, Nail Salon, Massage & Beauty in Toronto">
+    <meta name="twitter:description" content="Luxury nail care, spa treatments, and beauty services. Book your appointment at The Orchid in Toronto today!">
+    <meta name="twitter:image" content="logo.jpg">
+    <link rel="icon" href="logo.jpg" type="image/jpeg">
+    <!-- Calendly badge widget begin -->
+    <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
+    <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BeautySalon",
+      "name": "The Orchid",
+      "image": "logo.jpg",
+      "url": "https://shoporchid.ca/",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Toronto",
+        "addressRegion": "ON",
+        "addressCountry": "CA"
+      },
+      "description": "Luxury nail care, spa treatments, and beauty services in a serene, modern environment.",
+      "priceRange": "$$",
+      "openingHours": "Mo,Tu,We,Th,Fr,Sa 10:00-19:00"
+    }
+    </script>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Arial', sans-serif; }
+        body { overflow-x: hidden; }
+        .promo-banner {
+            width: 100%;
+            background: linear-gradient(90deg, #ff65a3 0%, #ff7eb3 100%);
+            color: #fff;
+            text-align: center;
+            padding: 18px 60px 18px 18px;
+            font-size: 1.15rem;
+            font-weight: bold;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: top 0.3s;
+        }
+        .promo-banner .close-btn {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 1.5rem;
+            cursor: pointer;
+            opacity: 0.8;
+            transition: opacity 0.2s;
+        }
+        .promo-banner .close-btn:hover { opacity: 1; }
+        .promo-banner.hide { top: -100px; }
+        .with-banner { margin-top: 60px; }
+        .hero {
+            position: relative;
+            height: 100vh;
+            width: 100%;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: black;
+            padding: 0 50px;
+        }
+        .hero img.bg-image {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            object-fit: cover; z-index: -1;
+        }
+        .hero-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(255,255,255,0.3); z-index: -1;
+        }
+        .hero-content {
+            max-width: 800px; padding: 20px; z-index: 1;
+            display: flex; flex-direction: column; align-items: flex-start;
+            opacity: 0; animation: fadeIn 1.5s forwards 0.5s;
+        }
+        @keyframes fadeIn { to { opacity: 1; } }
+        .logo {
+            width: 150px; height: auto; margin-bottom: 20px;
+            border-radius: 50%; box-shadow: 0 0 20px rgba(0,0,0,0.2);
+        }
+        h1 {
+            font-size: 3.5rem; margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(255,255,255,0.5);
+        }
+        p { font-size: 1.2rem; margin-bottom: 30px; }
+        .services-nav {
+            margin-top: 40px; display: flex; flex-direction: column; gap: 15px;
+            opacity: 0; animation: fadeIn 1.5s forwards 0.5s;
+        }
+        .service-btn {
+            padding: 10px 0; background: transparent; color: black;
+            border: none; border-bottom: 1px solid rgba(0,0,0,0.3);
+            font-size: 1.1rem; cursor: pointer; text-decoration: none;
+            transition: all 0.3s; text-align: left; position: relative;
+            overflow: hidden; width: 250px;
+            display: flex; align-items: center; justify-content: flex-start;
+        }
+        .service-btn.nails-center {
+            justify-content: center;
+            text-align: center;
+        }
+        .service-btn[disabled] {
+            color: #aaa;
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+        .service-btn:hover:not([disabled]) {
+            transform: scale(1.05);
+            border-bottom: 1px solid rgba(0,0,0,0.8);
+        }
+        .service-btn::before {
+            content: "";
+            position: absolute;
+            width: 30px; height: 30px;
+            background-size: contain; opacity: 0; border-radius: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            top: 50%; left: 50%;
+            transition: transform 0.6s, opacity 0.6s;
+        }
+        .service-btn:hover:not([disabled])::before {
+            opacity: 0.7;
+            transform: translate(-50%, -50%) scale(1);
+            animation: rotate 2s infinite linear;
+        }
+        @keyframes rotate {
+            0% { transform: translate(-50%, -50%) scale(1) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) scale(1) rotate(360deg); }
+        }
+        .coming-soon-label {
+            background: linear-gradient(90deg, #ff65a3 0%, #ff7eb3 100%);
+            color: #fff;
+            font-size: 0.9rem;
+            font-weight: bold;
+            border-radius: 6px;
+            padding: 2px 10px;
+            margin-left: 10px;
+            letter-spacing: 1px;
+            display: inline-block;
+        }
+        .btn {
+            display: inline-block; padding: 12px 30px;
+            background: linear-gradient(135deg, #ff7eb3, #ff65a3);
+            color: white; border: none; border-radius: 50px;
+            font-size: 1.1rem; cursor: pointer; text-decoration: none;
+            position: relative; overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s, filter 0.3s;
+            box-shadow: 0 4px 15px rgba(255,101,163,0.4);
+        }
+        .btn:hover {
+            transform: translateY(-3px) scale(1.04);
+            box-shadow: 0 6px 30px 0 #f787b4, 0 0 40px 0 #fdd8e8;
+            filter: brightness(1) drop-shadow(0 0 10px #ffb2d1);
+        }
+        .btn:active {
+            filter: brightness(0.98);
+        }
+        .btn::before {
+            content: "";
+            position: absolute;
+            width: 30px; height: 30px;
+            background-size: contain; opacity: 0; border-radius: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            top: 50%; left: 50%;
+            transition: transform 0.6s, opacity 0.6s;
+        }
+        .btn:hover::before {
+            opacity: 0.7;
+            transform: translate(-50%, -50%) scale(1);
+            animation: rotate 2s infinite linear;
+        }
+        .flower-burst {
+            pointer-events: none;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            z-index: 10;
+        }
+        .flower-burst img {
+            position: absolute;
+            width: 32px;
+            height: 32px;
+            opacity: 0.85;
+            will-change: transform, opacity;
+            pointer-events: none;
+            transition: opacity 0.5s;
+        }
+        .gallery-section { padding: 80px 20px; background-color: #f9f4f7; }
+        .section-title { text-align: center; margin-bottom: 50px; color: #333; font-size: 2.5rem; }
+        .gallery-container {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+            max-width: 1200px; margin: 0 auto;
+        }
+        .gallery-item {
+            height: 300px; overflow: hidden; border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1); transition: transform 0.3s;
+        }
+        .gallery-item:hover { transform: translateY(-10px); }
+        .gallery-item img {
+            width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s;
+        }
+        .gallery-item:hover img { transform: scale(1.1); }
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0,0,0,0.7); z-index: 1000;
+            display: flex; justify-content: center; align-items: center;
+            opacity: 0; visibility: hidden; transition: opacity 0.3s, visibility 0.3s;
+        }
+        .modal-overlay.active { opacity: 1; visibility: visible; }
+        .modal {
+            background-color: white; width: 90%; max-width: 900px; max-height: 90vh;
+            overflow-y: auto; border-radius: 15px; padding: 30px; position: relative;
+            transform: translateY(50px); opacity: 0;
+            transition: transform 0.5s, opacity 0.5s;
+        }
+        .modal-overlay.active .modal { transform: translateY(0); opacity: 1; }
+        .modal-close {
+            position: absolute; top: 20px; right: 20px; font-size: 24px;
+            background: none; border: none; cursor: pointer; color: #333;
+        }
+        .modal-title { font-size: 2rem; margin-bottom: 20px; color: #ff65a3; text-align: center; }
+        .modal-gallery {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 30px;
+        }
+        .modal-gallery-item { height: 200px; border-radius: 10px; overflow: hidden; }
+        .modal-gallery-item img {
+            width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s;
+        }
+        .modal-gallery-item:hover img { transform: scale(1.1); }
+        .price-list { margin-bottom: 30px; }
+        .price-item {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 15px 0; border-bottom: 1px dashed #ddd;
+        }
+        .price-name { font-weight: bold; color: #333; }
+        .price-value { color: #ff65a3; font-weight: bold; }
+        .modal-btn { display: block; width: 200px; margin: 0 auto; text-align: center; }
+        .coming-soon-banner {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(90deg, #ff65a3 0%, #ff7eb3 100%);
+            color: #fff;
+            font-weight: bold;
+            font-size: 1.1rem;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            padding: 10px 0;
+            letter-spacing: 1px;
+            box-shadow: 0 2px 8px rgba(255,101,163,0.15);
+        }
+        .nails-section-title {
+            font-weight: bold;
+            color: #ff65a3;
+            margin: 24px 0 8px;
+            font-size: 1.15rem;
+        }
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            .hero-content { padding: 20px; align-items: center; text-align: center; }
+            .services-nav { margin-top: 30px; align-items: center; }
+            .service-btn { text-align: center; width: 220px; }
+            .service-btn.nails-center { width: 220px; }
+            .gallery-container, .modal-gallery {
+                grid-template-columns: 1fr;
+                overflow-x: auto; scroll-snap-type: x mandatory;
+                display: flex; gap: 15px; padding-bottom: 20px;
+            }
+            .gallery-item, .modal-gallery-item {
+                min-width: 280px; scroll-snap-align: start; height: 250px;
+            }
+            .modal { padding: 20px; width: 95%; }
+            .modal-title { font-size: 1.5rem; }
+            .price-item { flex-direction: column; text-align: center; }
+            .price-value { margin-top: 5px; }
+            .promo-banner { font-size: 1rem; padding: 14px 40px 14px 10px; }
+            .coming-soon-banner { font-size: 1rem; }
+        }
+    </style>
+    <script type="text/javascript">
+        window.onload = function() {
+            Calendly.initBadgeWidget({
+                url: 'https://calendly.com/theorchidbyhuani/new-meeting?primary_color=ff65a3',
+                text: 'BOOK NOW',
+                color: '#ff65a3',
+                textColor: '#ffffff'
+            });
+        }
+    </script>
+    <!-- Calendly badge widget end -->
+</head>
+<body>
+    <!-- Promo Banner -->
+    <div class="promo-banner" id="promoBanner">
+        <span>PROMOTIONS: <strong>COMING SOON LIMITED GRAND OPENING OFFER! $59 DEALS! FROM MAY 29 - JUNE 29</strong></span>
+        <button class="close-btn" id="closePromoBanner" aria-label="Close">&times;</button>
+    </div>
+    <div id="mainContent" class="with-banner">
+    <!-- Hero Section -->
+    <section class="hero">
+        <img src="whiteorchid.jpg" alt="White Orchid Spa Background" class="bg-image">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <img src="logo.jpg" alt="THE ORCHID Spa & Nail Salon Logo" class="logo">
+            <h1>The Orchid</h1>
+            <p>Experience luxury nail care and spa treatments in a serene environment in Toronto</p>
+            <div class="services-nav">
+                <button class="service-btn" data-service="eyelash" disabled>
+                    EYELASH EXTENSIONS
+                    <span class="coming-soon-label">COMING SOON</span>
+                </button>
+                <button class="service-btn" data-service="bodymassage" disabled>
+                    BODY MASSAGE
+                    <span class="coming-soon-label">COMING SOON</span>
+                </button>
+                <button class="service-btn" data-service="facetreatments" disabled>
+                    FACE TREATMENTS
+                    <span class="coming-soon-label">COMING SOON</span>
+                </button>
+                <button class="service-btn nails-center" data-service="nails" id="nailsServiceBtn">NAILS</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="gallery-section" id="gallery">
+        <h2 class="section-title">Our Gallery</h2>
+        <div class="gallery-container">
+            <div class="gallery-item">
+                <img src="nails/1.jpeg" alt="Nail Art 1">
+            </div>
+            <div class="gallery-item">
+                <img src="nails/2.jpeg" alt="Nail Art 2">
+            </div>
+            <div class="gallery-item">
+                <img src="nails/3.jpeg" alt="Nail Art 3">
+            </div>
+            <div class="gallery-item">
+                <img src="gallery/candle1.jpg" alt="Spa Treatment">
+            </div>
+            <div class="gallery-item">
+                <img src="gallery/candle2.jpg" alt="Pedicure">
+            </div>
+            <div class="gallery-item">
+                <img src="gallery/candle3.jpg" alt="Eyelash Extensions">
+            </div>
+        </div>
+    </section>
+
+    <!-- Service Modals -->
+    <div class="modal-overlay" id="eyelash-modal">
+        <div class="modal">
+            <button class="modal-close">&times;</button>
+            <div class="coming-soon-banner">COMING SOON</div>
+            <h3 class="modal-title">EYELASH EXTENSIONS</h3>
+            <div class="modal-gallery">
+                <div class="modal-gallery-item">
+                    <img src="https://source.unsplash.com/random/600x600/?eyelash,extensions,1" alt="Eyelash Extensions">
+                </div>
+                <div class="modal-gallery-item">
+                    <img src="https://source.unsplash.com/random/600x600/?eyelash,extensions,2" alt="Eyelash Extensions">
+                </div>
+                <div class="modal-gallery-item">
+                    <img src="https://source.unsplash.com/random/600x600/?eyelash,extensions,3" alt="Eyelash Extensions">
+                </div>
+            </div>
+            <div class="price-list">
+                <div class="price-item">
+                    <span class="price-name">Classic Full Set</span>
+                    <span class="price-value">$120</span>
+                </div>
+                <div class="price-item">
+                    <span class="price-name">Volume Full Set</span>
+                    <span class="price-value">$150</span>
+                </div>
+                <div class="price-item">
+                    <span class="price-name">Hybrid Full Set</span>
+                    <span class="price-value">$135</span>
+                </div>
+                <div class="price-item">
+                    <span class="price-name">Removal</span>
+                    <span class="price-value">$25</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="bodymassage-modal">
+        <div class="modal">
+            <button class="modal-close">&times;</button>
+            <div class="coming-soon-banner">COMING SOON</div>
+            <h3 class="modal-title">BODY MASSAGE</h3>
+            <div class="modal-gallery">
+                <div class="modal-gallery-item">
+                    <img src="https://source.unsplash.com/random/600x600/?body,massage,2" alt="Body Massage">
+                </div>
+                <div class="modal-gallery-item">
+                    <img src="https://source.unsplash.com/random/600x600/?body,massage,3" alt="Body Massage">
+                </div>
+                <div class="modal-gallery-item">
+                    <img src="https://source.unsplash.com/random/600x600/?body,massage,4" alt="Body Massage">
+                </div>
+            </div>
+            <div class="price-list">
+                <div class="price-item">
+                    <span class="price-name">Swedish Massage</span>
+                    <span class="price-value">$100</span>
+                </div>
+                <div class="price-item">
+                    <span class="price-name">Deep Tissue Massage</span>
+                    <span class="price-value">$120</span>
+                </div>
+                <div class="price-item">
+                    <span class="price-name">Aromatherapy Massage</span>
+                    <span class="price-value">$110</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="facetreatments-modal">
+        <div class="modal">
+            <button class="modal-close">&times;</button>
+            <div class="coming-soon-banner">COMING SOON</div>
+            <h3 class="modal-title">FACE TREATMENTS</h3>
+            <div class="modal-gallery">
+                <div class="modal-gallery-item">
+                    <img src="https://source.unsplash.com/random/600x600/?face,facial,2" alt="Facial Treatment">
+                </div>
+                <div class="modal-gallery-item">
+                    <img src="https://source.unsplash.com/random/600x600/?face,facial,3" alt="Facial Treatment">
+                </div>
+                <div class="modal-gallery-item">
+                    <img src="https://source.unsplash.com/random/600x600/?face,facial,4" alt="Facial Treatment">
+                </div>
+            </div>
+            <div class="price-list">
+                <div class="price-item">
+                    <span class="price-name">Classic Facial</span>
+                    <span class="price-value">$75</span>
+                </div>
+                <div class="price-item">
+                    <span class="price-name">Anti-Aging Facial</span>
+                    <span class="price-value">$90</span>
+                </div>
+                <div class="price-item">
+                    <span class="price-name">Hydrating Facial</span>
+                    <span class="price-value">$85</span>
+                </div>
+                <div class="price-item">
+                    <span class="price-name">Acne Treatment Facial</span>
+                    <span class="price-value">$80</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="nails-modal">
+        <div class="modal">
+            <button class="modal-close">&times;</button>
+            <h3 class="modal-title">NAILS</h3>
+            <div class="modal-gallery">
+                <div class="modal-gallery-item">
+                    <img src="nails/1.jpeg" alt="Nail Art 1">
+                </div>
+                <div class="modal-gallery-item">
+                    <img src="nails/2.jpeg" alt="Nail Art 2">
+                </div>
+                <div class="modal-gallery-item">
+                    <img src="nails/3.jpeg" alt="Nail Art 3">
+                </div>
+            </div>
+            <div class="price-list" id="nails-price-list">
+                <div class="nails-section-title">Nails Style</div>
+                <div class="price-item">
+                    <span class="price-name">Shellac Color (單色)</span>
+                    <span class="price-value">$35</span>
+                </div>
+                <div class="price-item">
+                    <span class="price-name">Mirror (鏡面)</span>
+                    <span class="price-value">$53</span>
+                </div>
+                <div class="price-item">
+                    <span class="price-name">Cat eyes (單色編眼)</span>
+                    <span class="price-value">$45</span>
+                </div>
+                <div class="price-item">
+                    <span class="price-name">Gradation/Chrome (單色漸層/畫染)</span>
+                    <span class="price-value">$55</span>
+                </div>
+                <div class="price-item">
+                    <span class="price-name">French (法式)</span>
+                    <span class="price-value">$50</span>
+                </div>
+                <div class="price-item">
+                    <span class="price-name">ISPO (自帶圖)</span>
+                    <span class="price-value">INQUIRE</span>
+                </div>
+                <div class="nails-section-title">Nails Extension</div>
+                <div class="price-item">
+                    <span class="price-name">Bio Gel Refill Per Finger (延甲單指)</span>
+                    <span class="price-value">$8/finger</span>
+                </div>
+                <div class="price-item">
+                    <span class="price-name">Bio Gel Full Set (延甲D指)</span>
+                    <span class="price-value">$70</span>
+                </div>
+                <div class="nails-section-title">Additional</div>
+                <div class="price-item">
+                    <span class="price-name">Hand Draw (彩繪單指)</span>
+                    <span class="price-value">$3+/finger</span>
+                </div>
+                <div class="price-item">
+                    <span class="price-name">Stickers (貼紙單指)</span>
+                    <span class="price-value">$2/finger</span>
+                </div>
+                <div class="price-item">
+                    <span class="price-name">Bio Gel Overlay Full Set (加固ID指)</span>
+                    <span class="price-value">$18</span>
+                </div>
+                <div class="price-item">
+                    <span class="price-name">BIAB Full Set (連綿ID指)</span>
+                    <span class="price-value">$20</span>
+                </div>
+                <div class="nails-section-title">Removal</div>
+                <div class="price-item">
+                    <span class="price-name">Shellac (單色)</span>
+                    <span class="price-value">$8</span>
+                </div>
+                <div class="price-item">
+                    <span class="price-name">Bio Gel (延甲)</span>
+                    <span class="price-value">$20</span>
+                </div>
+                <div class="price-item">
+                    <span class="price-name">Gel X (甲片)</span>
+                    <span class="price-value">$10</span>
+                </div>
+                <div class="price-item">
+                    <span class="price-name">Acrylics (水晶延甲)</span>
+                    <span class="price-value">$20</span>
+                </div>
+                <div class="price-item">
+                    <span class="price-name">BIAB (連綿)</span>
+                    <span class="price-value">$15</span>
+                </div>
+            </div>
+            <a href="#" class="btn modal-btn" id="nails-book-btn" style="position:relative;overflow:visible;">Book Now
+                <span class="flower-burst" id="nails-flower-burst"></span>
+            </a>
+        </div>
+    </div>
+    </div>
+    <footer style="text-align:center; padding:40px 0 20px; color:#888; font-size:1rem;">
+        &copy; <span id="year"></span> The Orchid. All rights reserved. | <a href="https://shoporchid.ca/" style="color:#ff65a3;text-decoration:none;">shoporchid.ca</a>
+    </footer>
+    <script>
+        // Promo Banner logic
+        document.addEventListener('DOMContentLoaded', function() {
+            const promoBanner = document.getElementById('promoBanner');
+            const closePromoBanner = document.getElementById('closePromoBanner');
+            const mainContent = document.getElementById('mainContent');
+            promoBanner.classList.remove('hide');
+            mainContent.classList.add('with-banner');
+            closePromoBanner.addEventListener('click', function() {
+                promoBanner.classList.add('hide');
+                mainContent.classList.remove('with-banner');
+            });
+
+            // Service modals
+            const serviceButtons = document.querySelectorAll('.service-btn');
+            const modalOverlays = document.querySelectorAll('.modal-overlay');
+            const closeButtons = document.querySelectorAll('.modal-close');
+            serviceButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    if (this.hasAttribute('disabled')) return;
+                    const service = this.getAttribute('data-service');
+                    const modal = document.getElementById(`${service}-modal`);
+                    if (modal) {
+                        modal.classList.add('active');
+                        document.body.style.overflow = 'hidden';
+                    }
+                });
+            });
+            closeButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const modal = this.closest('.modal-overlay');
+                    modal.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                });
+            });
+            modalOverlays.forEach(overlay => {
+                overlay.addEventListener('click', function(e) {
+                    if (e.target === this) {
+                        this.classList.remove('active');
+                        document.body.style.overflow = 'auto';
+                    }
+                });
+            });
+
+            // Book Now button in Nails modal opens Calendly popup
+            const nailsBookBtn = document.getElementById('nails-book-btn');
+            if (nailsBookBtn) {
+                nailsBookBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    // Flower burst animation
+                    flowerBurst(nailsBookBtn, 7);
+                    if (window.Calendly) {
+                        setTimeout(function() {
+                            window.Calendly.initPopupWidget({
+                                url: 'https://calendly.com/theorchidbyhuani/new-meeting?primary_color=ff65a3'
+                            });
+                        }, 400);
+                    }
+                });
+            }
+
+            // Set copyright year
+            document.getElementById('year').textContent = new Date().getFullYear();
+        });
+
+        // Flower burst animation
+        function flowerBurst(btn, count) {
+            const burst = btn.querySelector('.flower-burst');
+            burst.innerHTML = '';
+            const rect = btn.getBoundingClientRect();
+            const btnW = rect.width, btnH = rect.height;
+            const minR = 40, maxR = 70;
+            for (let i = 0; i < count; i++) {
+                const angle = (2 * Math.PI / count) * i + (Math.random() - 0.5) * 0.5;
+                const r = minR + Math.random() * (maxR - minR);
+                const x = Math.cos(angle) * r;
+                const y = Math.sin(angle) * r;
+                const flower = document.createElement('img');
+                flower.src = 'resources/flower.png';
+                flower.style.left = '50%';
+                flower.style.top = '50%';
+                flower.style.transform = `translate(-50%, -50%) scale(0.7)`;
+                flower.style.opacity = '0.85';
+                flower.style.transition = 'transform 0.7s cubic-bezier(.4,2,.6,1), opacity 0.7s';
+                burst.appendChild(flower);
+                setTimeout(() => {
+                    flower.style.transform = `translate(${x}px, ${y}px) scale(${0.7 + Math.random()*0.5}) rotate(${Math.random()*360}deg)`;
+                    flower.style.opacity = '0';
+                }, 10);
+            }
+            setTimeout(() => { burst.innerHTML = ''; }, 900);
+        }
+    </script>
+</body>
+</html>
