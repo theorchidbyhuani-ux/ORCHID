@@ -18,6 +18,8 @@
     <meta name="twitter:description" content="Luxury nail care, spa treatments, and beauty services. Book your appointment at The Orchid in Toronto today!">
     <meta name="twitter:image" content="logo.jpg">
     <link rel="icon" href="logo.jpg" type="image/jpeg">
+    <!-- Playfair Display font for English -->
+    <link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,700&display=swap" rel="stylesheet">
     <!-- Calendly badge widget begin -->
     <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
     <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
@@ -40,7 +42,15 @@
     }
     </script>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Arial', sans-serif; }
+        /* Playfair Display for English, fallback to Arial for others */
+        html, body, .promo-banner, .hero-content, .services-nav, .service-btn, .btn, .section-title, .modal-title, .nails-section-title, .price-name, .price-value, .modal-btn, footer, h1, h2, h3, p, span, a, button, input, label, .coming-soon-label, .coming-soon-banner {
+            font-family: 'Playfair Display', Arial, sans-serif;
+        }
+        /* For Chinese/Japanese/Korean, fallback to system font */
+        .price-name, .nails-section-title {
+            font-family: 'Playfair Display', Arial, 'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', 'Source Han Sans SC', 'Hiragino Sans GB', 'Heiti SC', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body { overflow-x: hidden; }
         .promo-banner {
             width: 100%;
@@ -108,6 +118,7 @@
         h1 {
             font-size: 3.5rem; margin-bottom: 20px;
             text-shadow: 2px 2px 4px rgba(255,255,255,0.5);
+            font-family: 'Playfair Display', Arial, sans-serif;
         }
         p { font-size: 1.2rem; margin-bottom: 30px; }
         .services-nav {
@@ -121,6 +132,7 @@
             transition: all 0.3s; text-align: left; position: relative;
             overflow: hidden; width: 250px;
             display: flex; align-items: center; justify-content: flex-start;
+            font-family: 'Playfair Display', Arial, sans-serif;
         }
         .service-btn.nails-center {
             justify-content: center;
@@ -163,6 +175,7 @@
             margin-left: 10px;
             letter-spacing: 1px;
             display: inline-block;
+            font-family: 'Playfair Display', Arial, sans-serif;
         }
         .btn {
             display: inline-block; padding: 12px 30px;
@@ -172,6 +185,7 @@
             position: relative; overflow: hidden;
             transition: transform 0.3s, box-shadow 0.3s, filter 0.3s;
             box-shadow: 0 4px 15px rgba(255,101,163,0.4);
+            font-family: 'Playfair Display', Arial, sans-serif;
         }
         .btn:hover {
             transform: translateY(-3px) scale(1.04);
@@ -212,7 +226,7 @@
             transition: opacity 0.5s;
         }
         .gallery-section { padding: 80px 20px; background-color: #f9f4f7; }
-        .section-title { text-align: center; margin-bottom: 50px; color: #333; font-size: 2.5rem; }
+        .section-title { text-align: center; margin-bottom: 50px; color: #333; font-size: 2.5rem; font-family: 'Playfair Display', Arial, sans-serif; }
         .gallery-container {
             display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
             max-width: 1200px; margin: 0 auto;
@@ -243,8 +257,9 @@
         .modal-close {
             position: absolute; top: 20px; right: 20px; font-size: 24px;
             background: none; border: none; cursor: pointer; color: #333;
+            font-family: 'Playfair Display', Arial, sans-serif;
         }
-        .modal-title { font-size: 2rem; margin-bottom: 20px; color: #ff65a3; text-align: center; }
+        .modal-title { font-size: 2rem; margin-bottom: 20px; color: #ff65a3; text-align: center; font-family: 'Playfair Display', Arial, sans-serif; }
         .modal-gallery {
             display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 30px;
         }
@@ -257,9 +272,10 @@
         .price-item {
             display: flex; justify-content: space-between; align-items: center;
             padding: 15px 0; border-bottom: 1px dashed #ddd;
+            /* Responsive handled below */
         }
-        .price-name { font-weight: bold; color: #333; }
-        .price-value { color: #ff65a3; font-weight: bold; }
+        .price-name { font-weight: bold; color: #333; font-family: 'Playfair Display', Arial, 'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', 'Source Han Sans SC', 'Hiragino Sans GB', 'Heiti SC', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif; }
+        .price-value { color: #ff65a3; font-weight: bold; font-family: 'Playfair Display', Arial, sans-serif; }
         .modal-btn { display: block; width: 200px; margin: 0 auto; text-align: center; }
         .coming-soon-banner {
             display: flex;
@@ -274,12 +290,14 @@
             padding: 10px 0;
             letter-spacing: 1px;
             box-shadow: 0 2px 8px rgba(255,101,163,0.15);
+            font-family: 'Playfair Display', Arial, sans-serif;
         }
         .nails-section-title {
             font-weight: bold;
             color: #ff65a3;
             margin: 24px 0 8px;
             font-size: 1.15rem;
+            font-family: 'Playfair Display', Arial, 'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', 'Source Han Sans SC', 'Hiragino Sans GB', 'Heiti SC', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', sans-serif;
         }
         @media (max-width: 768px) {
             h1 { font-size: 2.5rem; }
@@ -297,10 +315,38 @@
             }
             .modal { padding: 20px; width: 95%; }
             .modal-title { font-size: 1.5rem; }
-            .price-item { flex-direction: column; text-align: center; }
-            .price-value { margin-top: 5px; }
+            /* Responsive price row for all price lists */
+            .price-item {
+                flex-direction: row !important;
+                text-align: left !important;
+                align-items: center !important;
+            }
+            .price-name, .price-value {
+                display: block;
+                width: auto;
+                margin: 0;
+                font-size: 1rem;
+            }
+            .price-name { flex: 1 1 60%; }
+            .price-value { flex: 0 0 auto; }
             .promo-banner { font-size: 1rem; padding: 14px 40px 14px 10px; }
             .coming-soon-banner { font-size: 1rem; }
+        }
+        /* Ensure price row is always horizontal, even on mobile */
+        @media (max-width: 480px) {
+            .price-item {
+                flex-direction: row !important;
+                text-align: left !important;
+                align-items: center !important;
+            }
+            .price-name, .price-value {
+                display: block;
+                width: auto;
+                margin: 0;
+                font-size: 0.98rem;
+            }
+            .price-name { flex: 1 1 60%; }
+            .price-value { flex: 0 0 auto; }
         }
     </style>
     <script type="text/javascript">
@@ -362,13 +408,25 @@
                 <img src="nails/3.jpeg" alt="Nail Art 3">
             </div>
             <div class="gallery-item">
-                <img src="gallery/candle1.jpg" alt="Spa Treatment">
+                <img src="gallery/eyelaches.jpg" alt="eyelaches">
             </div>
             <div class="gallery-item">
-                <img src="gallery/candle2.jpg" alt="Pedicure">
+                <img src="gallery/facial.jpeg" alt="facial2">
             </div>
             <div class="gallery-item">
-                <img src="gallery/candle3.jpg" alt="Eyelash Extensions">
+                <img src="gallery/facial2.jpeg" alt="facial">
+            </div>
+            <div class="gallery-item">
+                <img src="gallery/massage.jpeg" alt="massage">
+            </div>
+            <div class="gallery-item">
+                <img src="gallery/massage2.jpeg" alt="massage">
+            </div>
+            <div class="gallery-item">
+                <img src="gallery/massage3.jpeg" alt="massage">
+            </div>
+            <div class="gallery-item">
+                <img src="gallery/spa.jpeg" alt="spa">
             </div>
         </div>
     </section>
@@ -576,7 +634,7 @@
         </div>
     </div>
     </div>
-    <footer style="text-align:center; padding:40px 0 20px; color:#888; font-size:1rem;">
+    <footer style="text-align:center; padding:40px 0 20px; color:#888; font-size:1rem; font-family:'Playfair Display',Arial,sans-serif;">
         &copy; <span id="year"></span> The Orchid. All rights reserved. | <a href="https://shoporchid.ca/" style="color:#ff65a3;text-decoration:none;">shoporchid.ca</a>
     </footer>
     <script>
@@ -604,6 +662,8 @@
                     if (modal) {
                         modal.classList.add('active');
                         document.body.style.overflow = 'hidden';
+                        // Hide Calendly badge widget
+                        hideCalendlyBadge();
                     }
                 });
             });
@@ -612,6 +672,8 @@
                     const modal = this.closest('.modal-overlay');
                     modal.classList.remove('active');
                     document.body.style.overflow = 'auto';
+                    // Show Calendly badge widget
+                    showCalendlyBadge();
                 });
             });
             modalOverlays.forEach(overlay => {
@@ -619,6 +681,8 @@
                     if (e.target === this) {
                         this.classList.remove('active');
                         document.body.style.overflow = 'auto';
+                        // Show Calendly badge widget
+                        showCalendlyBadge();
                     }
                 });
             });
@@ -642,6 +706,13 @@
 
             // Set copyright year
             document.getElementById('year').textContent = new Date().getFullYear();
+
+            // Helper: Hide Calendly badge if modal is open on page load (edge case)
+            setTimeout(function() {
+                if ([...modalOverlays].some(m => m.classList.contains('active'))) {
+                    hideCalendlyBadge();
+                }
+            }, 500);
         });
 
         // Flower burst animation
@@ -670,6 +741,17 @@
                 }, 10);
             }
             setTimeout(() => { burst.innerHTML = ''; }, 900);
+        }
+
+        // Hide Calendly badge widget
+        function hideCalendlyBadge() {
+            var badge = document.querySelector('.calendly-badge-widget');
+            if (badge) badge.style.display = 'none';
+        }
+        // Show Calendly badge widget
+        function showCalendlyBadge() {
+            var badge = document.querySelector('.calendly-badge-widget');
+            if (badge) badge.style.display = '';
         }
     </script>
 </body>
