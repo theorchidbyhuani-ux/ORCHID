@@ -1736,6 +1736,12 @@
             // Populate time slots 10:00-21:00 (9pm) in 30min increments
             function populateTimeSlots() {
                 bookingTime.innerHTML = '<option value="">Select Time</option>';
+                
+                // Get blocked slots from localStorage
+                const blockedSlots = JSON.parse(localStorage.getItem('orchidBlockedSlots') || '{}');
+                const selectedDate = bookingDate.value;
+                const dateBlockedSlots = blockedSlots[selectedDate] || {};
+                
                 for (let h = 10; h <= 21; h++) {
                     for (let m = 0; m < 60; m += 30) {
                         if (h === 21 && m > 0) continue;
@@ -1746,7 +1752,15 @@
                         if (displayHour === 0) displayHour = 12;
                         let label = `${displayHour}:${min} ${ampm}`;
                         let value = `${hour}:${min}`;
-                        bookingTime.innerHTML += `<option value="${value}">${label}</option>`;
+                        
+                        // Check if this timeslot is blocked
+                        const isBlocked = dateBlockedSlots[value] && dateBlockedSlots[value].blocked;
+                        
+                        if (isBlocked) {
+                            bookingTime.innerHTML += `<option value="${value}" disabled>${label} - Unavailable</option>`;
+                        } else {
+                            bookingTime.innerHTML += `<option value="${value}">${label}</option>`;
+                        }
                     }
                 }
             }
@@ -1896,6 +1910,9 @@ Message: ${message || '(none)'}
 
             // When date is changed, optionally filter time slots (future: check for conflicts)
             // For now, always show all slots
+            bookingDate.addEventListener('change', function() {
+                populateTimeSlots(); // Repopulate time slots to check for blocked slots on the selected date
+            });
 
             // Floating Book Button click logic
             floatingBookBtn.addEventListener('click', function(e) {
