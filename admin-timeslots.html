@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin - Manage Timeslots | The Orchid</title>
+    <title>Admin - Manage Booked Timeslots | The Orchid</title>
     <meta name="robots" content="noindex, nofollow">
     <link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,700&display=swap" rel="stylesheet">
     <style>
@@ -68,17 +68,15 @@
         }
         .control-input {
             width: 100%;
-            max-width: 300px;
             padding: 10px 12px;
             border: 1px solid #eee;
-            border-radius: 7px;
+            border-radius: 8px;
             font-size: 1rem;
-            background: #fff;
+            background: #faf7fa;
             transition: border 0.2s;
-            font-family: 'Playfair Display', Arial, sans-serif;
         }
         .control-input:focus {
-            border: 1.5px solid #ff65a3;
+            border-color: #ff65a3;
             outline: none;
         }
         .btn {
@@ -157,7 +155,7 @@
             background: #d4f4dd;
             color: #1b8838;
         }
-        .status-blocked {
+        .status-booked {
             background: #ffd4d4;
             color: #d32f2f;
         }
@@ -231,6 +229,19 @@
                 grid-template-columns: 1fr;
             }
         }
+        #singleSlotControls, #multipleSlotControls, #rangeControls {
+            margin-top: 15px;
+            padding: 15px;
+            background: #f9f4f7;
+            border-radius: 8px;
+            border: 1px solid #ffe0ef;
+        }
+        .booking-mode-info {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 5px;
+            font-style: italic;
+        }
     </style>
 </head>
 <body>
@@ -238,62 +249,111 @@
         <a href="index.html" class="back-link">← Back to Website</a>
         
         <div class="admin-header">
-            <h1 class="admin-title">Timeslot Management</h1>
-            <p class="admin-subtitle">Manage blocked timeslots for The Orchid booking system</p>
+            <h1 class="admin-title">Booked Timeslot Management</h1>
+            <p class="admin-subtitle">Manage booked timeslots for The Orchid booking system</p>
         </div>
 
         <div id="messageArea"></div>
 
         <div class="stats-section" id="statsSection">
             <div class="stat-card">
-                <div class="stat-number" id="totalBlocked">0</div>
-                <div class="stat-label">Total Blocked Slots</div>
+                <div class="stat-number" id="totalBooked">0</div>
+                <div class="stat-label">Total Booked Slots</div>
             </div>
             <div class="stat-card">
-                <div class="stat-number" id="todayBlocked">0</div>
-                <div class="stat-label">Blocked Today</div>
+                <div class="stat-number" id="todayBooked">0</div>
+                <div class="stat-label">Booked Today</div>
             </div>
             <div class="stat-card">
-                <div class="stat-number" id="upcomingBlocked">0</div>
-                <div class="stat-label">Upcoming Blocked</div>
+                <div class="stat-number" id="upcomingBooked">0</div>
+                <div class="stat-label">Upcoming Bookings</div>
             </div>
         </div>
 
         <div class="controls-section">
-            <h2 style="font-size: 1.5rem; color: #ff65a3; margin-bottom: 20px;">Add Blocked Timeslot</h2>
+            <h2 style="font-size: 1.5rem; color: #ff65a3; margin-bottom: 20px;">Add Booked Timeslot</h2>
             
             <div class="control-group">
-                <label class="control-label" for="blockDate">Date</label>
-                <input type="date" id="blockDate" class="control-input" min="">
+                <label class="control-label" for="bookDate">Date</label>
+                <input type="date" id="bookDate" class="control-input" min="">
             </div>
             
             <div class="control-group">
-                <label class="control-label" for="blockTime">Time</label>
-                <select id="blockTime" class="control-input">
-                    <option value="">Select Time</option>
+                <label class="control-label" for="bookingMode">Booking Mode</label>
+                <select id="bookingMode" class="control-input" onchange="toggleBookingMode()">
+                    <option value="single">Single Timeslot</option>
+                    <option value="multiple">Multiple Consecutive Slots</option>
+                    <option value="range">Time Range</option>
                 </select>
             </div>
             
-            <div class="control-group">
-                <label class="control-label" for="blockReason">Reason (Optional)</label>
-                <input type="text" id="blockReason" class="control-input" placeholder="e.g., Staff meeting, Holiday">
+            <div id="singleSlotControls">
+                <div class="control-group">
+                    <label class="control-label" for="bookTime">Time</label>
+                    <select id="bookTime" class="control-input">
+                        <option value="">Select Time</option>
+                    </select>
+                    <div class="booking-mode-info">Book a single 30-minute timeslot</div>
+                </div>
             </div>
             
-            <button class="btn" onclick="addBlockedSlot()">Block Timeslot</button>
-            <button class="btn btn-secondary" onclick="clearAllBlocked()">Clear All Blocked</button>
+            <div id="multipleSlotControls" style="display: none;">
+                <div class="control-group">
+                    <label class="control-label" for="startTime">Start Time</label>
+                    <select id="startTime" class="control-input">
+                        <option value="">Select Start Time</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="numSlots">Number of 30-min Slots</label>
+                    <select id="numSlots" class="control-input">
+                        <option value="2">2 slots (1 hour)</option>
+                        <option value="3">3 slots (1.5 hours)</option>
+                        <option value="4">4 slots (2 hours)</option>
+                        <option value="5">5 slots (2.5 hours)</option>
+                        <option value="6">6 slots (3 hours)</option>
+                        <option value="8">8 slots (4 hours)</option>
+                    </select>
+                    <div class="booking-mode-info">Book consecutive timeslots starting from the selected time</div>
+                </div>
+            </div>
+            
+            <div id="rangeControls" style="display: none;">
+                <div class="control-group">
+                    <label class="control-label" for="rangeStart">Start Time</label>
+                    <select id="rangeStart" class="control-input">
+                        <option value="">Select Start Time</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="rangeEnd">End Time</label>
+                    <select id="rangeEnd" class="control-input">
+                        <option value="">Select End Time</option>
+                    </select>
+                    <div class="booking-mode-info">Book all timeslots between start and end time (end time not included)</div>
+                </div>
+            </div>
+            
+            <div class="control-group">
+                <label class="control-label" for="bookCustomer">Customer Name (Optional)</label>
+                <input type="text" id="bookCustomer" class="control-input" placeholder="e.g., Jane Doe">
+            </div>
+            
+            <button class="btn" onclick="addBookedSlot()">Mark as Booked</button>
+            <button class="btn btn-secondary" onclick="clearAllBooked()">Clear All Bookings</button>
             <button class="btn btn-secondary" onclick="exportData()">Export Data</button>
         </div>
 
-        <h2 style="font-size: 1.8rem; color: #ff65a3; margin-bottom: 20px; text-align: center;">Blocked Timeslots</h2>
+        <h2 style="font-size: 1.8rem; color: #ff65a3; margin-bottom: 20px; text-align: center;">Booked Timeslots</h2>
         
         <div class="timeslots-grid" id="timeslotsGrid">
-            <div class="no-slots">No blocked timeslots yet.</div>
+            <div class="no-slots">No booked timeslots yet.</div>
         </div>
     </div>
 
     <script>
-        // Initialize blocked slots from localStorage
-        let blockedSlots = JSON.parse(localStorage.getItem('orchidBlockedSlots') || '{}');
+        // Initialize booked slots from localStorage
+        let bookedSlots = JSON.parse(localStorage.getItem('orchidBookedSlots') || '{}');
 
         // Set min date to today
         function setMinDate() {
@@ -301,26 +361,54 @@
             const yyyy = today.getFullYear();
             const mm = String(today.getMonth() + 1).padStart(2, '0');
             const dd = String(today.getDate()).padStart(2, '0');
-            document.getElementById('blockDate').min = `${yyyy}-${mm}-${dd}`;
+            document.getElementById('bookDate').min = `${yyyy}-${mm}-${dd}`;
         }
 
         // Populate time slots
         function populateTimeSlots() {
-            const timeSelect = document.getElementById('blockTime');
-            timeSelect.innerHTML = '<option value="">Select Time</option>';
+            const selects = ['bookTime', 'startTime', 'rangeStart', 'rangeEnd'];
             
-            for (let h = 10; h <= 21; h++) {
-                for (let m = 0; m < 60; m += 30) {
-                    if (h === 21 && m > 0) continue;
-                    let hour = h < 10 ? '0' + h : h;
-                    let min = m === 0 ? '00' : '30';
-                    let ampm = h < 12 ? 'AM' : 'PM';
-                    let displayHour = h > 12 ? h - 12 : h;
-                    if (displayHour === 0) displayHour = 12;
-                    let label = `${displayHour}:${min} ${ampm}`;
-                    let value = `${hour}:${min}`;
-                    timeSelect.innerHTML += `<option value="${value}">${label}</option>`;
+            selects.forEach(selectId => {
+                const timeSelect = document.getElementById(selectId);
+                if (timeSelect) {
+                    timeSelect.innerHTML = '<option value="">Select Time</option>';
+                    
+                    for (let h = 10; h <= 21; h++) {
+                        for (let m = 0; m < 60; m += 30) {
+                            if (h === 21 && m > 0) continue;
+                            let hour = h < 10 ? '0' + h : h;
+                            let min = m === 0 ? '00' : '30';
+                            let ampm = h < 12 ? 'AM' : 'PM';
+                            let displayHour = h > 12 ? h - 12 : h;
+                            if (displayHour === 0) displayHour = 12;
+                            let label = `${displayHour}:${min} ${ampm}`;
+                            let value = `${hour}:${min}`;
+                            timeSelect.innerHTML += `<option value="${value}">${label}</option>`;
+                        }
+                    }
                 }
+            });
+        }
+
+        // Toggle booking mode
+        function toggleBookingMode() {
+            const mode = document.getElementById('bookingMode').value;
+            const singleControls = document.getElementById('singleSlotControls');
+            const multipleControls = document.getElementById('multipleSlotControls');
+            const rangeControls = document.getElementById('rangeControls');
+            
+            // Hide all controls first
+            singleControls.style.display = 'none';
+            multipleControls.style.display = 'none';
+            rangeControls.style.display = 'none';
+            
+            // Show relevant controls
+            if (mode === 'single') {
+                singleControls.style.display = 'block';
+            } else if (mode === 'multiple') {
+                multipleControls.style.display = 'block';
+            } else if (mode === 'range') {
+                rangeControls.style.display = 'block';
             }
         }
 
@@ -333,71 +421,150 @@
             }, 3000);
         }
 
-        // Add blocked slot
-        function addBlockedSlot() {
-            const date = document.getElementById('blockDate').value;
-            const time = document.getElementById('blockTime').value;
-            const reason = document.getElementById('blockReason').value;
+        // Add booked slot
+        function addBookedSlot() {
+            const date = document.getElementById('bookDate').value;
+            const mode = document.getElementById('bookingMode').value;
+            const customer = document.getElementById('bookCustomer').value;
+            let timesToBook = [];
 
-            if (!date || !time) {
-                showMessage('Please select both date and time', 'error');
+            if (!date) {
+                showMessage('Please select a date', 'error');
                 return;
             }
 
-            if (!blockedSlots[date]) {
-                blockedSlots[date] = {};
+            if (mode === 'single') {
+                const time = document.getElementById('bookTime').value;
+                if (!time) {
+                    showMessage('Please select a time', 'error');
+                    return;
+                }
+                timesToBook.push(time);
+            } else if (mode === 'multiple') {
+                const startTime = document.getElementById('startTime').value;
+                const numSlots = parseInt(document.getElementById('numSlots').value);
+                if (!startTime) {
+                    showMessage('Please select start time', 'error');
+                    return;
+                }
+                
+                // Parse start time
+                const [startHour, startMin] = startTime.split(':').map(Number);
+                
+                // Add consecutive slots
+                for (let i = 0; i < numSlots; i++) {
+                    const totalMinutes = (startHour * 60 + startMin) + (i * 30);
+                    const hour = Math.floor(totalMinutes / 60);
+                    const min = totalMinutes % 60;
+                    
+                    // Skip if beyond operating hours
+                    if (hour > 21 || (hour === 21 && min > 0)) break;
+                    
+                    const timeValue = `${hour.toString().padStart(2, '0')}:${min.toString().padStart(2, '0')}`;
+                    timesToBook.push(timeValue);
+                }
+            } else if (mode === 'range') {
+                const rangeStart = document.getElementById('rangeStart').value;
+                const rangeEnd = document.getElementById('rangeEnd').value;
+                if (!rangeStart || !rangeEnd) {
+                    showMessage('Please select both start and end time', 'error');
+                    return;
+                }
+                
+                // Parse times
+                const [startHour, startMin] = rangeStart.split(':').map(Number);
+                const [endHour, endMin] = rangeEnd.split(':').map(Number);
+                
+                // Validate range
+                if (startHour > endHour || (startHour === endHour && startMin >= endMin)) {
+                    showMessage('End time must be after start time', 'error');
+                    return;
+                }
+                
+                // Add all slots in range
+                let currentHour = startHour;
+                let currentMin = startMin;
+                
+                while (currentHour < endHour || (currentHour === endHour && currentMin < endMin)) {
+                    const timeValue = `${currentHour.toString().padStart(2, '0')}:${currentMin.toString().padStart(2, '0')}`;
+                    timesToBook.push(timeValue);
+                    
+                    // Increment by 30 minutes
+                    currentMin += 30;
+                    if (currentMin >= 60) {
+                        currentMin = 0;
+                        currentHour++;
+                    }
+                    
+                    // Stop if beyond operating hours
+                    if (currentHour > 21 || (currentHour === 21 && currentMin > 0)) break;
+                }
             }
 
-            blockedSlots[date][time] = {
-                blocked: true,
-                reason: reason || 'Blocked',
-                addedAt: new Date().toISOString()
-            };
+            if (!bookedSlots[date]) {
+                bookedSlots[date] = {};
+            }
 
-            localStorage.setItem('orchidBlockedSlots', JSON.stringify(blockedSlots));
+            // Book all selected timeslots
+            timesToBook.forEach(time => {
+                bookedSlots[date][time] = {
+                    booked: true,
+                    customer: customer || 'Customer',
+                    addedAt: new Date().toISOString()
+                };
+            });
+
+            localStorage.setItem('orchidBookedSlots', JSON.stringify(bookedSlots));
             
-            // Clear form
-            document.getElementById('blockTime').value = '';
-            document.getElementById('blockReason').value = '';
+            // Reset form
+            document.getElementById('bookDate').value = '';
+            document.getElementById('bookTime').value = '';
+            document.getElementById('startTime').value = '';
+            document.getElementById('rangeStart').value = '';
+            document.getElementById('rangeEnd').value = '';
+            document.getElementById('bookCustomer').value = '';
+            document.getElementById('bookingMode').value = 'single';
+            toggleBookingMode();
             
-            showMessage('Timeslot blocked successfully');
+            const slotsText = timesToBook.length > 1 ? `${timesToBook.length} timeslots` : '1 timeslot';
+            showMessage(`Successfully booked ${slotsText}`);
             updateDisplay();
         }
 
-        // Remove blocked slot
-        function removeBlockedSlot(date, time) {
-            if (blockedSlots[date] && blockedSlots[date][time]) {
-                delete blockedSlots[date][time];
+        // Remove booked slot
+        function removeBookedSlot(date, time) {
+            if (bookedSlots[date] && bookedSlots[date][time]) {
+                delete bookedSlots[date][time];
                 
                 // Remove date if no more slots
-                if (Object.keys(blockedSlots[date]).length === 0) {
-                    delete blockedSlots[date];
+                if (Object.keys(bookedSlots[date]).length === 0) {
+                    delete bookedSlots[date];
                 }
                 
-                localStorage.setItem('orchidBlockedSlots', JSON.stringify(blockedSlots));
-                showMessage('Timeslot unblocked successfully');
+                localStorage.setItem('orchidBookedSlots', JSON.stringify(bookedSlots));
+                showMessage('Timeslot marked as available');
                 updateDisplay();
             }
         }
 
-        // Clear all blocked slots
-        function clearAllBlocked() {
-            if (confirm('Are you sure you want to clear all blocked timeslots?')) {
-                blockedSlots = {};
-                localStorage.setItem('orchidBlockedSlots', JSON.stringify(blockedSlots));
-                showMessage('All blocked timeslots cleared');
+        // Clear all booked slots
+        function clearAllBooked() {
+            if (confirm('Are you sure you want to clear all booked timeslots?')) {
+                bookedSlots = {};
+                localStorage.setItem('orchidBookedSlots', JSON.stringify(bookedSlots));
+                showMessage('All booked timeslots cleared');
                 updateDisplay();
             }
         }
 
         // Export data
         function exportData() {
-            const dataStr = JSON.stringify(blockedSlots, null, 2);
+            const dataStr = JSON.stringify(bookedSlots, null, 2);
             const dataBlob = new Blob([dataStr], { type: 'application/json' });
             const url = URL.createObjectURL(dataBlob);
             const link = document.createElement('a');
             link.href = url;
-            link.download = `orchid-blocked-slots-${new Date().toISOString().split('T')[0]}.json`;
+            link.download = `orchid-booked-slots-${new Date().toISOString().split('T')[0]}.json`;
             link.click();
             URL.revokeObjectURL(url);
             showMessage('Data exported successfully');
@@ -426,8 +593,8 @@
             let todayCount = 0;
             let upcomingCount = 0;
 
-            Object.keys(blockedSlots).forEach(date => {
-                const slotCount = Object.keys(blockedSlots[date]).length;
+            Object.keys(bookedSlots).forEach(date => {
+                const slotCount = Object.keys(bookedSlots[date]).length;
                 totalCount += slotCount;
                 
                 if (date === today) {
@@ -437,9 +604,9 @@
                 }
             });
 
-            document.getElementById('totalBlocked').textContent = totalCount;
-            document.getElementById('todayBlocked').textContent = todayCount;
-            document.getElementById('upcomingBlocked').textContent = upcomingCount;
+            document.getElementById('totalBooked').textContent = totalCount;
+            document.getElementById('todayBooked').textContent = todayCount;
+            document.getElementById('upcomingBooked').textContent = upcomingCount;
         }
 
         // Update display
@@ -447,10 +614,10 @@
             updateStats();
             
             const grid = document.getElementById('timeslotsGrid');
-            const sortedDates = Object.keys(blockedSlots).sort();
+            const sortedDates = Object.keys(bookedSlots).sort();
             
             if (sortedDates.length === 0) {
-                grid.innerHTML = '<div class="no-slots">No blocked timeslots yet.</div>';
+                grid.innerHTML = '<div class="no-slots">No booked timeslots yet.</div>';
                 return;
             }
 
@@ -465,19 +632,19 @@
                 dateHeader.textContent = formatDate(date);
                 dateSection.appendChild(dateHeader);
                 
-                const sortedTimes = Object.keys(blockedSlots[date]).sort();
+                const sortedTimes = Object.keys(bookedSlots[date]).sort();
                 
                 sortedTimes.forEach(time => {
-                    const slot = blockedSlots[date][time];
+                    const slot = bookedSlots[date][time];
                     const slotItem = document.createElement('div');
                     slotItem.className = 'timeslot-item';
                     
                     slotItem.innerHTML = `
                         <div>
                             <div class="timeslot-time">${formatTime(time)}</div>
-                            <div style="font-size: 0.85rem; color: #666; margin-top: 2px;">${slot.reason}</div>
+                            <div style="font-size: 0.85rem; color: #666; margin-top: 2px;">${slot.customer}</div>
                         </div>
-                        <button class="remove-btn" onclick="removeBlockedSlot('${date}', '${time}')" title="Unblock">×</button>
+                        <button class="remove-btn" onclick="removeBookedSlot('${date}', '${time}')" title="Mark as Available">×</button>
                     `;
                     
                     dateSection.appendChild(slotItem);
@@ -492,15 +659,15 @@
             const today = new Date().toISOString().split('T')[0];
             let cleaned = false;
             
-            Object.keys(blockedSlots).forEach(date => {
+            Object.keys(bookedSlots).forEach(date => {
                 if (date < today) {
-                    delete blockedSlots[date];
+                    delete bookedSlots[date];
                     cleaned = true;
                 }
             });
             
             if (cleaned) {
-                localStorage.setItem('orchidBlockedSlots', JSON.stringify(blockedSlots));
+                localStorage.setItem('orchidBookedSlots', JSON.stringify(bookedSlots));
             }
         }
 
