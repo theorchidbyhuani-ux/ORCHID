@@ -20,9 +20,6 @@
     <link rel="icon" href="logo.jpg" type="image/jpeg">
     <!-- Playfair Display font for English -->
     <link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,700&display=swap" rel="stylesheet">
-    <!-- Calendly badge widget begin -->
-    <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
-    <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -126,6 +123,50 @@
             background: linear-gradient(90deg, #ff65a3 0%, #ff7eb3 100%);
             color: #ffffff;
             outline: none;
+        }
+        /* Instagram link styles */
+        .instagram-link {
+            position: fixed;
+            top: 70px;
+            right: 20px;
+            z-index: 1400;
+            background: #fff;
+            border-radius: 50%;
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+            text-decoration: none;
+        }
+        .instagram-link:hover {
+            transform: scale(1.1);
+            box-shadow: 0 4px 16px rgba(255,101,163,0.3);
+        }
+        .instagram-link svg {
+            width: 24px;
+            height: 24px;
+            fill: #ff65a3;
+        }
+        .instagram-link.with-banner {
+            top: 130px;
+        }
+        @media (max-width: 600px) {
+            .instagram-link {
+                width: 38px;
+                height: 38px;
+                right: 16px;
+                top: 64px;
+            }
+            .instagram-link.with-banner {
+                top: 124px;
+            }
+            .instagram-link svg {
+                width: 20px;
+                height: 20px;
+            }
         }
         /* Hamburger menu styles */
         .main-header .menu-toggle {
@@ -236,9 +277,11 @@
             padding: 10px 0; background: transparent; color: black;
             border: none; border-bottom: 1px solid rgba(0,0,0,0.3);
             font-size: 1.1rem; cursor: pointer; text-decoration: none;
-            transition: all 0.3s; text-align: left; position: relative;
+            transition: all 0.3s; 
+            text-align: center; /* Center align text */
+            position: relative;
             overflow: hidden; width: 250px;
-            display: flex; align-items: center; justify-content: flex-start;
+            display: flex; align-items: center; justify-content: center; /* Center horizontally */
             font-family: 'Playfair Display', Arial, sans-serif;
         }
         .service-btn.nails-center {
@@ -332,6 +375,8 @@
             pointer-events: none;
             transition: opacity 0.5s;
         }
+
+        /* --- GALLERY & SERVICES IMAGE FULLSCREEN STYLES --- */
         .gallery-section { padding: 80px 20px; background-color: #f9f4f7; }
         .section-title { text-align: center; margin-bottom: 50px; color: #333; font-size: 2.5rem; font-family: 'Playfair Display', Arial, sans-serif; }
         .gallery-container {
@@ -339,14 +384,64 @@
             max-width: 1200px; margin: 0 auto;
         }
         .gallery-item {
-            height: 300px; overflow: hidden; border-radius: 10px;
+            aspect-ratio: 1/1;
+            width: 100%;
+            height: auto;
+            overflow: hidden; border-radius: 10px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.1); transition: transform 0.3s;
+            display: flex; align-items: stretch; justify-content: stretch;
         }
         .gallery-item:hover { transform: translateY(-10px); }
         .gallery-item img {
             width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s;
+            display: block;
         }
         .gallery-item:hover img { transform: scale(1.1); }
+
+        /* Make modal-gallery images fit modal width and height */
+        .modal-gallery {
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 30px;
+        }
+        .modal-gallery-item {
+            aspect-ratio: 1/1;
+            width: 100%;
+            height: auto;
+            border-radius: 10px; overflow: hidden;
+            display: flex; align-items: stretch; justify-content: stretch;
+        }
+        .modal-gallery-item img {
+            width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s;
+            display: block;
+        }
+        .modal-gallery-item:hover img { transform: scale(1.1); }
+
+        /* Responsive: 2 columns on medium, 1 column on small */
+        @media (max-width: 1024px) {
+            .gallery-container, .modal-gallery {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        @media (max-width: 700px) {
+            .gallery-container, .modal-gallery {
+                grid-template-columns: 1fr;
+                overflow-x: auto; scroll-snap-type: x mandatory;
+                display: flex; gap: 15px; padding-bottom: 20px;
+            }
+            .gallery-item, .modal-gallery-item {
+                min-width: 90vw; max-width: 100vw;
+                aspect-ratio: 1/1;
+                height: auto;
+                scroll-snap-align: start;
+            }
+        }
+        @media (max-width: 480px) {
+            .gallery-item, .modal-gallery-item {
+                min-width: 98vw; max-width: 100vw;
+            }
+        }
+
+        /* --- END GALLERY & SERVICES IMAGE FULLSCREEN STYLES --- */
+
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background-color: rgba(0,0,0,0.7); z-index: 1000;
@@ -367,14 +462,6 @@
             font-family: 'Playfair Display', Arial, sans-serif;
         }
         .modal-title { font-size: 2rem; margin-bottom: 20px; color: #ff65a3; text-align: center; font-family: 'Playfair Display', Arial, sans-serif; }
-        .modal-gallery {
-            display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 30px;
-        }
-        .modal-gallery-item { height: 200px; border-radius: 10px; overflow: hidden; }
-        .modal-gallery-item img {
-            width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s;
-        }
-        .modal-gallery-item:hover img { transform: scale(1.1); }
         .price-list { margin-bottom: 30px; }
         .price-item {
             display: flex; justify-content: space-between; align-items: center;
@@ -411,14 +498,6 @@
             .services-nav { margin-top: 30px; align-items: center; }
             .service-btn { text-align: center; width: 220px; }
             .service-btn.nails-center { width: 220px; }
-            .gallery-container, .modal-gallery {
-                grid-template-columns: 1fr;
-                overflow-x: auto; scroll-snap-type: x mandatory;
-                display: flex; gap: 15px; padding-bottom: 20px;
-            }
-            .gallery-item, .modal-gallery-item {
-                min-width: 280px; scroll-snap-align: start; height: 250px;
-            }
             .modal { padding: 20px; width: 95%; }
             .modal-title { font-size: 1.5rem; }
             .price-item {
@@ -535,18 +614,219 @@
   box-shadow: 0 2px 10px rgba(0,0,0,0.4);
 }
 
-    </style>
-    <script type="text/javascript">
-        window.onload = function() {
-            Calendly.initBadgeWidget({
-                url: 'https://calendly.com/theorchidbyhuani/new-meeting?primary_color=ff65a3',
-                text: 'BOOK NOW',
-                color: '#ff65a3',
-                textColor: '#ffffff'
-            });
+    /* Booking Form Modal Styles */
+    .booking-modal-overlay {
+        position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+        background: rgba(0,0,0,0.7); z-index: 4000;
+        display: flex; justify-content: center; align-items: center;
+        opacity: 0; visibility: hidden; transition: opacity 0.3s, visibility 0.3s;
+    }
+    .booking-modal-overlay.active { opacity: 1; visibility: visible; }
+    .booking-modal {
+        background: #fff;
+        width: 95%;
+        max-width: 420px;
+        max-height: 95vh;
+        border-radius: 16px;
+        padding: 30px 20px 20px 20px;
+        position: relative;
+        overflow-y: auto;
+        box-shadow: 0 8px 32px rgba(255,101,163,0.18);
+        display: flex;
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .booking-modal-close {
+        position: absolute; top: 18px; right: 18px; font-size: 24px;
+        background: none; border: none; cursor: pointer; color: #ff65a3;
+        font-family: 'Playfair Display', Arial, sans-serif;
+    }
+    .booking-modal-title {
+        font-size: 1.5rem;
+        color: #ff65a3;
+        text-align: center;
+        margin-bottom: 18px;
+        font-family: 'Playfair Display', Arial, sans-serif;
+    }
+    .booking-form label {
+        font-weight: 600;
+        margin-bottom: 4px;
+        color: #333;
+        display: block;
+        font-size: 1.05rem;
+    }
+    .booking-form input, .booking-form select, .booking-form textarea {
+        width: 100%;
+        padding: 10px 12px;
+        margin-bottom: 16px;
+        border: 1px solid #eee;
+        border-radius: 7px;
+        font-size: 1rem;
+        background: #faf7fa;
+        transition: border 0.2s;
+    }
+    .booking-form input:focus, .booking-form select:focus, .booking-form textarea:focus {
+        border: 1.5px solid #ff65a3;
+        outline: none;
+    }
+    .booking-form .optional {
+        font-size: 0.95rem;
+        color: #888;
+        font-weight: 400;
+        margin-left: 4px;
+    }
+    .booking-form .booking-success {
+        color: #1bbf5c;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 10px;
+    }
+    .booking-form .booking-error {
+        color: #ff3b3b;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 10px;
+    }
+    .booking-form .booking-wait {
+        color: #ff65a3;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 10px;
+    }
+    .booking-form .booking-btn {
+        width: 100%;
+        margin: 0 auto;
+        margin-top: 8px;
+    }
+    .booking-form .booking-btn:disabled {
+        opacity: 0.7;
+        cursor: not-allowed;
+    }
+    .booking-form .booking-note {
+        font-size: 0.98rem;
+        color: #888;
+        text-align: center;
+        margin-bottom: 8px;
+    }
+
+    /* Floating Book Button Styles */
+    .floating-book-btn {
+        position: fixed;
+        bottom: 28px;
+        right: 28px;
+        z-index: 2100;
+        background: linear-gradient(135deg, #ff7eb3, #ff65a3);
+        color: #fff;
+        border: none;
+        border-radius: 50%;
+        width: 60px;
+        height: 60px;
+        box-shadow: 0 4px 18px rgba(255,101,163,0.25);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: box-shadow 0.2s, transform 0.2s;
+        font-size: 1.7rem;
+        outline: none;
+        overflow: visible;
+    }
+    .floating-book-btn:hover {
+        box-shadow: 0 8px 32px #f787b4, 0 0 40px #fdd8e8;
+        transform: scale(1.07);
+    }
+    .floating-book-btn .flower-burst {
+        pointer-events: none;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        z-index: 10;
+    }
+    .floating-book-btn .flower-burst img {
+        position: absolute;
+        width: 28px;
+        height: 28px;
+        opacity: 0.85;
+        will-change: transform, opacity;
+        pointer-events: none;
+        transition: opacity 0.5s;
+    }
+    @media (max-width: 600px) {
+        .floating-book-btn {
+            width: 48px;
+            height: 48px;
+            font-size: 1.2rem;
+            bottom: 16px;
+            right: 16px;
         }
-    </script>
-    <!-- Calendly badge widget end -->
+        .floating-book-btn .flower-burst img {
+            width: 20px;
+            height: 20px;
+        }
+    }
+    /* Google Map and Timings Section */
+    .location-section {
+        max-width: 900px;
+        margin: 40px auto 0 auto;
+        padding: 32px 16px 24px 16px;
+        background: #f9f4f7;
+        border-radius: 16px;
+        box-shadow: 0 2px 8px rgba(255,101,163,0.07);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 24px;
+    }
+    .location-title {
+        font-size: 1.4rem;
+        font-weight: bold;
+        color: #ff65a3;
+        margin-bottom: 10px;
+        font-family: 'Playfair Display', Arial, sans-serif;
+        text-align: center;
+    }
+    .location-map {
+        width: 100%;
+        max-width: 500px;
+        height: 260px;
+        border: 0;
+        border-radius: 12px;
+        box-shadow: 0 2px 12px rgba(255,101,163,0.08);
+        margin-bottom: 10px;
+    }
+    .location-details {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        font-size: 1.08rem;
+        color: #333;
+        text-align: center;
+    }
+    .location-details a {
+        color: #ff65a3;
+        text-decoration: underline;
+        font-weight: 600;
+    }
+    .location-hours {
+        margin-top: 8px;
+        font-size: 1.05rem;
+        color: #555;
+        background: #fff0f6;
+        border-radius: 8px;
+        padding: 10px 18px;
+        display: inline-block;
+        font-family: 'Playfair Display', Arial, sans-serif;
+    }
+    @media (max-width: 600px) {
+        .location-section {
+            padding: 18px 4px 14px 4px;
+        }
+        .location-map {
+            height: 180px;
+        }
+    }
+    </style>
 </head>
 <body>
     <!-- Promo Banner -->
@@ -566,6 +846,12 @@
             </div>
         </nav>
     </header>
+    <!-- Instagram Link -->
+    <a href="https://www.instagram.com/theorchid" target="_blank" rel="noopener" class="instagram-link" id="instagramLink" aria-label="Follow us on Instagram">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zM5.838 12a6.162 6.162 0 1 1 12.324 0 6.162 6.162 0 0 1-12.324 0zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm4.965-10.405a1.44 1.44 0 1 1 2.881.001 1.44 1.44 0 0 1-2.881-.001z"/>
+        </svg>
+    </a>
     <div id="mainContent" class="with-banner">
     <!-- Hero Section -->
     <section class="hero">
@@ -576,18 +862,9 @@
             <h1>The Orchid</h1>
             <p>Experience luxury nail care and spa treatments in a serene environment in Toronto</p>
             <div class="services-nav">
-                <button class="service-btn" data-service="eyelash" disabled>
-                    EYELASH EXTENSIONS
-                    <span class="coming-soon-label">COMING SOON</span>
-                </button>
-                <button class="service-btn" data-service="bodymassage" disabled>
-                    BODY MASSAGE
-                    <span class="coming-soon-label">COMING SOON</span>
-                </button>
-                <button class="service-btn" data-service="facetreatments" disabled>
-                    FACE TREATMENTS
-                    <span class="coming-soon-label">COMING SOON</span>
-                </button>
+                <button class="service-btn" data-service="eyelash" id="eyelashServiceBtn">EYELASH EXTENSIONS</button>
+                <button class="service-btn" data-service="bodymassage" id="bodymassageServiceBtn">BODY MASSAGE</button>
+                <button class="service-btn" data-service="facetreatments" id="facetreatmentsServiceBtn">FACE TREATMENTS</button>
                 <button class="service-btn nails-center" data-service="nails" id="nailsServiceBtn">NAILS</button>
             </div>
         </div>
@@ -597,35 +874,79 @@
     <section class="gallery-section" id="gallery">
         <h2 class="section-title">Our Gallery</h2>
         <div class="gallery-container" id="gallery-grid">
+            <!-- Nails images 1-9 -->
             <div class="gallery-item">
-                <img src="nails/1.jpeg" alt="Nail Art 1">
+                <img src="gallery/nails1.jpeg" alt="Nail Art 1">
             </div>
             <div class="gallery-item">
-                <img src="nails/2.jpeg" alt="Nail Art 2">
+                <img src="gallery/nails2.jpeg" alt="Nail Art 2">
             </div>
             <div class="gallery-item">
-                <img src="nails/3.jpeg" alt="Nail Art 3">
+                <img src="gallery/nails3.jpeg" alt="Nail Art 3">
             </div>
             <div class="gallery-item">
-                <img src="gallery/eyelaches.jpg" alt="eyelaches">
+                <img src="gallery/nails4.jpeg" alt="Nail Art 4">
             </div>
             <div class="gallery-item">
-                <img src="gallery/facial.jpeg" alt="facial2">
+                <img src="gallery/nails5.jpeg" alt="Nail Art 5">
             </div>
             <div class="gallery-item">
-                <img src="gallery/facial2.jpeg" alt="facial">
+                <img src="gallery/nails6.jpeg" alt="Nail Art 6">
             </div>
             <div class="gallery-item">
-                <img src="gallery/massage.jpeg" alt="massage">
+                <img src="gallery/nails7.jpeg" alt="Nail Art 7">
             </div>
             <div class="gallery-item">
-                <img src="gallery/massage2.jpeg" alt="massage">
+                <img src="gallery/nails8.jpeg" alt="Nail Art 8">
             </div>
             <div class="gallery-item">
-                <img src="gallery/massage3.jpeg" alt="massage">
+                <img src="gallery/nails9.jpeg" alt="Nail Art 9">
+            </div>
+            <!-- Eyelashes images 1-6 -->
+            <div class="gallery-item">
+                <img src="gallery/eyelashes1.jpeg" alt="Eyelash Extensions 1">
             </div>
             <div class="gallery-item">
-                <img src="gallery/spa.jpeg" alt="spa">
+                <img src="gallery/eyelashes2.jpeg" alt="Eyelash Extensions 2">
+            </div>
+            <div class="gallery-item">
+                <img src="gallery/eyelashes3.jpeg" alt="Eyelash Extensions 3">
+            </div>
+            <div class="gallery-item">
+                <img src="gallery/eyelashes4.jpeg" alt="Eyelash Extensions 4">
+            </div>
+            <div class="gallery-item">
+                <img src="gallery/eyelashes5.jpeg" alt="Eyelash Extensions 5">
+            </div>
+            <div class="gallery-item">
+                <img src="gallery/eyelashes6.jpeg" alt="Eyelash Extensions 6">
+            </div>
+            <!-- Massage images 1-3 -->
+            <div class="gallery-item">
+                <img src="gallery/massage1.jpeg" alt="Massage Therapy 1">
+            </div>
+            <div class="gallery-item">
+                <img src="gallery/massage2.jpeg" alt="Massage Therapy 2">
+            </div>
+            <div class="gallery-item">
+                <img src="gallery/massage3.jpeg" alt="Massage Therapy 3">
+            </div>
+            <!-- Space images 1-4 -->
+            <div class="gallery-item">
+                <img src="gallery/space1.jpeg" alt="Spa Space 1">
+            </div>
+            <div class="gallery-item">
+                <img src="gallery/space2.jpeg" alt="Spa Space 2">
+            </div>
+            <div class="gallery-item">
+                <img src="gallery/space3.jpeg" alt="Spa Space 3">
+            </div>
+            <div class="gallery-item">
+                <img src="gallery/space4.jpeg" alt="Spa Space 4">
+            </div>
+            <!-- Team image -->
+            <div class="gallery-item">
+                <img src="gallery/team.jpeg" alt="Our Team">
             </div>
         </div>
     </section>
@@ -633,16 +954,16 @@
         <h2 class="section-title">Our Services & Price list</h2>
         <div class="gallery-container" id="services-grid">
             <div class="gallery-item">
-                <img src="services\1.jpeg" alt="Nail Art 1">
+                <img src="services/1.jpeg" alt="Nail Art 1">
             </div>
             <div class="gallery-item">
-                <img src="services\2.jpeg" alt="Nail Art 2">
+                <img src="services/2.jpeg" alt="Nail Art 2">
             </div>
             <div class="gallery-item">
-                <img src="services\3.jpeg" alt="Nail Art 3">
+                <img src="services/3.jpeg" alt="Nail Art 3">
             </div>
             <div class="gallery-item">
-                <img src="services\4.jpeg" alt="eyelaches">
+                <img src="services/4.jpeg" alt="eyelaches">
             </div>
         </div>
     </section>
@@ -651,107 +972,328 @@
     <div class="modal-overlay" id="eyelash-modal">
         <div class="modal">
             <button class="modal-close">&times;</button>
-            <div class="coming-soon-banner">COMING SOON</div>
             <h3 class="modal-title">EYELASH EXTENSIONS</h3>
             <div class="modal-gallery">
                 <div class="modal-gallery-item">
-                    <img src="https://source.unsplash.com/random/600x600/?eyelash,extensions,1" alt="Eyelash Extensions">
+                    <img src="gallery/eyelashes1.jpeg" alt="Eyelash Extensions">
                 </div>
                 <div class="modal-gallery-item">
-                    <img src="https://source.unsplash.com/random/600x600/?eyelash,extensions,2" alt="Eyelash Extensions">
+                    <img src="gallery/eyelashes2.jpeg" alt="Eyelash Extensions">
                 </div>
                 <div class="modal-gallery-item">
-                    <img src="https://source.unsplash.com/random/600x600/?eyelash,extensions,3" alt="Eyelash Extensions">
+                    <img src="gallery/eyelashes3.jpeg" alt="Eyelash Extensions">
+                </div>
+                <div class="modal-gallery-item">
+                    <img src="gallery/eyelashes4.jpeg" alt="Eyelash Extensions">
+                </div>
+                <div class="modal-gallery-item">
+                    <img src="gallery/eyelashes5.jpeg" alt="Eyelash Extensions">
+                </div>
+                <div class="modal-gallery-item">
+                    <img src="gallery/eyelashes6.jpeg" alt="Eyelash Extensions">
                 </div>
             </div>
             <div class="price-list">
-                <div class="price-item">
-                    <span class="price-name">Classic Full Set</span>
-                    <span class="price-value">$120</span>
+                <div class="nails-section-title" style="font-size:1.25em; margin-bottom:0.7em;">👁 Classic Lash Extensions</div>
+                <div style="overflow-x:auto; margin-bottom:1.2em;">
+                    <table style="width:100%; border-radius:12px; border-collapse:separate; border-spacing:0; background:linear-gradient(90deg,#fff0fa 0%,#f9f9f9 100%); box-shadow:0 2px 12px #ffb2d133;">
+                        <thead>
+                            <tr style="background:#ffe6f3;">
+                                <th style="padding:10px 12px; text-align:left; border-top-left-radius:12px; color:#ff65a3; font-weight:700;">Style</th>
+                                <th style="padding:10px 12px; text-align:left; border-top-right-radius:12px; color:#ff65a3; font-weight:700;">Price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="background:#fff;">
+                                <td style="padding:9px 12px;">Natural Classic Set</td>
+                                <td style="padding:9px 12px;">$65</td>
+                            </tr>
+                            <tr style="background:#f9f6fa;">
+                                <td style="padding:9px 12px;">Elegant Classic Set</td>
+                                <td style="padding:9px 12px;">$75</td>
+                            </tr>
+                            <tr style="background:#fff;">
+                                <td style="padding:9px 12px; border-bottom-left-radius:12px;">Full Glam Classic Set</td>
+                                <td style="padding:9px 12px; border-bottom-right-radius:12px;">$85</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
-                <div class="price-item">
-                    <span class="price-name">Volume Full Set</span>
-                    <span class="price-value">$150</span>
+
+                <div class="nails-section-title" style="font-size:1.25em; margin:1.5em 0 0.7em 0;">🌸 Hybrid/Volume Lash Extensions</div>
+                <div style="overflow-x:auto; margin-bottom:1.2em;">
+                    <table style="width:100%; border-radius:12px; border-collapse:separate; border-spacing:0; background:linear-gradient(90deg,#fff0fa 0%,#f9f9f9 100%); box-shadow:0 2px 12px #ffb2d133;">
+                        <thead>
+                            <tr style="background:#ffe6f3;">
+                                <th style="padding:10px 12px; text-align:left; border-top-left-radius:12px; color:#ff65a3; font-weight:700;">Style</th>
+                                <th style="padding:10px 12px; text-align:left; border-top-right-radius:12px; color:#ff65a3; font-weight:700;">Price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="background:#fff;">
+                                <td style="padding:9px 12px;">Natural Hybrid Set</td>
+                                <td style="padding:9px 12px;">$100</td>
+                            </tr>
+                            <tr style="background:#f9f6fa;">
+                                <td style="padding:9px 12px;">Elegant Hybrid Set</td>
+                                <td style="padding:9px 12px;">$110</td>
+                            </tr>
+                            <tr style="background:#fff;">
+                                <td style="padding:9px 12px;">Glam Hybrid Set</td>
+                                <td style="padding:9px 12px;">$120</td>
+                            </tr>
+                            <tr style="background:#f9f6fa;">
+                                <td style="padding:9px 12px;">Volume Full Set</td>
+                                <td style="padding:9px 12px;">$130</td>
+                            </tr>
+                            <tr style="background:#fff;">
+                                <td style="padding:9px 12px; border-bottom-left-radius:12px;">Mega Volume Full Set</td>
+                                <td style="padding:9px 12px; border-bottom-right-radius:12px;">$150</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
-                <div class="price-item">
-                    <span class="price-name">Hybrid Full Set</span>
-                    <span class="price-value">$135</span>
+
+                <div class="nails-section-title" style="font-size:1.25em; margin:1.5em 0 0.7em 0;">🔁 Refills (2 Weeks)</div>
+                <div style="font-weight:600; font-size:1.08em; color:#ff65a3; margin-bottom:0.3em; letter-spacing:0.5px;">Classic Lash</div>
+                <div style="overflow-x:auto; margin-bottom:1.2em;">
+                    <table style="width:100%; border-radius:12px; border-collapse:separate; border-spacing:0; background:linear-gradient(90deg,#fff0fa 0%,#f9f9f9 100%); box-shadow:0 2px 12px #ffb2d133;">
+                        <tbody>
+                            <tr style="background:#fff;">
+                                <td style="padding:9px 12px;">Natural Classic</td>
+                                <td style="padding:9px 12px;">$55</td>
+                                <td style="padding:9px 12px;">Elegant Classic</td>
+                                <td style="padding:9px 12px;">$65</td>
+                            </tr>
+                            <tr style="background:#f9f6fa;">
+                                <td style="padding:9px 12px;">Full Glam Classic</td>
+                                <td style="padding:9px 12px;">$75</td>
+                                <td style="padding:9px 12px;"></td>
+                                <td style="padding:9px 12px;"></td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
-                <div class="price-item">
-                    <span class="price-name">Removal</span>
-                    <span class="price-value">$25</span>
+                
+                <div style="font-weight:600; font-size:1.08em; color:#ff65a3; margin-bottom:0.3em; letter-spacing:0.5px;">Hybrid/Volume</div>
+                <div style="overflow-x:auto; margin-bottom:1.2em;">
+                    <table style="width:100%; border-radius:12px; border-collapse:separate; border-spacing:0; background:linear-gradient(90deg,#fff0fa 0%,#f9f9f9 100%); box-shadow:0 2px 12px #ffb2d133;">
+                        <tbody>
+                            <tr style="background:#fff;">
+                                <td style="padding:9px 12px;">Natural Hybrid</td>
+                                <td style="padding:9px 12px;">$70</td>
+                                <td style="padding:9px 12px;">Elegant Hybrid</td>
+                                <td style="padding:9px 12px;">$80</td>
+                            </tr>
+                            <tr style="background:#f9f6fa;">
+                                <td style="padding:9px 12px;">Glam Hybrid</td>
+                                <td style="padding:9px 12px;">$90</td>
+                                <td style="padding:9px 12px;">Volume</td>
+                                <td style="padding:9px 12px;">$100</td>
+                            </tr>
+                            <tr style="background:#fff;">
+                                <td style="padding:9px 12px;">Mega Volume Full</td>
+                                <td style="padding:9px 12px;">$120</td>
+                                <td style="padding:9px 12px;"></td>
+                                <td style="padding:9px 12px;"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="nails-section-title" style="font-size:1.25em; margin:1.5em 0 0.7em 0;">❌ Lash Removal</div>
+                <div style="overflow-x:auto; margin-bottom:1.2em;">
+                    <table style="width:100%; border-radius:12px; border-collapse:separate; border-spacing:0; background:linear-gradient(90deg,#fff0fa 0%,#f9f9f9 100%); box-shadow:0 2px 12px #ffb2d133;">
+                        <thead>
+                            <tr style="background:#ffe6f3;">
+                                <th style="padding:10px 12px; text-align:left; border-top-left-radius:12px; color:#ff65a3; font-weight:700;">Service</th>
+                                <th style="padding:10px 12px; text-align:left; color:#ff65a3; font-weight:700;">Removal Only</th>
+                                <th style="padding:10px 12px; text-align:left; border-top-right-radius:12px; color:#ff65a3; font-weight:700;">With New Set</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="background:#fff;">
+                                <td style="padding:9px 12px;">Classic Lash Extension</td>
+                                <td style="padding:9px 12px;">$5</td>
+                                <td style="padding:9px 12px;">$10</td>
+                            </tr>
+                            <tr style="background:#f9f6fa;">
+                                <td style="padding:9px 12px; border-bottom-left-radius:12px;">Hybrid/Volume Foreign</td>
+                                <td style="padding:9px 12px;">$10</td>
+                                <td style="padding:9px 12px; border-bottom-right-radius:12px;">$20</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
+            <a href="#" class="btn modal-btn book-btn" data-service="EYELASH EXTENSIONS" style="position:relative;overflow:visible;">Book Now
+                <span class="flower-burst"></span>
+            </a>
         </div>
     </div>
 
     <div class="modal-overlay" id="bodymassage-modal">
         <div class="modal">
             <button class="modal-close">&times;</button>
-            <div class="coming-soon-banner">COMING SOON</div>
-            <h3 class="modal-title">BODY MASSAGE</h3>
+            <h3 class="modal-title">BODY MASSAGE & WAXING</h3>
             <div class="modal-gallery">
                 <div class="modal-gallery-item">
-                    <img src="https://source.unsplash.com/random/600x600/?body,massage,2" alt="Body Massage">
+                    <img src="gallery/massage1.jpeg" alt="Body Massage">
                 </div>
                 <div class="modal-gallery-item">
-                    <img src="https://source.unsplash.com/random/600x600/?body,massage,3" alt="Body Massage">
+                    <img src="gallery/massage2.jpeg" alt="Body Massage">
                 </div>
                 <div class="modal-gallery-item">
-                    <img src="https://source.unsplash.com/random/600x600/?body,massage,4" alt="Body Massage">
+                    <img src="gallery/massage3.jpeg" alt="Body Massage">
                 </div>
             </div>
             <div class="price-list">
+                <div class="nails-section-title" style="font-size:1.25em; margin-bottom:0.7em;">💆 Massage Services</div>
                 <div class="price-item">
-                    <span class="price-name">Swedish Massage</span>
-                    <span class="price-value">$100</span>
+                    <span class="price-name">Relaxation Massage – 60 min</span>
+                    <span class="price-value">$90</span>
                 </div>
                 <div class="price-item">
-                    <span class="price-name">Deep Tissue Massage</span>
-                    <span class="price-value">$120</span>
+                    <span class="price-name">Swedish Massage – 60 min</span>
+                    <span class="price-value">$90</span>
                 </div>
                 <div class="price-item">
-                    <span class="price-name">Aromatherapy Massage</span>
-                    <span class="price-value">$110</span>
+                    <span class="price-name">Relaxation Massage – 45 min</span>
+                    <span class="price-value">$70</span>
+                </div>
+                <div class="price-item">
+                    <span class="price-name">Swedish Massage – 45 min</span>
+                    <span class="price-value">$70</span>
+                </div>
+                
+                <div class="nails-section-title" style="font-size:1.25em; margin:1.5em 0 0.7em 0;">🧖 Waxing Services</div>
+                <div style="overflow-x:auto; margin-bottom:1.2em;">
+                    <table style="width:100%; border-radius:12px; border-collapse:separate; border-spacing:0; background:linear-gradient(90deg,#fff0fa 0%,#f9f9f9 100%); box-shadow:0 2px 12px #ffb2d133;">
+                        <tbody>
+                            <tr style="background:#fff;">
+                                <td style="padding:9px 12px;">Upper Lip</td>
+                                <td style="padding:9px 12px;">$10</td>
+                                <td style="padding:9px 12px;">Brows</td>
+                                <td style="padding:9px 12px;">$15</td>
+                            </tr>
+                            <tr style="background:#f9f6fa;">
+                                <td style="padding:9px 12px;">Chin</td>
+                                <td style="padding:9px 12px;">$12</td>
+                                <td style="padding:9px 12px;">Underarms</td>
+                                <td style="padding:9px 12px;">$25</td>
+                            </tr>
+                            <tr style="background:#fff;">
+                                <td style="padding:9px 12px;">Full Legs</td>
+                                <td style="padding:9px 12px;">$65</td>
+                                <td style="padding:9px 12px;">Half Legs</td>
+                                <td style="padding:9px 12px;">$35</td>
+                            </tr>
+                            <tr style="background:#f9f6fa;">
+                                <td style="padding:9px 12px;">Full Arms</td>
+                                <td style="padding:9px 12px;">$40</td>
+                                <td style="padding:9px 12px;">Half Arms</td>
+                                <td style="padding:9px 12px;">$25</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="nails-section-title" style="font-size:1.25em; margin:1.5em 0 0.7em 0;">✨ Massage Add-Ons</div>
+                <div class="price-item">
+                    <span class="price-name">Hot Stone Therapy</span>
+                    <span class="price-value">$20</span>
+                </div>
+                <div class="price-item">
+                    <span class="price-name">Aromatherapy</span>
+                    <span class="price-value">$15</span>
+                </div>
+                <div class="price-item">
+                    <span class="price-name">Deep Tissue Focus (15 min)</span>
+                    <span class="price-value">$25</span>
                 </div>
             </div>
+            <a href="#" class="btn modal-btn book-btn" data-service="BODY MASSAGE" style="position:relative;overflow:visible;">Book Now
+                <span class="flower-burst"></span>
+            </a>
         </div>
     </div>
 
     <div class="modal-overlay" id="facetreatments-modal">
         <div class="modal">
             <button class="modal-close">&times;</button>
-            <div class="coming-soon-banner">COMING SOON</div>
-            <h3 class="modal-title">FACE TREATMENTS</h3>
+            <h3 class="modal-title">🧖 Facial Services</h3>
             <div class="modal-gallery">
                 <div class="modal-gallery-item">
-                    <img src="https://source.unsplash.com/random/600x600/?face,facial,2" alt="Facial Treatment">
+                    <img src="gallery/space1.jpeg" alt="Facial Service 1">
                 </div>
                 <div class="modal-gallery-item">
-                    <img src="https://source.unsplash.com/random/600x600/?face,facial,3" alt="Facial Treatment">
+                    <img src="gallery/space2.jpeg" alt="Facial Service 2">
                 </div>
                 <div class="modal-gallery-item">
-                    <img src="https://source.unsplash.com/random/600x600/?face,facial,4" alt="Facial Treatment">
+                    <img src="gallery/space3.jpeg" alt="Facial Service 3">
+                </div>
+                <div class="modal-gallery-item">
+                    <img src="gallery/space4.jpeg" alt="Facial Service 4">
+                </div>
+                <div class="modal-gallery-item">
+                    <img src="gallery/team.jpeg" alt="Our Team">
+                </div>
+                <div class="modal-gallery-item">
+                    <img src="gallery/massage1.jpeg" alt="Facial Treatment">
                 </div>
             </div>
             <div class="price-list">
+                <div class="nails-section-title" style="font-size:1.25em; margin-bottom:0.7em;">💆 Facial Treatments</div>
                 <div class="price-item">
-                    <span class="price-name">Classic Facial</span>
-                    <span class="price-value">$75</span>
-                </div>
-                <div class="price-item">
-                    <span class="price-name">Anti-Aging Facial</span>
+                    <span class="price-name">Relaxation Facial</span>
                     <span class="price-value">$90</span>
                 </div>
                 <div class="price-item">
-                    <span class="price-name">Hydrating Facial</span>
-                    <span class="price-value">$85</span>
+                    <span class="price-name">Acne Facial</span>
+                    <span class="price-value">$90</span>
                 </div>
                 <div class="price-item">
-                    <span class="price-name">Acne Treatment Facial</span>
-                    <span class="price-value">$80</span>
+                    <span class="price-name">Diamond Microdermabrasion Facial</span>
+                    <span class="price-value">$90</span>
+                </div>
+                <div class="price-item">
+                    <span class="price-name">Dermaplaning Facial</span>
+                    <span class="price-value">$120</span>
+                </div>
+                <div class="price-item">
+                    <span class="price-name">Custom Facial</span>
+                    <span class="price-value">$90</span>
+                </div>
+                
+                <div class="nails-section-title" style="font-size:1.25em; margin:1.5em 0 0.7em 0;">✨ Advanced Treatments</div>
+                <div class="price-item">
+                    <span class="price-name">Microneedling</span>
+                    <span class="price-value">$150 <span style="color:#b48b6c;font-size:0.95em;">per session</span></span>
+                </div>
+                
+                <div class="nails-section-title" style="font-size:1.25em; margin:1.5em 0 0.7em 0;">➕ Add-Ons</div>
+                <div style="overflow-x:auto; margin-bottom:1.2em;">
+                    <table style="width:100%; border-radius:12px; border-collapse:separate; border-spacing:0; background:linear-gradient(90deg,#fff0fa 0%,#f9f9f9 100%); box-shadow:0 2px 12px #ffb2d133;">
+                        <tbody>
+                            <tr style="background:#fff;">
+                                <td style="padding:9px 12px;">LED Light Therapy</td>
+                                <td style="padding:9px 12px;">$20</td>
+                                <td style="padding:9px 12px;">Collagen Mask</td>
+                                <td style="padding:9px 12px;">$15</td>
+                            </tr>
+                            <tr style="background:#f9f6fa;">
+                                <td style="padding:9px 12px;">Eye Treatment</td>
+                                <td style="padding:9px 12px;">$25</td>
+                                <td style="padding:9px 12px;">Neck & Décolleté</td>
+                                <td style="padding:9px 12px;">$30</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
+            <a href="#" class="btn modal-btn book-btn" data-service="FACE TREATMENTS" style="position:relative;overflow:visible;">Book Now
+                <span class="flower-burst"></span>
+            </a>
         </div>
     </div>
 
@@ -761,94 +1303,247 @@
             <h3 class="modal-title">NAILS</h3>
             <div class="modal-gallery">
                 <div class="modal-gallery-item">
-                    <img src="nails/1.jpeg" alt="Nail Art 1">
+                    <img src="gallery/nails1.jpeg" alt="Nail Art 1">
                 </div>
                 <div class="modal-gallery-item">
-                    <img src="nails/2.jpeg" alt="Nail Art 2">
+                    <img src="gallery/nails2.jpeg" alt="Nail Art 2">
                 </div>
                 <div class="modal-gallery-item">
-                    <img src="nails/3.jpeg" alt="Nail Art 3">
+                    <img src="gallery/nails3.jpeg" alt="Nail Art 3">
+                </div>
+                <div class="modal-gallery-item">
+                    <img src="gallery/nails4.jpeg" alt="Nail Art 4">
+                </div>
+                <div class="modal-gallery-item">
+                    <img src="gallery/nails5.jpeg" alt="Nail Art 5">
+                </div>
+                <div class="modal-gallery-item">
+                    <img src="gallery/nails6.jpeg" alt="Nail Art 6">
                 </div>
             </div>
             <div class="price-list" id="nails-price-list">
-                <div class="nails-section-title">Nails Style</div>
+                <div class="nails-section-title" style="font-size:1.25em; margin-bottom:0.7em;">🌿 Natural Nails</div>
                 <div class="price-item">
-                    <span class="price-name">Shellac Color (單色)</span>
+                    <span class="price-name">Shellac Manicure</span>
                     <span class="price-value">$35</span>
                 </div>
                 <div class="price-item">
-                    <span class="price-name">Mirror (鏡面)</span>
-                    <span class="price-value">$53</span>
+                    <span class="price-name">BIAB (Builder in a Bottle)</span>
+                    <span class="price-value">$60</span>
                 </div>
                 <div class="price-item">
-                    <span class="price-name">Cat eyes (單色編眼)</span>
-                    <span class="price-value">$45</span>
+                    <span class="price-name">BIAB Refill</span>
+                    <span class="price-value">$55 <span style="color:#b48b6c;font-size:0.95em;">per set</span> <span style="color:#aaa;">or</span> $6 <span style="color:#b48b6c;font-size:0.95em;">per finger</span></span>
                 </div>
                 <div class="price-item">
-                    <span class="price-name">Gradation/Chrome (單色漸層/畫染)</span>
-                    <span class="price-value">$55</span>
-                </div>
-                <div class="price-item">
-                    <span class="price-name">French (法式)</span>
-                    <span class="price-value">$50</span>
-                </div>
-                <div class="price-item">
-                    <span class="price-name">ISPO (自帶圖)</span>
-                    <span class="price-value">INQUIRE</span>
-                </div>
-                <div class="nails-section-title">Nails Extension</div>
-                <div class="price-item">
-                    <span class="price-name">Bio Gel Refill Per Finger (延甲單指)</span>
-                    <span class="price-value">$8/finger</span>
-                </div>
-                <div class="price-item">
-                    <span class="price-name">Bio Gel Full Set (延甲D指)</span>
-                    <span class="price-value">$70</span>
-                </div>
-                <div class="nails-section-title">Additional</div>
-                <div class="price-item">
-                    <span class="price-name">Hand Draw (彩繪單指)</span>
-                    <span class="price-value">$3+/finger</span>
-                </div>
-                <div class="price-item">
-                    <span class="price-name">Stickers (貼紙單指)</span>
-                    <span class="price-value">$2/finger</span>
-                </div>
-                <div class="price-item">
-                    <span class="price-name">Bio Gel Overlay Full Set (加固ID指)</span>
-                    <span class="price-value">$18</span>
-                </div>
-                <div class="price-item">
-                    <span class="price-name">BIAB Full Set (連綿ID指)</span>
-                    <span class="price-value">$20</span>
-                </div>
-                <div class="nails-section-title">Removal</div>
-                <div class="price-item">
-                    <span class="price-name">Shellac (單色)</span>
+                    <span class="price-name">Shellac Removal</span>
                     <span class="price-value">$8</span>
                 </div>
-                <div class="price-item">
-                    <span class="price-name">Bio Gel (延甲)</span>
-                    <span class="price-value">$20</span>
+
+                <div class="nails-section-title" style="font-size:1.25em; margin:1.5em 0 0.7em 0;">💅 Nail Extensions</div>
+                <div style="margin-bottom:1.2em;">
+                    <div style="font-weight:600; font-size:1.08em; color:#ff65a3; margin-bottom:0.3em; letter-spacing:0.5px;">Bio Gel Extensions</div>
+                    <div style="overflow-x:auto;">
+                        <table style="width:100%; border-radius:12px; border-collapse:separate; border-spacing:0; background:linear-gradient(90deg,#fff0fa 0%,#f9f9f9 100%); box-shadow:0 2px 12px #ffb2d133;">
+                            <thead>
+                                <tr style="background:#ffe6f3;">
+                                    <th style="padding:10px 12px; text-align:left; border-top-left-radius:12px; color:#ff65a3; font-weight:700;">Size</th>
+                                    <th style="padding:10px 12px; text-align:left; color:#ff65a3; font-weight:700;">Full Set</th>
+                                    <th style="padding:10px 12px; text-align:left; border-top-right-radius:12px; color:#ff65a3; font-weight:700;">Refill <span style="font-size:0.95em; color:#b48b6c;">(per finger)</span></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="background:#fff;">
+                                    <td style="padding:9px 12px;">XS/Small</td>
+                                    <td style="padding:9px 12px;">$65</td>
+                                    <td style="padding:9px 12px;">$7</td>
+                                </tr>
+                                <tr style="background:#f9f6fa;">
+                                    <td style="padding:9px 12px;">Medium</td>
+                                    <td style="padding:9px 12px;">$65</td>
+                                    <td style="padding:9px 12px;">$7</td>
+                                </tr>
+                                <tr style="background:#fff;">
+                                    <td style="padding:9px 12px;">Long</td>
+                                    <td style="padding:9px 12px;">$70</td>
+                                    <td style="padding:9px 12px;">$8</td>
+                                </tr>
+                                <tr style="background:#f9f6fa;">
+                                    <td style="padding:9px 12px; border-bottom-left-radius:12px;">XL</td>
+                                    <td style="padding:9px 12px;">$75</td>
+                                    <td style="padding:9px 12px; border-bottom-right-radius:12px;">$9</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-                <div class="price-item">
-                    <span class="price-name">Gel X (甲片)</span>
-                    <span class="price-value">$10</span>
+                <div style="margin-bottom:1.2em;">
+                    <div style="font-weight:600; font-size:1.08em; color:#ff65a3; margin-bottom:0.3em; letter-spacing:0.5px;">GelX Extensions</div>
+                    <div style="overflow-x:auto;">
+                        <table style="width:100%; border-radius:12px; border-collapse:separate; border-spacing:0; background:linear-gradient(90deg,#fff0fa 0%,#f9f9f9 100%); box-shadow:0 2px 12px #ffb2d133;">
+                            <thead>
+                                <tr style="background:#ffe6f3;">
+                                    <th style="padding:10px 12px; text-align:left; border-top-left-radius:12px; color:#ff65a3; font-weight:700;">Size</th>
+                                    <th style="padding:10px 12px; text-align:left; border-top-right-radius:12px; color:#ff65a3; font-weight:700;">Full Set</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="background:#fff;">
+                                    <td style="padding:9px 12px;">XS/Small</td>
+                                    <td style="padding:9px 12px;">$60</td>
+                                </tr>
+                                <tr style="background:#f9f6fa;">
+                                    <td style="padding:9px 12px;">Medium</td>
+                                    <td style="padding:9px 12px;">$60</td>
+                                </tr>
+                                <tr style="background:#fff;">
+                                    <td style="padding:9px 12px;">Long</td>
+                                    <td style="padding:9px 12px;">$65</td>
+                                </tr>
+                                <tr style="background:#f9f6fa;">
+                                    <td style="padding:9px 12px; border-bottom-left-radius:12px;">XL</td>
+                                    <td style="padding:9px 12px; border-bottom-right-radius:12px;">$75</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
+
+                <div class="nails-section-title" style="font-size:1.25em; margin:1.5em 0 0.7em 0;">🎨 Nail Designs <span style="font-size:0.95em; color:#b48b6c;">(per set)</span></div>
                 <div class="price-item">
-                    <span class="price-name">Acrylics (水晶延甲)</span>
-                    <span class="price-value">$20</span>
-                </div>
-                <div class="price-item">
-                    <span class="price-name">BIAB (連綿)</span>
+                    <span class="price-name">French Tip</span>
                     <span class="price-value">$15</span>
                 </div>
+                <div class="price-item">
+                    <span class="price-name">Ombre/Aura</span>
+                    <span class="price-value">$20</span>
+                </div>
+                <div class="price-item">
+                    <span class="price-name">Mirror</span>
+                    <span class="price-value">$15</span>
+                </div>
+                <div class="price-item">
+                    <span class="price-name">Cat Eye</span>
+                    <span class="price-value">$15</span>
+                </div>
+
+                <div class="nails-section-title" style="font-size:1.25em; margin:1.5em 0 0.7em 0;">✨ Add-Ons <span style="font-size:0.95em; color:#b48b6c;">(per finger)</span></div>
+                <div style="overflow-x:auto; margin-bottom:1.2em;">
+                    <table style="width:100%; border-radius:12px; border-collapse:separate; border-spacing:0; background:linear-gradient(90deg,#fff0fa 0%,#f9f9f9 100%); box-shadow:0 2px 12px #ffb2d133;">
+                        <tbody>
+                            <tr style="background:#fff;">
+                                <td style="padding:9px 12px;">French Tip</td>
+                                <td style="padding:9px 12px;">$2</td>
+                                <td style="padding:9px 12px;">Ombre/Aura</td>
+                                <td style="padding:9px 12px;">$3</td>
+                            </tr>
+                            <tr style="background:#f9f6fa;">
+                                <td style="padding:9px 12px;">3D Design</td>
+                                <td style="padding:9px 12px;">$4</td>
+                                <td style="padding:9px 12px;">Simple Art</td>
+                                <td style="padding:9px 12px;">$2</td>
+                            </tr>
+                            <tr style="background:#fff;">
+                                <td style="padding:9px 12px;">Chrome</td>
+                                <td style="padding:9px 12px;">$2</td>
+                                <td style="padding:9px 12px;">Stickers</td>
+                                <td style="padding:9px 12px;">$1</td>
+                            </tr>
+                            <tr style="background:#f9f6fa;">
+                                <td style="padding:9px 12px;">Glitters</td>
+                                <td style="padding:9px 12px;">$2</td>
+                                <td style="padding:9px 12px;">Gems</td>
+                                <td style="padding:9px 12px;">$1 <span style="font-size:0.95em; color:#b48b6c;">per stone</span></td>
+                            </tr>
+                            <tr style="background:#fff;">
+                                <td style="padding:9px 12px;">Mirror</td>
+                                <td style="padding:9px 12px;">$2</td>
+                                <td style="padding:9px 12px;">Cat Eye</td>
+                                <td style="padding:9px 12px;">$2</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="nails-section-title" style="font-size:1.25em; margin:1.5em 0 0.7em 0;">🧼 Removals</div>
+                <div class="price-item">
+                    <span class="price-name">Extension Removal</span>
+                    <span class="price-value">$15</span>
+                </div>
+                <div class="price-item">
+                    <span class="price-name">Foreign Removal</span>
+                    <span class="price-value">$20</span>
+                </div>
             </div>
-            <a href="#" class="btn modal-btn" id="nails-book-btn" style="position:relative;overflow:visible;">Book Now
-                <span class="flower-burst" id="nails-flower-burst"></span>
+            <a href="#" class="btn modal-btn book-btn" data-service="NAILS" style="position:relative;overflow:visible;">Book Now
+                <span class="flower-burst"></span>
             </a>
         </div>
     </div>
+    </div>
+    <!-- Floating Book Button -->
+    <button class="floating-book-btn" id="floatingBookBtn" title="Book Now" aria-label="Book Now">
+        <span style="font-size:0.8rem;line-height:1;font-weight:600;">Book Now</span>
+        <span class="flower-burst"></span>
+    </button>
+    <!-- Booking Form Modal -->
+    <div class="booking-modal-overlay" id="bookingModalOverlay">
+        <div class="booking-modal">
+            <button class="booking-modal-close" id="bookingModalClose">&times;</button>
+            <div class="booking-modal-title">Book Your Appointment</div>
+            <form class="booking-form" id="bookingForm" autocomplete="off">
+                <div class="booking-form-messages"></div>
+                <label for="bookingName">Name *</label>
+                <input type="text" id="bookingName" name="Name" required placeholder="Your Name" autocomplete="off" />
+
+                <label for="bookingPhone">Phone *</label>
+                <input type="tel" id="bookingPhone" name="Phone" required placeholder="Your Phone" autocomplete="off" pattern="^[0-9+\-\s()]{7,}$" />
+
+                <label for="bookingEmail">Email *</label>
+                <input type="email" id="bookingEmail" name="Email" required placeholder="Your Email" autocomplete="off" />
+
+                <label for="bookingDOB">Date of Birth <span class="optional">(optional)</span></label>
+                <input type="date" id="bookingDOB" name="DOB" max="2100-12-31" />
+
+                <label for="bookingService">Service *</label>
+                <select id="bookingService" name="Service" required>
+                    <option value="">Select Service</option>
+                    <option value="NAILS">Nails</option>
+                    <option value="EYELASH EXTENSIONS">Eyelash Extensions</option>
+                    <option value="BODY MASSAGE">Body Massage</option>
+                    <option value="FACE TREATMENTS">Face Treatments</option>
+                </select>
+
+                <label for="bookingNotes">Notes</label>
+                <select id="bookingNotes" name="Notes">
+                    <option value="">Select</option>
+                    <option value="Nails - Manicure">Nails - Manicure</option>
+                    <option value="Nails - Pedicure">Nails - Pedicure</option>
+                    <option value="Nails - Art/Design">Nails - Art/Design</option>
+                    <option value="Eyelash - Classic">Eyelash - Classic</option>
+                    <option value="Eyelash - Volume">Eyelash - Volume</option>
+                    <option value="Massage - Swedish">Massage - Swedish</option>
+                    <option value="Massage - Deep Tissue">Massage - Deep Tissue</option>
+                    <option value="Facial - Classic">Facial - Classic</option>
+                    <option value="Facial - Anti-Aging">Facial - Anti-Aging</option>
+                    <option value="Other">Other (describe in message below)</option>
+                </select>
+
+                <label for="bookingDate">Date *</label>
+                <input type="date" id="bookingDate" name="Date" required min="" />
+
+                <label for="bookingTime">Time *</label>
+                <select id="bookingTime" name="Time" required>
+                    <option value="">Select Time</option>
+                </select>
+
+                <label for="bookingMessage">Message <span class="optional">(optional)</span></label>
+                <textarea id="bookingMessage" name="Message" rows="2" placeholder="Any additional info?"></textarea>
+
+                <div class="booking-note">We'll call you soon to confirm your booking.</div>
+                <button type="submit" class="btn booking-btn">Submit Booking</button>
+            </form>
+        </div>
     </div>
     <section class="contact-section" id="contact">
         <div class="contact-title">Contact</div>
@@ -863,6 +1558,36 @@
           </a>
         </div>
       </section>
+    <!-- Google Map and Timings Section -->
+    <section class="location-section" id="location">
+        <div class="location-title">Find Us &amp; Hours</div>
+        <iframe class="location-map"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2886.393964965508!2d-79.393!3d43.653!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x882b34d1e2e2e2e3%3A0x1234567890abcdef!2sThe%20Orchid!5e0!3m2!1sen!2sca!4v1710000000000!5m2!1sen!2sca"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="The Orchid Location"></iframe>
+        <div class="location-details">
+            <div>
+                <strong>Address:</strong>
+                <a href="https://maps.app.goo.gl/q3nEx7cgi9Vd1EfC7" target="_blank" rel="noopener">
+                    384 Yonge St Unit 38 - P1, Toronto, ON
+                </a>
+            </div>
+            <div>
+                <strong>Email:</strong>
+                <a href="mailto:theorchidbyhuani@gmail.com">theorchidbyhuani@gmail.com</a>
+            </div>
+            <div>
+                <strong>Phone:</strong>
+                <a href="tel:+16479759101">+1 647-975-9101</a>
+            </div>
+            <div class="location-hours">
+                <strong>Hours:</strong><br>
+                Mon-Sun: 10:00am - 9:00pm<br>
+            </div>
+        </div>
+    </section>
     <footer style="text-align:center; padding:40px 0 20px; color:#888; font-size:1rem; font-family:'Playfair Display',Arial,sans-serif;">
         &copy; <span id="year"></span> The Orchid. All rights reserved. | <a href="https://shoporchid.ca/" style="color:#ff65a3;text-decoration:none;">shoporchid.ca</a>
     </footer>
@@ -872,11 +1597,14 @@
             const promoBanner = document.getElementById('promoBanner');
             const closePromoBanner = document.getElementById('closePromoBanner');
             const mainContent = document.getElementById('mainContent');
+            const instagramLink = document.getElementById('instagramLink');
             promoBanner.classList.remove('hide');
             mainContent.classList.add('with-banner');
+            instagramLink.classList.add('with-banner');
             closePromoBanner.addEventListener('click', function() {
                 promoBanner.classList.add('hide');
                 mainContent.classList.remove('with-banner');
+                instagramLink.classList.remove('with-banner');
             });
 
             // Header menu logic
@@ -937,18 +1665,31 @@
                 }
             }
 
+            // Floating Book Button logic
+            const floatingBookBtn = document.getElementById('floatingBookBtn');
+            function updateFloatingBookBtnVisibility() {
+                const anyModalOpen = Array.from(modalOverlays).some(m => m.classList.contains('active'));
+                if (anyModalOpen) {
+                    floatingBookBtn.style.display = 'none';
+                } else {
+                    floatingBookBtn.style.display = 'flex';
+                }
+            }
+
+            // Show/hide floating book button when modals open/close
+            function updateAllModalVisibility() {
+                updateHeaderVisibility();
+                updateFloatingBookBtnVisibility();
+            }
+
             serviceButtons.forEach(button => {
                 button.addEventListener('click', function() {
-                    if (this.hasAttribute('disabled')) return;
                     const service = this.getAttribute('data-service');
                     const modal = document.getElementById(`${service}-modal`);
                     if (modal) {
                         modal.classList.add('active');
                         document.body.style.overflow = 'hidden';
-                        // Hide Calendly badge widget
-                        hideCalendlyBadge();
-                        // Hide header
-                        updateHeaderVisibility();
+                        updateAllModalVisibility();
                     }
                 });
             });
@@ -957,10 +1698,7 @@
                     const modal = this.closest('.modal-overlay');
                     modal.classList.remove('active');
                     document.body.style.overflow = 'auto';
-                    // Show Calendly badge widget
-                    showCalendlyBadge();
-                    // Show header if no modals open
-                    updateHeaderVisibility();
+                    updateAllModalVisibility();
                 });
             });
             modalOverlays.forEach(overlay => {
@@ -968,109 +1706,263 @@
                     if (e.target === this) {
                         this.classList.remove('active');
                         document.body.style.overflow = 'auto';
-                        // Show Calendly badge widget
-                        showCalendlyBadge();
-                        // Show header if no modals open
-                        updateHeaderVisibility();
+                        updateAllModalVisibility();
                     }
                 });
             });
 
-            // Book Now button in Nails modal opens Calendly popup
-            const nailsBookBtn = document.getElementById('nails-book-btn');
-            if (nailsBookBtn) {
-                nailsBookBtn.addEventListener('click', function(e) {
+            // Book Now button in all service modals opens booking form
+            const bookBtns = document.querySelectorAll('.book-btn');
+            const bookingModalOverlay = document.getElementById('bookingModalOverlay');
+            const bookingModalClose = document.getElementById('bookingModalClose');
+            const bookingForm = document.getElementById('bookingForm');
+            const bookingService = document.getElementById('bookingService');
+            const bookingDate = document.getElementById('bookingDate');
+            const bookingTime = document.getElementById('bookingTime');
+            const bookingFormMessages = bookingForm.querySelector('.booking-form-messages');
+            let lastService = '';
+
+            // Set min date to today
+            function setMinDate() {
+                const today = new Date();
+                const yyyy = today.getFullYear();
+                const mm = String(today.getMonth() + 1).padStart(2, '0');
+                const dd = String(today.getDate()).padStart(2, '0');
+                const minDate = `${yyyy}-${mm}-${dd}`;
+                bookingDate.min = minDate;
+            }
+            setMinDate();
+
+            // Populate time slots 10:00-21:00 (9pm) in 30min increments
+            function populateTimeSlots() {
+                bookingTime.innerHTML = '<option value="">Select Time</option>';
+                for (let h = 10; h <= 21; h++) {
+                    for (let m = 0; m < 60; m += 30) {
+                        if (h === 21 && m > 0) continue;
+                        let hour = h < 10 ? '0' + h : h;
+                        let min = m === 0 ? '00' : '30';
+                        let ampm = h < 12 ? 'AM' : 'PM';
+                        let displayHour = h > 12 ? h - 12 : h;
+                        if (displayHour === 0) displayHour = 12;
+                        let label = `${displayHour}:${min} ${ampm}`;
+                        let value = `${hour}:${min}`;
+                        bookingTime.innerHTML += `<option value="${value}">${label}</option>`;
+                    }
+                }
+            }
+            populateTimeSlots();
+
+            // When Book Now is clicked, open booking modal and set service
+            bookBtns.forEach(btn => {
+                btn.addEventListener('click', function(e) {
                     e.preventDefault();
                     // Flower burst animation
-                    flowerBurst(nailsBookBtn, 7);
-                    if (window.Calendly) {
-                        setTimeout(function() {
-                            window.Calendly.initPopupWidget({
-                                url: 'https://calendly.com/theorchidbyhuani/new-meeting?primary_color=ff65a3'
-                            });
-                        }, 400);
+                    const burst = btn.querySelector('.flower-burst');
+                    if (burst) {
+                        burst.innerHTML = '';
+                        for (let i = 0; i < 7; i++) {
+                            const angle = (2 * Math.PI / 7) * i + (Math.random() - 0.5) * 0.5;
+                            const r = 40 + Math.random() * 30;
+                            const x = Math.cos(angle) * r;
+                            const y = Math.sin(angle) * r;
+                            const flower = document.createElement('img');
+                            flower.src = 'resources/flower.png';
+                            flower.style.left = '50%';
+                            flower.style.top = '50%';
+                            flower.style.position = 'absolute';
+                            flower.style.transform = `translate(-50%, -50%) scale(0.7)`;
+                            flower.style.opacity = '0.85';
+                            flower.style.transition = 'transform 0.7s cubic-bezier(.4,2,.6,1), opacity 0.7s';
+                            burst.appendChild(flower);
+                            setTimeout(() => {
+                                flower.style.transform = `translate(${x}px, ${y}px) scale(${0.7 + Math.random()*0.5}) rotate(${Math.random()*360}deg)`;
+                                flower.style.opacity = '0';
+                            }, 10);
+                        }
+                        setTimeout(() => { burst.innerHTML = ''; }, 900);
                     }
+                    // Set service in form
+                    const service = btn.getAttribute('data-service');
+                    lastService = service;
+                    bookingService.value = service;
+                    bookingModalOverlay.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                    // Close all service modals
+                    document.querySelectorAll('.modal-overlay').forEach(m => m.classList.remove('active'));
+                    updateAllModalVisibility();
                 });
-            }
+            });
+
+            // When service is changed in form, update lastService
+            bookingService.addEventListener('change', function() {
+                lastService = this.value;
+            });
+
+            // Close booking modal
+            bookingModalClose.addEventListener('click', function() {
+                bookingModalOverlay.classList.remove('active');
+                document.body.style.overflow = 'auto';
+                updateAllModalVisibility();
+            });
+            bookingModalOverlay.addEventListener('click', function(e) {
+                if (e.target === this) {
+                    bookingModalOverlay.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                    updateAllModalVisibility();
+                }
+            });
+
+            // Booking form submission
+            bookingForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                bookingFormMessages.innerHTML = '';
+                const name = bookingForm.bookingName.value.trim();
+                const phone = bookingForm.bookingPhone.value.trim();
+                const email = bookingForm.bookingEmail.value.trim();
+                const dob = bookingForm.bookingDOB.value;
+                const service = bookingForm.bookingService.value;
+                const notes = bookingForm.bookingNotes.value;
+                const date = bookingForm.bookingDate.value;
+                const time = bookingForm.bookingTime.value;
+                const message = bookingForm.bookingMessage.value.trim();
+                const timestamp = new Date().toISOString();
+
+                // Basic validation
+                if (!name || !phone || !email || !service || !date || !time) {
+                    bookingFormMessages.innerHTML = '<div class="booking-error">Please fill in all required fields.</div>';
+                    return;
+                }
+
+                // Show waiting message
+                bookingFormMessages.innerHTML = '<div class="booking-wait">Submitting your booking...</div>';
+
+                // Prepare email content
+                const emailBody = `
+Booking Request from The Orchid Website
+
+Timestamp: ${timestamp}
+Name: ${name}
+Phone: ${phone}
+Email: ${email}
+Date of Birth: ${dob || '(not provided)'}
+Service: ${service}
+Notes: ${notes}
+Date: ${date}
+Time: ${time}
+Message: ${message || '(none)'}
+                `;
+
+                // Send email using EmailJS (client-side) or your own backend
+                // For this example, we'll use EmailJS (https://www.emailjs.com/)
+                // You must set up an EmailJS account and replace the following with your own service/template/user IDs
+                // This will send the email to rubansingh126@gmail.com
+
+                // Remove Google Apps Script submission
+                // Instead, send via EmailJS
+                emailjs.send('service_psng4kg', 'template_w4r2wfc', {
+                    to_email: 'rubansingh126@gmail.com',
+                    from_name: name,
+                    from_email: email,
+                    phone: phone,
+                    dob: dob,
+                    service: service,
+                    notes: notes,
+                    date: date,
+                    time: time,
+                    message: message,
+                    timestamp: timestamp,
+                    email_body: emailBody
+                })
+                .then(function(response) {
+                    bookingFormMessages.innerHTML = '<div class="booking-success">Thank you! Your booking has been received.<br>We\'ll call you soon to confirm.</div>';
+                    bookingForm.reset();
+                    setMinDate();
+                    populateTimeSlots();
+                    setTimeout(() => {
+                        bookingModalOverlay.classList.remove('active');
+                        document.body.style.overflow = 'auto';
+                        updateAllModalVisibility();
+                    }, 2000);
+                }, function(error) {
+                    bookingFormMessages.innerHTML = '<div class="booking-error">Sorry, there was an error. Please try again or contact us.</div>';
+                });
+            });
 
             // Set copyright year
             document.getElementById('year').textContent = new Date().getFullYear();
 
-            // Helper: Hide Calendly badge if modal is open on page load (edge case)
-            setTimeout(function() {
-                if ([...modalOverlays].some(m => m.classList.contains('active'))) {
-                    hideCalendlyBadge();
-                }
-            }, 500);
+            // Set min date on load
+            setMinDate();
 
-            // Hide header if modal is open on page load (edge case)
-            setTimeout(function() {
-                const anyModalOpen = Array.from(modalOverlays).some(m => m.classList.contains('active'));
-                if (anyModalOpen) {
-                    mainHeader.classList.add('hide');
+            // When date is changed, optionally filter time slots (future: check for conflicts)
+            // For now, always show all slots
+
+            // Floating Book Button click logic
+            floatingBookBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                // Flower burst animation
+                const burst = floatingBookBtn.querySelector('.flower-burst');
+                if (burst) {
+                    burst.innerHTML = '';
+                    for (let i = 0; i < 7; i++) {
+                        const angle = (2 * Math.PI / 7) * i + (Math.random() - 0.5) * 0.5;
+                        const r = 32 + Math.random() * 18;
+                        const x = Math.cos(angle) * r;
+                        const y = Math.sin(angle) * r;
+                        const flower = document.createElement('img');
+                        flower.src = 'resources/flower.png';
+                        flower.style.left = '50%';
+                        flower.style.top = '50%';
+                        flower.style.position = 'absolute';
+                        flower.style.transform = `translate(-50%, -50%) scale(0.7)`;
+                        flower.style.opacity = '0.85';
+                        flower.style.transition = 'transform 0.7s cubic-bezier(.4,2,.6,1), opacity 0.7s';
+                        burst.appendChild(flower);
+                        setTimeout(() => {
+                            flower.style.transform = `translate(${x}px, ${y}px) scale(${0.7 + Math.random()*0.5}) rotate(${Math.random()*360}deg)`;
+                            flower.style.opacity = '0';
+                        }, 10);
+                    }
+                    setTimeout(() => { burst.innerHTML = ''; }, 900);
                 }
-            }, 500);
+                // Open booking modal
+                bookingModalOverlay.classList.add('active');
+                document.body.style.overflow = 'hidden';
+                updateAllModalVisibility();
+            });
+
+            // Hide floating book button if any modal is open on load
+            updateAllModalVisibility();
         });
 
-        // Flower burst animation
-        function flowerBurst(btn, count) {
-            const burst = btn.querySelector('.flower-burst');
-            burst.innerHTML = '';
-            const rect = btn.getBoundingClientRect();
-            const btnW = rect.width, btnH = rect.height;
-            const minR = 40, maxR = 70;
-            for (let i = 0; i < count; i++) {
-                const angle = (2 * Math.PI / count) * i + (Math.random() - 0.5) * 0.5;
-                const r = minR + Math.random() * (maxR - minR);
-                const x = Math.cos(angle) * r;
-                const y = Math.sin(angle) * r;
-                const flower = document.createElement('img');
-                flower.src = 'resources/flower.png';
-                flower.style.left = '50%';
-                flower.style.top = '50%';
-                flower.style.transform = `translate(-50%, -50%) scale(0.7)`;
-                flower.style.opacity = '0.85';
-                flower.style.transition = 'transform 0.7s cubic-bezier(.4,2,.6,1), opacity 0.7s';
-                burst.appendChild(flower);
-                setTimeout(() => {
-                    flower.style.transform = `translate(${x}px, ${y}px) scale(${0.7 + Math.random()*0.5}) rotate(${Math.random()*360}deg)`;
-                    flower.style.opacity = '0';
-                }, 10);
-            }
-            setTimeout(() => { burst.innerHTML = ''; }, 900);
-        }
+        // Fullscreen gallery logic
+        document.querySelectorAll('#gallery-grid .gallery-item img, #services-grid .gallery-item img').forEach(img => {
+            img.addEventListener('click', () => {
+                const overlay = document.createElement('div');
+                overlay.classList.add('fullscreen-overlay');
+                overlay.innerHTML = `
+                    <div class="fullscreen-image-wrapper">
+                        <img src="${img.src}" alt="${img.alt}" style="max-width:98vw;max-height:98vh;object-fit:contain;">
+                        <button class="fullscreen-close">&times;</button>
+                    </div>
+                `;
+                document.body.appendChild(overlay);
+                document.body.style.overflow = 'hidden';
 
-        // Hide Calendly badge widget
-        function hideCalendlyBadge() {
-            var badge = document.querySelector('.calendly-badge-widget');
-            if (badge) badge.style.display = 'none';
-        }
-        // Show Calendly badge widget
-        function showCalendlyBadge() {
-            var badge = document.querySelector('.calendly-badge-widget');
-            if (badge) badge.style.display = '';
-        }
-        
-  document.querySelectorAll('#gallery-grid .gallery-item img, #services-grid .gallery-item img').forEach(img => {
-    img.addEventListener('click', () => {
-      const overlay = document.createElement('div');
-      overlay.classList.add('fullscreen-overlay');
-      overlay.innerHTML = `
-        <div class="fullscreen-image-wrapper">
-          <img src="${img.src}" alt="${img.alt}">
-          <button class="fullscreen-close">&times;</button>
-        </div>
-      `;
-      document.body.appendChild(overlay);
-      document.body.style.overflow = 'hidden';
+                overlay.querySelector('.fullscreen-close').addEventListener('click', () => {
+                    overlay.remove();
+                    document.body.style.overflow = 'auto';
+                });
+            });
+        });
 
-      overlay.querySelector('.fullscreen-close').addEventListener('click', () => {
-        overlay.remove();
-        document.body.style.overflow = 'auto';
-      });
-    });
-  });
-
+    </script>
+    <!-- EmailJS SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+    <script>
+      (function(){
+        emailjs.init("Pd-yRlYBJ_aOkUhOS"); // Replace with your EmailJS user ID
+      })();
     </script>
 </body>
 </html>
