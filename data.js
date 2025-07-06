@@ -89,9 +89,7 @@ const globalGalleryData = {
         { name: "Nail Art 1", path: "gallery/nails1.jpeg", category: "nails", alt: "Nail Art 1", description: "Beautiful nail design" },
         { name: "Nail Art 2", path: "gallery/nails2.jpeg", category: "nails", alt: "Nail Art 2", description: "Elegant nail design" },
         { name: "Threading Service", path: "gallery/threading1.jpeg", category: "threading", alt: "Threading Service", description: "Professional threading service" },
-        { name: "Waxing Service", path: "gallery/waxing1.jpeg", category: "waxing", alt: "Waxing Service", description: "Professional waxing service" },
-        { name: "Massage Image 1", path: "gallery/massage1.jpeg", category: "massage", alt: "Massage Service 1", description: "Relaxing massage session" },
-        { name: "Massage Image 2", path: "gallery/massage2.jpeg", category: "massage", alt: "Massage Service 2", description: "Swedish massage therapy" }
+        { name: "Waxing Service", path: "gallery/waxing1.jpeg", category: "waxing", alt: "Waxing Service", description: "Professional waxing service" }
     ],
     services: [
         { name: "Service Price List 1", path: "services/1.jpeg", category: "pricelist", alt: "Service Price List 1", description: "Price list for services" },
