@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery Management - The Orchid</title>
+    <link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Playfair Display', Arial, sans-serif;
+            background: linear-gradient(135deg, #f9f4f7 0%, #fff0f6 100%);
+            min-height: 100vh;
+        }
+        
+        .admin-header {
+            background: linear-gradient(135deg, #ff7eb3, #ff65a3);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(255,101,163,0.3);
+        }
+        
+        .admin-header h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 2px solid white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            transition: all 0.3s;
+            backdrop-filter: blur(10px);
+        }
+        
+        .back-btn:hover {
+            background: white;
+            color: #ff65a3;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        
+        .gallery-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 20px rgba(255,101,163,0.1);
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
+        .section-title {
+            color: #ff65a3;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+        
+        .btn {
+            background: linear-gradient(135deg, #ff7eb3, #ff65a3);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            font-family: inherit;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255,101,163,0.3);
+        }
+        
+        .btn-secondary {
+            background: #666;
+        }
+        
+        .btn-danger {
+            background: #ff4757;
+        }
+        
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        
+        .gallery-item {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 15px;
+            border: 2px solid transparent;
+            transition: border-color 0.3s;
+            text-align: center;
+        }
+        
+        .gallery-item:hover {
+            border-color: #ff65a3;
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+        
+        .image-info {
+            margin-bottom: 10px;
+        }
+        
+        .image-name {
+            font-weight: bold;
+            color: #333;
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+        
+        .image-path {
+            color: #666;
+            font-size: 0.8rem;
+            word-break: break-all;
+        }
+        
+        .image-actions {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+        }
+        
+        .image-actions .btn {
+            padding: 6px 12px;
+            font-size: 0.8rem;
+        }
+        
+        .upload-section {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            display: none;
+        }
+        
+        .upload-section h3 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #eee;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: border-color 0.3s;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #ff65a3;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        
+        .file-upload {
+            border: 2px dashed #ff65a3;
+            border-radius: 8px;
+            padding: 30px;
+            text-align: center;
+            background: #fff0f6;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .file-upload:hover {
+            background: #ffe0ef;
+        }
+        
+        .file-upload input[type="file"] {
+            display: none;
+        }
+        
+        .upload-icon {
+            font-size: 2rem;
+            color: #ff65a3;
+            margin-bottom: 10px;
+        }
+        
+        .export-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 30px;
+            box-shadow: 0 5px 20px rgba(255,101,163,0.1);
+        }
+        
+        .export-section h2 {
+            color: #ff65a3;
+            margin-bottom: 20px;
+        }
+        
+        .export-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .github-info {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .github-info h3 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+        
+        .github-info p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+        
+        .github-info code {
+            background: #e9ecef;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+        
+        @media (max-width: 768px) {
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .image-actions {
+                flex-direction: column;
+            }
+            
+            .export-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-header">
+        <h1>Gallery Management</h1>
+        <p>Manage your gallery images and organize them by category</p>
+        <a href="admin_dashboard.html" class="back-btn">← Back to Dashboard</a>
+    </div>
+    
+    <div class="container">
+        <div class="github-info">
+            <h3>📁 GitHub Image Management</h3>
+            <p>Since your website is hosted on GitHub, you'll need to upload images directly to your GitHub repository.</p>
+            <p><strong>Current image paths:</strong></p>
+            <ul style="margin-left: 20px; color: #666;">
+                <li>Gallery images: <code>gallery/</code> folder</li>
+                <li>Service images: <code>services/</code> folder</li>
+                <li>Logo and hero: <code>logo.jpg</code>, <code>whiteorchid.jpg</code></li>
+            </ul>
+            <p><strong>To add new images:</strong></p>
+            <ol style="margin-left: 20px; color: #666;">
+                <li>Upload images to your GitHub repository in the appropriate folder</li>
+                <li>Use the form below to add the image information to your CMS</li>
+                <li>The image will appear on your website immediately</li>
+            </ol>
+        </div>
+        
+        <!-- Main Gallery -->
+        <div class="gallery-section">
+            <div class="section-header">
+                <h2 class="section-title">📸 Main Gallery</h2>
+                <button class="btn" onclick="toggleUploadForm('gallery')">Add Image</button>
+            </div>
+            
+            <div class="gallery-grid" id="gallery-images">
+                <!-- Images will be loaded here -->
+            </div>
+            
+            <div class="upload-section" id="gallery-upload">
+                <h3>Add New Gallery Image</h3>
+                <form onsubmit="addImage(event, 'gallery')">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="gallery-name">Image Name *</label>
+                            <input type="text" id="gallery-name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="gallery-category">Category</label>
+                            <select id="gallery-category">
+                                <option value="eyelashes">Eyelashes</option>
+                                <option value="nails">Nails</option>
+                                <option value="facials">Facials</option>
+                                <option value="threading">Threading</option>
+                                <option value="waxing">Waxing</option>
+                                <option value="space">Spa Space</option>
+                                <option value="team">Team</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="gallery-path">Image Path *</label>
+                        <input type="text" id="gallery-path" placeholder="gallery/image-name.jpeg" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="gallery-alt">Alt Text</label>
+                        <input type="text" id="gallery-alt" placeholder="Description for accessibility">
+                    </div>
+                    <div class="form-group">
+                        <label for="gallery-description">Description</label>
+                        <textarea id="gallery-description" rows="2" placeholder="Optional description"></textarea>
+                    </div>
+                    <div class="service-actions">
+                        <button type="submit" class="btn">Add Image</button>
+                        <button type="button" class="btn btn-secondary" onclick="toggleUploadForm('gallery')">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Services Gallery -->
+        <div class="gallery-section">
+            <div class="section-header">
+                <h2 class="section-title">💼 Services Gallery</h2>
+                <button class="btn" onclick="toggleUploadForm('services')">Add Image</button>
+            </div>
+            
+            <div class="gallery-grid" id="services-images">
+                <!-- Images will be loaded here -->
+            </div>
+            
+            <div class="upload-section" id="services-upload">
+                <h3>Add New Service Image</h3>
+                <form onsubmit="addImage(event, 'services')">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="services-name">Image Name *</label>
+                            <input type="text" id="services-name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="services-category">Category</label>
+                            <select id="services-category">
+                                <option value="pricelist">Price List</option>
+                                <option value="service">Service</option>
+                                <option value="promotion">Promotion</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="services-path">Image Path *</label>
+                        <input type="text" id="services-path" placeholder="services/image-name.jpeg" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="services-alt">Alt Text</label>
+                        <input type="text" id="services-alt" placeholder="Description for accessibility">
+                    </div>
+                    <div class="form-group">
+                        <label for="services-description">Description</label>
+                        <textarea id="services-description" rows="2" placeholder="Optional description"></textarea>
+                    </div>
+                    <div class="service-actions">
+                        <button type="submit" class="btn">Add Image</button>
+                        <button type="button" class="btn btn-secondary" onclick="toggleUploadForm('services')">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <div class="export-section">
+            <h2>Data Management</h2>
+            <p>Export your gallery data to save it permanently, or import from a backup.</p>
+            <div class="export-buttons">
+                <button class="btn" onclick="exportGalleryData()">Export Gallery Data</button>
+                <button class="btn btn-secondary" onclick="importGalleryData()">Import Gallery Data</button>
+                <button class="btn btn-secondary" onclick="loadDefaultGallery()">Load Default Gallery</button>
+                <input type="file" id="importGalleryFile" accept=".json" style="display: none;" onchange="handleGalleryFileImport(event)">
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Default gallery data
+        const defaultGallery = {
+            gallery: [
+                { name: "Eyelash Extensions 1", path: "gallery/eyelashes1.jpeg", category: "eyelashes", alt: "Eyelash Extensions 1", description: "Beautiful eyelash extensions" },
+                { name: "Eyelash Extensions 2", path: "gallery/eyelashes6.jpeg", category: "eyelashes", alt: "Eyelash Extensions 2", description: "Elegant eyelash extensions" },
+                { name: "Facial Treatment 1", path: "gallery/facials1.jpeg", category: "facials", alt: "Facial Treatment 1", description: "Relaxing facial treatment" },
+                { name: "Facial Treatment 2", path: "gallery/facials2.jpeg", category: "facials", alt: "Facial Treatment 2", description: "Advanced facial treatment" },
+                { name: "Nail Art 1", path: "gallery/nails1.jpeg", category: "nails", alt: "Nail Art 1", description: "Beautiful nail design" },
+                { name: "Nail Art 2", path: "gallery/nails2.jpeg", category: "nails", alt: "Nail Art 2", description: "Elegant nail design" },
+                { name: "Threading Service", path: "gallery/threading1.jpeg", category: "threading", alt: "Threading Service", description: "Professional threading service" },
+                { name: "Waxing Service", path: "gallery/waxing1.jpeg", category: "waxing", alt: "Waxing Service", description: "Professional waxing service" }
+            ],
+            services: [
+                { name: "Service Price List 1", path: "services/1.jpeg", category: "pricelist", alt: "Service Price List 1", description: "Price list for services" },
+                { name: "Service Price List 2", path: "services/2.jpeg", category: "pricelist", alt: "Service Price List 2", description: "Additional price information" },
+                { name: "Service Price List 3", path: "services/3.jpeg", category: "pricelist", alt: "Service Price List 3", description: "Service pricing details" },
+                { name: "Service Price List 4", path: "services/4.jpeg", category: "pricelist", alt: "Service Price List 4", description: "Complete service menu" }
+            ]
+        };
+        
+        // Load gallery from localStorage or use defaults
+        function loadGallery() {
+            const savedGallery = JSON.parse(localStorage.getItem('orchidGallery') || '{}');
+            const gallery = Object.keys(savedGallery).length > 0 ? savedGallery : defaultGallery;
+            
+            Object.keys(gallery).forEach(category => {
+                renderGallery(category, gallery[category]);
+            });
+        }
+        
+        // Render gallery for a category
+        function renderGallery(category, images) {
+            const container = document.getElementById(`${category}-images`);
+            container.innerHTML = '';
+            
+            images.forEach((image, index) => {
+                const imageElement = document.createElement('div');
+                imageElement.className = 'gallery-item';
+                imageElement.innerHTML = `
+                    <img src="${image.path}" alt="${image.alt || image.name}" onerror="this.src='data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjE1MCIgdmlld0JveD0iMCAwIDIwMCAxNTAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSIyMDAiIGhlaWdodD0iMTUwIiBmaWxsPSIjRjVGNUY1Ii8+Cjx0ZXh0IHg9IjEwMCIgeT0iNzUiIGZvbnQtZmFtaWx5PSJBcmlhbCIgZm9udC1zaXplPSIxNCIgZmlsbD0iIzk5OSIgdGV4dC1hbmNob3I9Im1pZGRsZSI+SW1hZ2UgTm90IEZvdW5kPC90ZXh0Pgo8L3N2Zz4K'">
+                    <div class="image-info">
+                        <div class="image-name">${image.name}</div>
+                        <div class="image-path">${image.path}</div>
+                    </div>
+                    <div class="image-actions">
+                        <button class="btn btn-secondary" onclick="editImage('${category}', ${index})">Edit</button>
+                        <button class="btn btn-danger" onclick="deleteImage('${category}', ${index})">Delete</button>
+                    </div>
+                `;
+                container.appendChild(imageElement);
+            });
+        }
+        
+        // Toggle upload form
+        function toggleUploadForm(category) {
+            const form = document.getElementById(`${category}-upload`);
+            form.style.display = form.style.display === 'none' ? 'block' : 'none';
+        }
+        
+        // Add new image
+        function addImage(event, category) {
+            event.preventDefault();
+            
+            const nameInput = document.getElementById(`${category}-name`);
+            const pathInput = document.getElementById(`${category}-path`);
+            const categoryInput = document.getElementById(`${category}-category`);
+            const altInput = document.getElementById(`${category}-alt`);
+            const descriptionInput = document.getElementById(`${category}-description`);
+            
+            const newImage = {
+                name: nameInput.value,
+                path: pathInput.value,
+                category: categoryInput.value,
+                alt: altInput.value,
+                description: descriptionInput.value
+            };
+            
+            const gallery = JSON.parse(localStorage.getItem('orchidGallery') || '{}');
+            if (!gallery[category]) gallery[category] = [];
+            gallery[category].push(newImage);
+            
+            localStorage.setItem('orchidGallery', JSON.stringify(gallery));
+            renderGallery(category, gallery[category]);
+            
+            // Reset form
+            event.target.reset();
+            toggleUploadForm(category);
+            
+            alert('Image added successfully! Make sure the image file exists at the specified path.');
+        }
+        
+        // Edit image
+        function editImage(category, index) {
+            const gallery = JSON.parse(localStorage.getItem('orchidGallery') || '{}');
+            const image = gallery[category][index];
+            
+            // For now, just show an alert. You can implement a modal for editing
+            alert(`Edit image: ${image.name}\nPath: ${image.path}\nCategory: ${image.category}\nAlt: ${image.alt}`);
+        }
+        
+        // Delete image
+        function deleteImage(category, index) {
+            if (confirm('Are you sure you want to delete this image from the gallery?')) {
+                const gallery = JSON.parse(localStorage.getItem('orchidGallery') || '{}');
+                gallery[category].splice(index, 1);
+                localStorage.setItem('orchidGallery', JSON.stringify(gallery));
+                renderGallery(category, gallery[category]);
+                alert('Image removed from gallery successfully!');
+            }
+        }
+        
+        // Export gallery data
+        function exportGalleryData() {
+            const gallery = localStorage.getItem('orchidGallery');
+            if (!gallery) {
+                alert('No gallery data to export.');
+                return;
+            }
+            
+            const dataStr = JSON.stringify(JSON.parse(gallery), null, 2);
+            const dataBlob = new Blob([dataStr], {type: 'application/json'});
+            const url = URL.createObjectURL(dataBlob);
+            
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'orchid-gallery-data.json';
+            link.click();
+            
+            URL.revokeObjectURL(url);
+        }
+        
+        // Import gallery data
+        function importGalleryData() {
+            document.getElementById('importGalleryFile').click();
+        }
+        
+        // Handle gallery file import
+        function handleGalleryFileImport(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const galleryData = JSON.parse(e.target.result);
+                    localStorage.setItem('orchidGallery', JSON.stringify(galleryData));
+                    loadGallery();
+                    alert('Gallery data imported successfully!');
+                } catch (error) {
+                    alert('Error importing file. Please check the file format.');
+                }
+            };
+            reader.readAsText(file);
+        }
+        
+        // Load default gallery
+        function loadDefaultGallery() {
+            if (confirm('This will replace all current gallery data with default ones. Continue?')) {
+                localStorage.setItem('orchidGallery', JSON.stringify(defaultGallery));
+                loadGallery();
+                alert('Default gallery loaded successfully!');
+            }
+        }
+        
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', loadGallery);
+    </script>
+</body>
+</html> 

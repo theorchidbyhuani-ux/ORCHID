@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Promotions Management - The Orchid</title>
+    <link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Playfair Display', Arial, sans-serif;
+            background: linear-gradient(135deg, #f9f4f7 0%, #fff0f6 100%);
+            min-height: 100vh;
+        }
+        
+        .admin-header {
+            background: linear-gradient(135deg, #ff7eb3, #ff65a3);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(255,101,163,0.3);
+        }
+        
+        .admin-header h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: 2px solid white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            text-decoration: none;
+            transition: all 0.3s;
+            backdrop-filter: blur(10px);
+        }
+        
+        .back-btn:hover {
+            background: white;
+            color: #ff65a3;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        
+        .promo-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 20px rgba(255,101,163,0.1);
+        }
+        
+        .promo-card h2 {
+            color: #ff65a3;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #eee;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: border-color 0.3s;
+        }
+        
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #ff65a3;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .btn {
+            background: linear-gradient(135deg, #ff7eb3, #ff65a3);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            font-family: inherit;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255,101,163,0.3);
+        }
+        
+        .btn-secondary {
+            background: #666;
+        }
+        
+        .btn-danger {
+            background: #ff4757;
+        }
+        
+        .btn-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .preview-section {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        
+        .preview-section h3 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+        
+        .preview-banner {
+            background: linear-gradient(90deg, #ff65a3 0%, #ff7eb3 100%);
+            color: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            font-weight: bold;
+            text-align: center;
+        }
+        
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        
+        .status-active {
+            background: #2ed573;
+        }
+        
+        .status-inactive {
+            background: #ff4757;
+        }
+        
+        .export-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 30px;
+            box-shadow: 0 5px 20px rgba(255,101,163,0.1);
+        }
+        
+        .export-section h2 {
+            color: #ff65a3;
+            margin-bottom: 20px;
+        }
+        
+        .export-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .btn-group {
+                flex-direction: column;
+            }
+            
+            .export-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-header">
+        <h1>Promotions Management</h1>
+        <p>Manage promotional banners and special offers</p>
+        <a href="admin_dashboard.html" class="back-btn">← Back to Dashboard</a>
+    </div>
+    
+    <div class="container">
+        <div class="promo-card">
+            <h2>Current Promotion Banner</h2>
+            <form id="promoForm">
+                <div class="form-group">
+                    <label for="promoText">Promotion Text *</label>
+                    <textarea id="promoText" rows="3" placeholder="Enter your promotion message..." required></textarea>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="startDate">Start Date</label>
+                        <input type="date" id="startDate">
+                    </div>
+                    <div class="form-group">
+                        <label for="endDate">End Date</label>
+                        <input type="date" id="endDate">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="promoStatus">Status</label>
+                        <select id="promoStatus">
+                            <option value="active">Active</option>
+                            <option value="inactive">Inactive</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="promoColor">Banner Color</label>
+                        <select id="promoColor">
+                            <option value="pink">Pink (Default)</option>
+                            <option value="purple">Purple</option>
+                            <option value="blue">Blue</option>
+                            <option value="green">Green</option>
+                            <option value="orange">Orange</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="btn-group">
+                    <button type="submit" class="btn">Save Promotion</button>
+                    <button type="button" class="btn btn-secondary" onclick="previewPromo()">Preview</button>
+                    <button type="button" class="btn btn-danger" onclick="clearPromo()">Clear Banner</button>
+                </div>
+            </form>
+            
+            <div class="preview-section" id="previewSection" style="display: none;">
+                <h3>Preview</h3>
+                <div class="preview-banner" id="previewBanner"></div>
+            </div>
+        </div>
+        
+        <div class="export-section">
+            <h2>Data Management</h2>
+            <p>Export your promotion settings to save them permanently, or import from a backup.</p>
+            <div class="export-buttons">
+                <button class="btn" onclick="exportPromoData()">Export Promotion Data</button>
+                <button class="btn btn-secondary" onclick="importPromoData()">Import Promotion Data</button>
+                <input type="file" id="importFile" accept=".json" style="display: none;" onchange="handleFileImport(event)">
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Load current promotion from localStorage
+        function loadCurrentPromo() {
+            const promo = JSON.parse(localStorage.getItem('orchidPromo') || '{}');
+            
+            if (promo.text) {
+                document.getElementById('promoText').value = promo.text || '';
+                document.getElementById('startDate').value = promo.startDate || '';
+                document.getElementById('endDate').value = promo.endDate || '';
+                document.getElementById('promoStatus').value = promo.status || 'active';
+                document.getElementById('promoColor').value = promo.color || 'pink';
+            }
+        }
+        
+        // Save promotion to localStorage
+        function savePromo(event) {
+            event.preventDefault();
+            
+            const promoData = {
+                text: document.getElementById('promoText').value,
+                startDate: document.getElementById('startDate').value,
+                endDate: document.getElementById('endDate').value,
+                status: document.getElementById('promoStatus').value,
+                color: document.getElementById('promoColor').value,
+                lastUpdated: new Date().toISOString()
+            };
+            
+            localStorage.setItem('orchidPromo', JSON.stringify(promoData));
+            
+            // Show success message
+            alert('Promotion saved successfully! The changes will appear on your website immediately.');
+        }
+        
+        // Preview promotion
+        function previewPromo() {
+            const text = document.getElementById('promoText').value;
+            const color = document.getElementById('promoColor').value;
+            
+            if (!text) {
+                alert('Please enter promotion text first.');
+                return;
+            }
+            
+            const previewSection = document.getElementById('previewSection');
+            const previewBanner = document.getElementById('previewBanner');
+            
+            // Set color based on selection
+            const colors = {
+                pink: 'linear-gradient(90deg, #ff65a3 0%, #ff7eb3 100%)',
+                purple: 'linear-gradient(90deg, #a855f7 0%, #c084fc 100%)',
+                blue: 'linear-gradient(90deg, #3b82f6 0%, #60a5fa 100%)',
+                green: 'linear-gradient(90deg, #10b981 0%, #34d399 100%)',
+                orange: 'linear-gradient(90deg, #f59e0b 0%, #fbbf24 100%)'
+            };
+            
+            previewBanner.style.background = colors[color] || colors.pink;
+            previewBanner.textContent = text;
+            previewSection.style.display = 'block';
+        }
+        
+        // Clear promotion
+        function clearPromo() {
+            if (confirm('Are you sure you want to clear the promotion banner?')) {
+                localStorage.removeItem('orchidPromo');
+                document.getElementById('promoForm').reset();
+                document.getElementById('previewSection').style.display = 'none';
+                alert('Promotion banner cleared!');
+            }
+        }
+        
+        // Export promotion data
+        function exportPromoData() {
+            const promo = localStorage.getItem('orchidPromo');
+            if (!promo) {
+                alert('No promotion data to export.');
+                return;
+            }
+            
+            const dataStr = JSON.stringify(JSON.parse(promo), null, 2);
+            const dataBlob = new Blob([dataStr], {type: 'application/json'});
+            const url = URL.createObjectURL(dataBlob);
+            
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = 'orchid-promotion-data.json';
+            link.click();
+            
+            URL.revokeObjectURL(url);
+        }
+        
+        // Import promotion data
+        function importPromoData() {
+            document.getElementById('importFile').click();
+        }
+        
+        // Handle file import
+        function handleFileImport(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const promoData = JSON.parse(e.target.result);
+                    localStorage.setItem('orchidPromo', JSON.stringify(promoData));
+                    loadCurrentPromo();
+                    alert('Promotion data imported successfully!');
+                } catch (error) {
+                    alert('Error importing file. Please check the file format.');
+                }
+            };
+            reader.readAsText(file);
+        }
+        
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            loadCurrentPromo();
+            document.getElementById('promoForm').addEventListener('submit', savePromo);
+        });
+    </script>
+</body>
+</html> 
