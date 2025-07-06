@@ -428,6 +428,7 @@
                 <button class="btn btn-secondary" onclick="importGalleryData()">Import Gallery Data</button>
                 <button class="btn btn-secondary" onclick="loadDefaultGallery()">Load Default Gallery</button>
                 <input type="file" id="importGalleryFile" accept=".json" style="display: none;" onchange="handleGalleryFileImport(event)">
+                <button class="btn" onclick="publishGalleryData()">Publish to Website</button>
             </div>
         </div>
     </div>
@@ -443,7 +444,9 @@
                 { name: "Nail Art 1", path: "gallery/nails1.jpeg", category: "nails", alt: "Nail Art 1", description: "Beautiful nail design" },
                 { name: "Nail Art 2", path: "gallery/nails2.jpeg", category: "nails", alt: "Nail Art 2", description: "Elegant nail design" },
                 { name: "Threading Service", path: "gallery/threading1.jpeg", category: "threading", alt: "Threading Service", description: "Professional threading service" },
-                { name: "Waxing Service", path: "gallery/waxing1.jpeg", category: "waxing", alt: "Waxing Service", description: "Professional waxing service" }
+                { name: "Waxing Service", path: "gallery/waxing1.jpeg", category: "waxing", alt: "Waxing Service", description: "Professional waxing service" },
+                { name: "Massage Image 1", path: "gallery/massage1.jpeg", category: "massage", alt: "Massage Service 1", description: "Relaxing massage session" },
+                { name: "Massage Image 2", path: "gallery/massage2.jpeg", category: "massage", alt: "Massage Service 2", description: "Swedish massage therapy" }
             ],
             services: [
                 { name: "Service Price List 1", path: "services/1.jpeg", category: "pricelist", alt: "Service Price List 1", description: "Price list for services" },
@@ -595,6 +598,52 @@
                 loadGallery();
                 alert('Default gallery loaded successfully!');
             }
+        }
+
+        // Publish gallery data to globalGalleryData for data.js
+        function publishGalleryData() {
+            const galleryData = JSON.parse(localStorage.getItem('orchidGallery') || JSON.stringify(defaultGallery));
+
+            let jsCode = `const globalGalleryData = ${JSON.stringify(galleryData, null, 2)};`;
+
+            // Append existing globalPromoData and globalServicesData (if they exist) to ensure data.js is complete
+            jsCode += `\nconst globalPromoData = globalPromoData || {};`;
+            jsCode += `\nconst globalServicesData = globalServicesData || {};`;
+
+            showPublishModal(jsCode, 'Gallery Data');
+        }
+
+        // Generic modal for showing code to publish (copied from admin_promotions.html)
+        function showPublishModal(code, title) {
+            let modal = document.getElementById('publishModal');
+            if (!modal) {
+                modal = document.createElement('div');
+                modal.id = 'publishModal';
+                modal.style.cssText = `
+                    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+                    background: rgba(0,0,0,0.7); z-index: 9999; display: flex;
+                    justify-content: center; align-items: center;
+                `;
+                modal.innerHTML = `
+                    <div style="background:white; padding:20px; border-radius:10px; max-width:80%; max-height:80%; overflow:auto;">
+                        <h3 style="color:#ff65a3; margin-bottom:15px;">Publish ${title} to Website</h3>
+                        <p style="margin-bottom:15px;">Copy the code below and paste it into your <code>data.js</code> file.</p>
+                        <textarea id="publishCode" style="width:100%; height:300px; font-family:monospace; resize:vertical; border:1px solid #eee; padding:10px;" readonly></textarea>
+                        <button onclick="copyPublishCode()" style="background:#ff65a3; color:white; border:none; padding:10px 20px; border-radius:5px; margin-top:10px; cursor:pointer;">Copy Code</button>
+                        <button onclick="document.getElementById('publishModal').remove()" style="background:#666; color:white; border:none; padding:10px 20px; border-radius:5px; margin-top:10px; cursor:pointer; margin-left:10px;">Close</button>
+                    </div>
+                `;
+                document.body.appendChild(modal);
+            }
+            document.getElementById('publishCode').value = code;
+            modal.style.display = 'flex';
+        }
+
+        function copyPublishCode() {
+            const codeField = document.getElementById('publishCode');
+            codeField.select();
+            document.execCommand('copy');
+            alert('Code copied to clipboard! Now paste it into your data.js file and push to GitHub.');
         }
         
         // Initialize page
