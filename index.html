@@ -20,6 +20,7 @@
     <link rel="icon" href="logo.jpg" type="image/jpeg">
     <!-- Playfair Display font for English -->
     <link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,700&display=swap" rel="stylesheet">
+    <script src="data.js"></script>
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -1159,7 +1160,7 @@
 <body>
     <!-- Promo Banner -->
     <div class="promo-banner" id="promoBanner">
-        <span>PROMOTIONS: <strong>COMING SOON LIMITED GRAND OPENING OFFER! 20% OFF! $59 DEALS! FROM MAY 29 - JUNE 29</strong></span>
+        <span></span>
         <button class="close-btn" id="closePromoBanner" aria-label="Close">&times;</button>
     </div>
     <!-- Transparent Header with Menu (top right) -->
@@ -1204,54 +1205,15 @@
         <button class="scroll-indicator scroll-left" id="galleryScrollLeft">‹</button>
         <button class="scroll-indicator scroll-right" id="galleryScrollRight">›</button>
         <div class="gallery-container" id="gallery-grid">
-            <!-- Eyelashes images -->
-            <div class="gallery-item">
-                <img src="gallery/eyelashes1.jpeg" alt="Eyelash Extensions 1">
-            </div>
-            <div class="gallery-item">
-                <img src="gallery/eyelashes6.jpeg" alt="Eyelash Extensions 2">
-            </div>
-            <!-- Facials images -->
-            <div class="gallery-item">
-                <img src="gallery/facials1.jpeg" alt="Facial Treatment 1">
-            </div>
-            <div class="gallery-item">
-                <img src="gallery/facials2.jpeg" alt="Facial Treatment 2">
-            </div>
-            <!-- Nails images -->
-            <div class="gallery-item">
-                <img src="gallery/nails1.jpeg" alt="Nail Art 1">
-            </div>
-            <div class="gallery-item">
-                <img src="gallery/nails2.jpeg" alt="Nail Art 2">
-            </div>
-            <!-- Threading image -->
-            <div class="gallery-item">
-                <img src="gallery/threading1.jpeg" alt="Threading Service">
-            </div>
-            <!-- Waxing image -->
-            <div class="gallery-item">
-                <img src="gallery/waxing1.jpeg" alt="Waxing Service">
-            </div>
+            <!-- Gallery images will be dynamically loaded here -->
         </div>
     </section>
-    <section class="gallery-section" id="gallery">
+    <section class="gallery-section" id="services-gallery-section">
         <h2 class="section-title">Our Services & Price list</h2>
         <button class="scroll-indicator scroll-left" id="servicesScrollLeft">‹</button>
         <button class="scroll-indicator scroll-right" id="servicesScrollRight">›</button>
         <div class="gallery-container" id="services-grid">
-            <div class="gallery-item">
-                <img src="services/1.jpeg" alt="Service Price List 1">
-            </div>
-            <div class="gallery-item">
-                <img src="services/2.jpeg" alt="Service Price List 2">
-            </div>
-            <div class="gallery-item">
-                <img src="services/3.jpeg" alt="Service Price List 3">
-            </div>
-            <div class="gallery-item">
-                <img src="services/4.jpeg" alt="Service Price List 4">
-            </div>
+            <!-- Services images will be dynamically loaded here -->
         </div>
     </section>
 
@@ -1260,146 +1222,11 @@
         <div class="modal">
             <button class="modal-close">&times;</button>
             <h3 class="modal-title">EYELASH EXTENSIONS</h3>
-            <div class="modal-gallery">
-                <div class="modal-gallery-item">
-                    <img src="gallery/eyelashes1.jpeg" alt="Eyelash Extensions">
-                </div>
-                <div class="modal-gallery-item">
-                    <img src="gallery/eyelashes6.jpeg" alt="Eyelash Extensions">
-                </div>
+            <div class="modal-gallery" id="eyelash-modal-gallery">
+                <!-- Eyelash modal gallery images will be dynamically loaded here -->
             </div>
-            <div class="price-list">
-                <div class="nails-section-title" style="font-size:1.25em; margin-bottom:0.7em;">👁 Classic Lash Extensions</div>
-                <div style="overflow-x:auto; margin-bottom:1.2em;">
-                    <table style="width:100%; border-radius:12px; border-collapse:separate; border-spacing:0; background:linear-gradient(90deg,#fff0fa 0%,#f9f9f9 100%); box-shadow:0 2px 12px #ffb2d133;">
-                        <thead>
-                            <tr style="background:#ffe6f3;">
-                                <th style="padding:10px 12px; text-align:left; border-top-left-radius:12px; color:#ff65a3; font-weight:700;">Style</th>
-                                <th style="padding:10px 12px; text-align:left; border-top-right-radius:12px; color:#ff65a3; font-weight:700;">Price</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr style="background:#fff;">
-                                <td style="padding:9px 12px;">Natural Classic Set</td>
-                                <td style="padding:9px 12px;">$65</td>
-                            </tr>
-                            <tr style="background:#f9f6fa;">
-                                <td style="padding:9px 12px;">Elegant Classic Set</td>
-                                <td style="padding:9px 12px;">$75</td>
-                            </tr>
-                            <tr style="background:#fff;">
-                                <td style="padding:9px 12px; border-bottom-left-radius:12px;">Full Glam Classic Set</td>
-                                <td style="padding:9px 12px; border-bottom-right-radius:12px;">$85</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <div class="nails-section-title" style="font-size:1.25em; margin:1.5em 0 0.7em 0;">🌸 Hybrid/Volume Lash Extensions</div>
-                <div style="overflow-x:auto; margin-bottom:1.2em;">
-                    <table style="width:100%; border-radius:12px; border-collapse:separate; border-spacing:0; background:linear-gradient(90deg,#fff0fa 0%,#f9f9f9 100%); box-shadow:0 2px 12px #ffb2d133;">
-                        <thead>
-                            <tr style="background:#ffe6f3;">
-                                <th style="padding:10px 12px; text-align:left; border-top-left-radius:12px; color:#ff65a3; font-weight:700;">Style</th>
-                                <th style="padding:10px 12px; text-align:left; border-top-right-radius:12px; color:#ff65a3; font-weight:700;">Price</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr style="background:#fff;">
-                                <td style="padding:9px 12px;">Natural Hybrid Set</td>
-                                <td style="padding:9px 12px;">$100</td>
-                            </tr>
-                            <tr style="background:#f9f6fa;">
-                                <td style="padding:9px 12px;">Elegant Hybrid Set</td>
-                                <td style="padding:9px 12px;">$110</td>
-                            </tr>
-                            <tr style="background:#fff;">
-                                <td style="padding:9px 12px;">Glam Hybrid Set</td>
-                                <td style="padding:9px 12px;">$120</td>
-                            </tr>
-                            <tr style="background:#f9f6fa;">
-                                <td style="padding:9px 12px;">Volume Full Set</td>
-                                <td style="padding:9px 12px;">$130</td>
-                            </tr>
-                            <tr style="background:#fff;">
-                                <td style="padding:9px 12px; border-bottom-left-radius:12px;">Mega Volume Full Set</td>
-                                <td style="padding:9px 12px; border-bottom-right-radius:12px;">$150</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <div class="nails-section-title" style="font-size:1.25em; margin:1.5em 0 0.7em 0;">🔁 Refills (2 Weeks)</div>
-                <div style="font-weight:600; font-size:1.08em; color:#ff65a3; margin-bottom:0.3em; letter-spacing:0.5px;">Classic Lash</div>
-                <div style="overflow-x:auto; margin-bottom:1.2em;">
-                    <table style="width:100%; border-radius:12px; border-collapse:separate; border-spacing:0; background:linear-gradient(90deg,#fff0fa 0%,#f9f9f9 100%); box-shadow:0 2px 12px #ffb2d133;">
-                        <tbody>
-                            <tr style="background:#fff;">
-                                <td style="padding:9px 12px;">Natural Classic</td>
-                                <td style="padding:9px 12px;">$55</td>
-                                <td style="padding:9px 12px;">Elegant Classic</td>
-                                <td style="padding:9px 12px;">$65</td>
-                            </tr>
-                            <tr style="background:#f9f6fa;">
-                                <td style="padding:9px 12px;">Full Glam Classic</td>
-                                <td style="padding:9px 12px;">$75</td>
-                                <td style="padding:9px 12px;"></td>
-                                <td style="padding:9px 12px;"></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                
-                <div style="font-weight:600; font-size:1.08em; color:#ff65a3; margin-bottom:0.3em; letter-spacing:0.5px;">Hybrid/Volume</div>
-                <div style="overflow-x:auto; margin-bottom:1.2em;">
-                    <table style="width:100%; border-radius:12px; border-collapse:separate; border-spacing:0; background:linear-gradient(90deg,#fff0fa 0%,#f9f9f9 100%); box-shadow:0 2px 12px #ffb2d133;">
-                        <tbody>
-                            <tr style="background:#fff;">
-                                <td style="padding:9px 12px;">Natural Hybrid</td>
-                                <td style="padding:9px 12px;">$70</td>
-                                <td style="padding:9px 12px;">Elegant Hybrid</td>
-                                <td style="padding:9px 12px;">$80</td>
-                            </tr>
-                            <tr style="background:#f9f6fa;">
-                                <td style="padding:9px 12px;">Glam Hybrid</td>
-                                <td style="padding:9px 12px;">$90</td>
-                                <td style="padding:9px 12px;">Volume</td>
-                                <td style="padding:9px 12px;">$100</td>
-                            </tr>
-                            <tr style="background:#fff;">
-                                <td style="padding:9px 12px;">Mega Volume Full</td>
-                                <td style="padding:9px 12px;">$120</td>
-                                <td style="padding:9px 12px;"></td>
-                                <td style="padding:9px 12px;"></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <div class="nails-section-title" style="font-size:1.25em; margin:1.5em 0 0.7em 0;">❌ Lash Removal</div>
-                <div style="overflow-x:auto; margin-bottom:1.2em;">
-                    <table style="width:100%; border-radius:12px; border-collapse:separate; border-spacing:0; background:linear-gradient(90deg,#fff0fa 0%,#f9f9f9 100%); box-shadow:0 2px 12px #ffb2d133;">
-                        <thead>
-                            <tr style="background:#ffe6f3;">
-                                <th style="padding:10px 12px; text-align:left; border-top-left-radius:12px; color:#ff65a3; font-weight:700;">Service</th>
-                                <th style="padding:10px 12px; text-align:left; color:#ff65a3; font-weight:700;">Removal Only</th>
-                                <th style="padding:10px 12px; text-align:left; border-top-right-radius:12px; color:#ff65a3; font-weight:700;">With New Set</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr style="background:#fff;">
-                                <td style="padding:9px 12px;">Classic Lash Extension</td>
-                                <td style="padding:9px 12px;">$20</td>
-                                <td style="padding:9px 12px;">$10</td>
-                            </tr>
-                            <tr style="background:#f9f6fa;">
-                                <td style="padding:9px 12px; border-bottom-left-radius:12px;">Hybrid/Volume Foreign</td>
-                                <td style="padding:9px 12px;">$30</td>
-                                <td style="padding:9px 12px; border-bottom-right-radius:12px;">$20</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+            <div class="price-list" id="eyelash-price-list">
+                <!-- Eyelash prices will be dynamically loaded here -->
             </div>
             <a href="#" class="btn modal-btn book-btn" data-service="EYELASH EXTENSIONS" style="position:relative;overflow:visible;">Book Now
                 <span class="flower-burst"></span>
@@ -1411,76 +1238,11 @@
         <div class="modal">
             <button class="modal-close">&times;</button>
             <h3 class="modal-title">BODY MASSAGE & WAXING</h3>
-            <div class="modal-gallery">
-                <div class="modal-gallery-item">
-                    <img src="gallery/waxing1.jpeg" alt="Waxing Service">
-                </div>
-                <div class="modal-gallery-item">
-                    <img src="gallery/threading1.jpeg" alt="Threading Service">
-                </div>
-                <div class="modal-gallery-item">
-                    <img src="gallery/massage2.jpeg" alt="Threading Service">
-                </div>
-                <div class="modal-gallery-item">
-                    <img src="gallery/massage1.jpeg" alt="Threading Service">
-                </div>
+            <div class="modal-gallery" id="bodymassage-modal-gallery">
+                <!-- Body Massage modal gallery images will be dynamically loaded here -->
             </div>
-            <div class="price-list">
-                <div class="nails-section-title" style="font-size:1.25em; margin-bottom:0.7em;">💆 Massage Services</div>
-                <div class="price-item">
-                    <span class="price-name">Relaxation Massage – 60 min</span>
-                    <span class="price-value">$90</span>
-                </div>
-                <div class="price-item">
-                    <span class="price-name">Swedish Massage – 60 min</span>
-                    <span class="price-value">$90</span>
-                </div>
-                <div class="price-item">
-                    <span class="price-name">Relaxation Massage – 45 min</span>
-                    <span class="price-value">$70</span>
-                </div>
-                <div class="price-item">
-                    <span class="price-name">Swedish Massage – 45 min</span>
-                    <span class="price-value">$70</span>
-                </div>
-                
-                <div class="nails-section-title" style="font-size:1.25em; margin:1.5em 0 0.7em 0;">🧖 Waxing Services</div>
-                <div style="overflow-x:auto; margin-bottom:1.2em;">
-                    <table style="width:100%; border-radius:12px; border-collapse:separate; border-spacing:0; background:linear-gradient(90deg,#fff0fa 0%,#f9f9f9 100%); box-shadow:0 2px 12px #ffb2d133;">
-                        <tbody>
-                            <tr style="background:#fff;">
-                                <td style="padding:9px 12px;">Upper Lip</td>
-                                <td style="padding:9px 12px;">$10</td>
-                                <td style="padding:9px 12px;">Brows</td>
-                                <td style="padding:9px 12px;">$15</td>
-                            </tr>
-                            <tr style="background:#f9f6fa;">
-                                <td style="padding:9px 12px;">Chin</td>
-                                <td style="padding:9px 12px;">$12</td>
-                                <td style="padding:9px 12px;">Underarms</td>
-                                <td style="padding:9px 12px;">$25</td>
-                            </tr>
-                            <tr style="background:#fff;">
-                                <td style="padding:9px 12px;">Full Legs</td>
-                                <td style="padding:9px 12px;">$65</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                
-                <div class="nails-section-title" style="font-size:1.25em; margin:1.5em 0 0.7em 0;">✨ Massage Add-Ons</div>
-                <div class="price-item">
-                    <span class="price-name">Hot Stone Therapy</span>
-                    <span class="price-value">$20</span>
-                </div>
-                <div class="price-item">
-                    <span class="price-name">Aromatherapy</span>
-                    <span class="price-value">$15</span>
-                </div>
-                <div class="price-item">
-                    <span class="price-name">Deep Tissue Focus (15 min)</span>
-                    <span class="price-value">$25</span>
-                </div>
+            <div class="price-list" id="bodymassage-price-list">
+                <!-- Body Massage prices will be dynamically loaded here -->
             </div>
             <a href="#" class="btn modal-btn book-btn" data-service="BODY MASSAGE" style="position:relative;overflow:visible;">Book Now
                 <span class="flower-burst"></span>
@@ -1492,44 +1254,11 @@
         <div class="modal">
             <button class="modal-close">&times;</button>
             <h3 class="modal-title">🧖 Facial Services</h3>
-            <div class="modal-gallery">
-                <div class="modal-gallery-item">
-                    <img src="gallery/facials1.jpeg" alt="Facial Treatment 1">
-                </div>
-                <div class="modal-gallery-item">
-                    <img src="gallery/facials2.jpeg" alt="Facial Treatment 2">
-                </div>
+            <div class="modal-gallery" id="facetreatments-modal-gallery">
+                <!-- Facial Treatments modal gallery images will be dynamically loaded here -->
             </div>
-            <div class="price-list">
-                <div class="nails-section-title" style="font-size:1.25em; margin-bottom:0.7em;">💆 Facial Treatments</div>
-                <div class="price-item">
-                    <span class="price-name">Relaxation Facial</span>
-                    <span class="price-value">$90</span>
-                </div>
-                <div class="price-item">
-                    <span class="price-name">Acne Facial</span>
-                    <span class="price-value">$90</span>
-                </div>
-                <div class="price-item">
-                    <span class="price-name">Diamond Microdermabrasion Facial</span>
-                    <span class="price-value">$90</span>
-                </div>
-                <div class="price-item">
-                    <span class="price-name">Dermaplaning Facial</span>
-                    <span class="price-value">$120</span>
-                </div>
-                <div class="price-item">
-                    <span class="price-name">Custom Facial</span>
-                    <span class="price-value">$90</span>
-                </div>
-                
-                <div class="nails-section-title" style="font-size:1.25em; margin:1.5em 0 0.7em 0;">✨ Advanced Treatments</div>
-                <div class="price-item">
-                    <span class="price-name">Microneedling</span>
-                    <span class="price-value">$150 <span style="color:#b48b6c;font-size:0.95em;">per session</span></span>
-                </div>
-                <div style="overflow-x:auto; margin-bottom:1.2em;">
-                </div>
+            <div class="price-list" id="facetreatments-price-list">
+                <!-- Facial Treatments prices will be dynamically loaded here -->
             </div>
             <a href="#" class="btn modal-btn book-btn" data-service="FACE TREATMENTS" style="position:relative;overflow:visible;">Book Now
                 <span class="flower-burst"></span>
@@ -1541,167 +1270,11 @@
         <div class="modal">
             <button class="modal-close">&times;</button>
             <h3 class="modal-title">NAILS</h3>
-            <div class="modal-gallery">
-                <div class="modal-gallery-item">
-                    <img src="gallery/nails1.jpeg" alt="Nail Art 1">
-                </div>
-                <div class="modal-gallery-item">
-                    <img src="gallery/nails2.jpeg" alt="Nail Art 2">
-                </div>
+            <div class="modal-gallery" id="nails-modal-gallery">
+                <!-- Nails modal gallery images will be dynamically loaded here -->
             </div>
             <div class="price-list" id="nails-price-list">
-                <div class="nails-section-title" style="font-size:1.25em; margin-bottom:0.7em;">🌿 Natural Nails</div>
-                <div class="price-item">
-                    <span class="price-name">Shellac Manicure</span>
-                    <span class="price-value">$35</span>
-                </div>
-                <div class="price-item">
-                    <span class="price-name">BIAB (Builder in a Bottle)</span>
-                    <span class="price-value">$60</span>
-                </div>
-                <div class="price-item">
-                    <span class="price-name">BIAB Refill</span>
-                    <span class="price-value">$55 <span style="color:#b48b6c;font-size:0.95em;">per set</span> <span style="color:#aaa;">or</span> $6 <span style="color:#b48b6c;font-size:0.95em;">per finger</span></span>
-                </div>
-                <div class="price-item">
-                    <span class="price-name">Shellac Removal</span>
-                    <span class="price-value">$8</span>
-                </div>
-
-                <div class="nails-section-title" style="font-size:1.25em; margin:1.5em 0 0.7em 0;">💅 Nail Extensions</div>
-                <div style="margin-bottom:1.2em;">
-                    <div style="font-weight:600; font-size:1.08em; color:#ff65a3; margin-bottom:0.3em; letter-spacing:0.5px;">Bio Gel Extensions</div>
-                    <div style="overflow-x:auto;">
-                        <table style="width:100%; border-radius:12px; border-collapse:separate; border-spacing:0; background:linear-gradient(90deg,#fff0fa 0%,#f9f9f9 100%); box-shadow:0 2px 12px #ffb2d133;">
-                            <thead>
-                                <tr style="background:#ffe6f3;">
-                                    <th style="padding:10px 12px; text-align:left; border-top-left-radius:12px; color:#ff65a3; font-weight:700;">Size</th>
-                                    <th style="padding:10px 12px; text-align:left; color:#ff65a3; font-weight:700;">Full Set</th>
-                                    <th style="padding:10px 12px; text-align:left; border-top-right-radius:12px; color:#ff65a3; font-weight:700;">Refill <span style="font-size:0.95em; color:#b48b6c;">(per finger)</span></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr style="background:#fff;">
-                                    <td style="padding:9px 12px;">XS/Small</td>
-                                    <td style="padding:9px 12px;">$65</td>
-                                    <td style="padding:9px 12px;">$7</td>
-                                </tr>
-                                <tr style="background:#f9f6fa;">
-                                    <td style="padding:9px 12px;">Medium</td>
-                                    <td style="padding:9px 12px;">$65</td>
-                                    <td style="padding:9px 12px;">$7</td>
-                                </tr>
-                                <tr style="background:#fff;">
-                                    <td style="padding:9px 12px;">Long</td>
-                                    <td style="padding:9px 12px;">$70</td>
-                                    <td style="padding:9px 12px;">$8</td>
-                                </tr>
-                                <tr style="background:#f9f6fa;">
-                                    <td style="padding:9px 12px; border-bottom-left-radius:12px;">XL</td>
-                                    <td style="padding:9px 12px;">$75</td>
-                                    <td style="padding:9px 12px; border-bottom-right-radius:12px;">$9</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div style="margin-bottom:1.2em;">
-                    <div style="font-weight:600; font-size:1.08em; color:#ff65a3; margin-bottom:0.3em; letter-spacing:0.5px;">GelX Extensions</div>
-                    <div style="overflow-x:auto;">
-                        <table style="width:100%; border-radius:12px; border-collapse:separate; border-spacing:0; background:linear-gradient(90deg,#fff0fa 0%,#f9f9f9 100%); box-shadow:0 2px 12px #ffb2d133;">
-                            <thead>
-                                <tr style="background:#ffe6f3;">
-                                    <th style="padding:10px 12px; text-align:left; border-top-left-radius:12px; color:#ff65a3; font-weight:700;">Size</th>
-                                    <th style="padding:10px 12px; text-align:left; border-top-right-radius:12px; color:#ff65a3; font-weight:700;">Full Set</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr style="background:#fff;">
-                                    <td style="padding:9px 12px;">XS/Small</td>
-                                    <td style="padding:9px 12px;">$60</td>
-                                </tr>
-                                <tr style="background:#f9f6fa;">
-                                    <td style="padding:9px 12px;">Medium</td>
-                                    <td style="padding:9px 12px;">$60</td>
-                                </tr>
-                                <tr style="background:#fff;">
-                                    <td style="padding:9px 12px;">Long</td>
-                                    <td style="padding:9px 12px;">$65</td>
-                                </tr>
-                                <tr style="background:#f9f6fa;">
-                                    <td style="padding:9px 12px; border-bottom-left-radius:12px;">XL</td>
-                                    <td style="padding:9px 12px; border-bottom-right-radius:12px;">$75</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <div class="nails-section-title" style="font-size:1.25em; margin:1.5em 0 0.7em 0;">🎨 Nail Designs <span style="font-size:0.95em; color:#b48b6c;">(per set)</span></div>
-                <div class="price-item">
-                    <span class="price-name">French Tip</span>
-                    <span class="price-value">$15</span>
-                </div>
-                <div class="price-item">
-                    <span class="price-name">Ombre/Aura</span>
-                    <span class="price-value">$20</span>
-                </div>
-                <div class="price-item">
-                    <span class="price-name">Mirror</span>
-                    <span class="price-value">$18</span>
-                </div>
-                <div class="price-item">
-                    <span class="price-name">Cat Eye</span>
-                    <span class="price-value">$15</span>
-                </div>
-
-                <div class="nails-section-title" style="font-size:1.25em; margin:1.5em 0 0.7em 0;">✨ Add-Ons <span style="font-size:0.95em; color:#b48b6c;">(per finger)</span></div>
-                <div style="overflow-x:auto; margin-bottom:1.2em;">
-                    <table style="width:100%; border-radius:12px; border-collapse:separate; border-spacing:0; background:linear-gradient(90deg,#fff0fa 0%,#f9f9f9 100%); box-shadow:0 2px 12px #ffb2d133;">
-                        <tbody>
-                            <tr style="background:#fff;">
-                                <td style="padding:9px 12px;">French Tip</td>
-                                <td style="padding:9px 12px;">$2</td>
-                                <td style="padding:9px 12px;">Ombre/Aura</td>
-                                <td style="padding:9px 12px;">$3</td>
-                            </tr>
-                            <tr style="background:#f9f6fa;">
-                                <td style="padding:9px 12px;">3D Design</td>
-                                <td style="padding:9px 12px;">$3</td>
-                                <td style="padding:9px 12px;">Simple Art</td>
-                                <td style="padding:9px 12px;">$2</td>
-                            </tr>
-                            <tr style="background:#fff;">
-                                <td style="padding:9px 12px;">Chrome</td>
-                                <td style="padding:9px 12px;">$2</td>
-                                <td style="padding:9px 12px;">Stickers</td>
-                                <td style="padding:9px 12px;">$1</td>
-                            </tr>
-                            <tr style="background:#f9f6fa;">
-                                <td style="padding:9px 12px;">Glitters</td>
-                                <td style="padding:9px 12px;">$2</td>
-                                <td style="padding:9px 12px;">Gems</td>
-                                <td style="padding:9px 12px;">$1 <span style="font-size:0.95em; color:#b48b6c;">per stone</span></td>
-                            </tr>
-                            <tr style="background:#fff;">
-                                <td style="padding:9px 12px;">Mirror</td>
-                                <td style="padding:9px 12px;">$2</td>
-                                <td style="padding:9px 12px;">Cat Eye</td>
-                                <td style="padding:9px 12px;">$2</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <div class="nails-section-title" style="font-size:1.25em; margin:1.5em 0 0.7em 0;">🧼 Removals</div>
-                <div class="price-item">
-                    <span class="price-name">Extension Removal</span>
-                    <span class="price-value">$15</span>
-                </div>
-                <div class="price-item">
-                    <span class="price-name">Foreign Removal</span>
-                    <span class="price-value">$20</span>
-                </div>
+                <!-- Nails prices will be dynamically loaded here -->
             </div>
             <a href="#" class="btn modal-btn book-btn" data-service="NAILS" style="position:relative;overflow:visible;">Book Now
                 <span class="flower-burst"></span>
@@ -1847,9 +1420,36 @@
             const closePromoBanner = document.getElementById('closePromoBanner');
             const mainContent = document.getElementById('mainContent');
             const instagramLink = document.getElementById('instagramLink');
-            promoBanner.classList.remove('hide');
-            mainContent.classList.add('with-banner');
-            instagramLink.classList.add('with-banner');
+            
+            // Dynamic promo banner loading
+            function loadPromoBanner() {
+                if (globalPromoData && globalPromoData.status === 'active' && globalPromoData.text) {
+                    const now = new Date();
+                    const startDate = globalPromoData.startDate ? new Date(globalPromoData.startDate) : null;
+                    const endDate = globalPromoData.endDate ? new Date(globalPromoData.endDate) : null;
+
+                    if ((!startDate || now >= startDate) && (!endDate || now <= endDate)) {
+                        promoBanner.querySelector('span').textContent = globalPromoData.text;
+                        const colors = {
+                            pink: 'linear-gradient(90deg, #ff65a3 0%, #ff7eb3 100%)',
+                            purple: 'linear-gradient(90deg, #a855f7 0%, #c084fc 100%)',
+                            blue: 'linear-gradient(90deg, #3b82f6 0%, #60a5fa 100%)',
+                            green: 'linear-gradient(90deg, #10b981 0%, #34d399 100%)',
+                            orange: 'linear-gradient(90deg, #f59e0b 0%, #fbbf24 100%)'
+                        };
+                        promoBanner.style.background = colors[globalPromoData.color] || colors.pink;
+                        promoBanner.classList.remove('hide');
+                        mainContent.classList.add('with-banner');
+                        instagramLink.classList.add('with-banner');
+                        return;
+                    }
+                }
+                promoBanner.classList.add('hide');
+                mainContent.classList.remove('with-banner');
+                instagramLink.classList.remove('with-banner');
+            }
+            loadPromoBanner(); // Call on load
+
             closePromoBanner.addEventListener('click', function() {
                 promoBanner.classList.add('hide');
                 mainContent.classList.remove('with-banner');
@@ -1987,6 +1587,9 @@
                 bookingTime.innerHTML = '<option value="">Select Time</option>';
                 
                 // Get booked slots from localStorage
+                // Note: Booking slots are still managed by localStorage.
+                // For live updates on booking slots, you'd need a backend.
+                // This is beyond the scope of a static CMS for content.
                 const bookedSlots = JSON.parse(localStorage.getItem('orchidBookedSlots') || '{}');
                 const selectedDate = bookingDate.value;
                 const dateBookedSlots = bookedSlots[selectedDate] || {};
@@ -2373,8 +1976,149 @@ Message: ${message || '(none)'}
             
             // Initialize enhanced gallery scrolling
             initGalleryScrolling();
+            renderDynamicContent();
         });
 
+        // --- Dynamic Content Rendering ---
+        function renderDynamicContent() {
+            // Render Gallery Images
+            const galleryGrid = document.getElementById('gallery-grid');
+            galleryGrid.innerHTML = ''; // Clear existing content
+            if (globalGalleryData.gallery) {
+                globalGalleryData.gallery.forEach(image => {
+                    galleryGrid.innerHTML += `
+                        <div class="gallery-item">
+                            <img src="${image.path}" alt="${image.alt || image.name}">
+                        </div>
+                    `;
+                });
+            }
+
+            // Render Services Price List Images
+            const servicesGrid = document.getElementById('services-grid');
+            servicesGrid.innerHTML = ''; // Clear existing content
+            if (globalGalleryData.services) {
+                globalGalleryData.services.forEach(image => {
+                    servicesGrid.innerHTML += `
+                        <div class="gallery-item">
+                            <img src="${image.path}" alt="${image.alt || image.name}">
+                        </div>
+                    `;
+                });
+            }
+
+            // Render Service Modals (Eyelash, Body Massage, Facial, Nails)
+            renderServiceModal('eyelash', 'EYELASH EXTENSIONS', globalServicesData.eyelash, globalGalleryData.gallery.filter(img => img.category === 'eyelashes'));
+            renderServiceModal('bodymassage', 'BODY MASSAGE & WAXING', globalServicesData.massage, globalGalleryData.gallery.filter(img => img.category === 'waxing' || img.category === 'threading' || img.category === 'massage'));
+            renderServiceModal('facetreatments', '🧖 Facial Services', globalServicesData.facial, globalGalleryData.gallery.filter(img => img.category === 'facials'));
+            renderServiceModal('nails', 'NAILS', globalServicesData.nails, globalGalleryData.gallery.filter(img => img.category === 'nails'));
+        }
+
+        function renderServiceModal(idPrefix, title, services, galleryImages) {
+            const modal = document.getElementById(`${idPrefix}-modal`);
+            if (!modal) return;
+
+            modal.querySelector('.modal-title').textContent = title;
+
+            // Render modal gallery images
+            const modalGallery = document.getElementById(`${idPrefix}-modal-gallery`);
+            modalGallery.innerHTML = '';
+            galleryImages.forEach(image => {
+                modalGallery.innerHTML += `
+                    <div class="modal-gallery-item">
+                        <img src="${image.path}" alt="${image.alt || image.name}">
+                    </div>
+                `;
+            });
+
+            // Render price list
+            const priceListContainer = document.getElementById(`${idPrefix}-price-list`);
+            priceListContainer.innerHTML = '';
+
+            const categories = {};
+            services.forEach(service => {
+                if (!categories[service.category]) {
+                    categories[service.category] = [];
+                }
+                categories[service.category].push(service);
+            });
+
+            for (const categoryName in categories) {
+                let displayCategoryName = categoryName.charAt(0).toUpperCase() + categoryName.slice(1);
+                if (idPrefix === 'eyelash') {
+                    if (categoryName === 'classic') displayCategoryName = '👁 Classic Lash Extensions';
+                    if (categoryName === 'hybrid') displayCategoryName = '🌸 Hybrid/Volume Lash Extensions';
+                    if (categoryName === 'volume') displayCategoryName = '🌸 Hybrid/Volume Lash Extensions';
+                    if (categoryName === 'refill') displayCategoryName = '🔁 Refills (2 Weeks)';
+                    if (categoryName === 'removal') displayCategoryName = '❌ Lash Removal';
+                } else if (idPrefix === 'nails') {
+                    if (categoryName === 'natural') displayCategoryName = '🌿 Natural Nails';
+                    if (categoryName === 'extensions') displayCategoryName = '💅 Nail Extensions';
+                    if (categoryName === 'designs') displayCategoryName = '🎨 Nail Designs <span style="font-size:0.95em; color:#b48b6c;">(per set)</span>';
+                    if (categoryName === 'addons') displayCategoryName = '✨ Add-Ons <span style="font-size:0.95em; color:#b48b6c;">(per finger)</span>';
+                    if (categoryName === 'removal') displayCategoryName = '🧼 Removals';
+                } else if (idPrefix === 'massage') {
+                    if (categoryName === 'massage') displayCategoryName = '💆 Massage Services';
+                    if (categoryName === 'waxing') displayCategoryName = '🧖 Waxing Services';
+                    if (categoryName === 'addons') displayCategoryName = '✨ Massage Add-Ons';
+                } else if (idPrefix === 'facial') {
+                    if (categoryName === 'basic') displayCategoryName = '💆 Facial Treatments';
+                    if (categoryName === 'advanced') displayCategoryName = '✨ Advanced Treatments';
+                    if (categoryName === 'addons') displayCategoryName = '➕ Facial Add-Ons';
+                }
+
+                priceListContainer.innerHTML += `<div class="nails-section-title" style="font-size:1.25em; margin:${categoryName === 'classic' || categoryName === 'natural' || categoryName === 'massage' || categoryName === 'basic' ? '0' : '1.5em'} 0 0.7em 0;">${displayCategoryName}</div>`;
+
+                // Render services for the current category
+                if (['eyelash', 'nails'].includes(idPrefix) && ['refill', 'removal', 'extensions', 'addons'].includes(categoryName)) {
+                    // Render as a table for specific categories
+                    let tableHtml = `<div style="overflow-x:auto; margin-bottom:1.2em;"><table style="width:100%; border-radius:12px; border-collapse:separate; border-spacing:0; background:linear-gradient(90deg,#fff0fa 0%,#f9f9f9 100%); box-shadow:0 2px 12px #ffb2d133;">`;
+                    tableHtml += `<thead><tr style="background:#ffe6f3;">`;
+                    
+                    // Determine table headers based on category
+                    if (categoryName === 'removal' && idPrefix === 'eyelash') {
+                        tableHtml += `<th style="padding:10px 12px; text-align:left; border-top-left-radius:12px; color:#ff65a3; font-weight:700;">Service</th><th style="padding:10px 12px; text-align:left; color:#ff65a3; font-weight:700;">Removal Only</th><th style="padding:10px 12px; text-align:left; border-top-right-radius:12px; color:#ff65a3; font-weight:700;">With New Set</th>`;
+                    } else if (categoryName === 'extensions' && idPrefix === 'nails') {
+                        tableHtml += `<th style="padding:10px 12px; text-align:left; border-top-left-radius:12px; color:#ff65a3; font-weight:700;">Size</th><th style="padding:10px 12px; text-align:left; color:#ff65a3; font-weight:700;">Full Set</th><th style="padding:10px 12px; text-align:left; border-top-right-radius:12px; color:#ff65a3; font-weight:700;">Refill <span style="font-size:0.95em; color:#b48b6c;">(per finger)</span></th>`;
+                    } else if (categoryName === 'addons' && idPrefix === 'nails') {
+                        tableHtml += `<th style="padding:10px 12px; text-align:left; border-top-left-radius:12px; color:#ff65a3; font-weight:700;">Add-On</th><th style="padding:10px 12px; text-align:left; color:#ff65a3; font-weight:700;">Price</th>`;
+                    }
+                    else {
+                        tableHtml += `<th style="padding:10px 12px; text-align:left; border-top-left-radius:12px; color:#ff65a3; font-weight:700;">Style</th><th style="padding:10px 12px; text-align:left; border-top-right-radius:12px; color:#ff65a3; font-weight:700;">Price</th>`;
+                    }
+                    tableHtml += `</tr></thead><tbody>`;
+
+                    categories[categoryName].forEach((service, serviceIndex) => {
+                        const rowBg = serviceIndex % 2 === 0 ? '#fff' : '#f9f6fa';
+                        tableHtml += `<tr style="background:${rowBg};">`;
+                        if (categoryName === 'removal' && idPrefix === 'eyelash') {
+                            tableHtml += `<td style="padding:9px 12px;">${service.name}</td><td style="padding:9px 12px;">$${service.price}</td><td style="padding:9px 12px;">$${service.priceWithNewSet || 'N/A'}</td>`;
+                        } else if (categoryName === 'extensions' && idPrefix === 'nails') {
+                            tableHtml += `<td style="padding:9px 12px;">${service.name}</td><td style="padding:9px 12px;">$${service.price}</td><td style="padding:9px 12px;">$${service.refillPrice || 'N/A'}</td>`;
+                        } else if (categoryName === 'addons' && idPrefix === 'nails') {
+                            tableHtml += `<td style="padding:9px 12px;">${service.name}</td><td style="padding:9px 12px;">$${service.price}</td>`;
+                        }
+                        else {
+                            tableHtml += `<td style="padding:9px 12px;">${service.name}</td><td style="padding:9px 12px;">$${service.price}</td>`;
+                        }
+                        tableHtml += `</tr>`;
+                    });
+                    tableHtml += `</tbody></table></div>`;
+                    priceListContainer.innerHTML += tableHtml;
+
+                } else {
+                    // Render as simple price items for other categories
+                    categories[categoryName].forEach(service => {
+                        priceListContainer.innerHTML += `
+                            <div class="price-item">
+                                <span class="price-name">${service.name}</span>
+                                <span class="price-value">$${service.price}</span>
+                            </div>
+                        `;
+                    });
+                }
+            }
+        }
     </script>
     <!-- EmailJS SDK -->
     <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
