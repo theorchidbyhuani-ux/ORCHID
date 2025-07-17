@@ -3,84 +3,227 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin - Manage Booked Timeslots | The Orchid</title>
-    <meta name="robots" content="noindex, nofollow">
+    <title>Admin Timeslots - The Orchid</title>
     <link href="https://fonts.googleapis.com/css?family=Playfair+Display:400,700&display=swap" rel="stylesheet">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: 'Playfair Display', Arial, sans-serif;
-            background: #f9f4f7;
+            font-family: 'Playfair Display', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f4f7;
             color: #333;
-            padding: 20px;
-            min-height: 100vh;
         }
-        .admin-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            background: #fff;
-            border-radius: 16px;
-            box-shadow: 0 4px 24px rgba(255,101,163,0.1);
-            padding: 40px;
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            padding: 30px;
         }
-        .admin-header {
+        h1 {
             text-align: center;
-            margin-bottom: 40px;
-            padding-bottom: 30px;
+            color: #ff65a3;
+            margin-bottom: 30px;
+            font-size: 2.5rem;
+        }
+        .date-selector {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .date-selector label {
+            font-size: 1.2rem;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+        .date-selector input[type="date"] {
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-family: 'Playfair Display', sans-serif;
+            color: #333;
+        }
+        /* Calendar Styles */
+        .calendar-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .calendar-nav button {
+            background: linear-gradient(135deg, #ff7eb3, #ff65a3);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 10px 20px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.2s;
+        }
+        .calendar-nav button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(255,101,163,0.3);
+        }
+        .calendar-nav h2 {
+            font-size: 1.8rem;
+            color: #ff65a3;
+            margin: 0;
+        }
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .calendar-day-header {
+            font-weight: bold;
+            color: #ff65a3;
+            padding: 10px;
             border-bottom: 2px solid #ffe6f3;
         }
-        .admin-title {
-            font-size: 2.5rem;
-            color: #ff65a3;
-            margin-bottom: 10px;
+        .calendar-date {
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: background 0.2s, color 0.2s;
         }
-        .admin-subtitle {
-            font-size: 1.2rem;
+        .calendar-date.today {
+            background-color: #ffe6f3;
+            font-weight: bold;
+        }
+        .calendar-date.selected {
+            background-color: #ff65a3;
+            color: white;
+        }
+        .calendar-date:hover:not(.empty):not(.selected) {
+            background-color: #fce8f0;
+        }
+        .calendar-date.empty {
+            background-color: #f9f9f9;
+            cursor: default;
+            color: #ccc;
+        }
+        /* End Calendar Styles */
+        .timeslot-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .timeslot-item {
+            background-color: #f0f0f0;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            font-size: 1.1rem;
+            font-weight: 600;
+            position: relative;
+        }
+        .timeslot-item.booked {
+            background-color: #ffcccc; /* Light red for booked */
+            color: #cc0000;
+            box-shadow: 0 2px 8px rgba(204,0,0,0.15);
+        }
+        .timeslot-item.available {
+            background-color: #d4edda; /* Light green for available */
+            color: #155724;
+            box-shadow: 0 2px 8px rgba(21,87,36,0.15);
+        }
+        .timeslot-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+        }
+        .timeslot-item.booked:hover {
+            background-color: #ffb3b3;
+        }
+        .timeslot-item.available:hover {
+            background-color: #c3e6cb;
+        }
+        .timeslot-info {
+            font-size: 0.9em;
+            margin-top: 5px;
             color: #666;
+            font-weight: normal;
+            word-break: break-word; /* Ensure long words break */
+        }
+        .timeslot-item.booked .timeslot-info {
+            color: #a00;
+        }
+        .loading-message {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #ff65a3;
+            margin-top: 30px;
         }
         .back-link {
             display: inline-block;
-            margin-bottom: 20px;
-            color: #ff65a3;
-            text-decoration: none;
-            font-weight: 600;
-            transition: opacity 0.2s;
-        }
-        .back-link:hover {
-            opacity: 0.7;
-        }
-        .controls-section {
-            margin-bottom: 40px;
-            padding: 25px;
-            background: #fff0f6;
-            border-radius: 12px;
-            border: 1px solid #ffe0ef;
-        }
-        .control-group {
-            margin-bottom: 20px;
-        }
-        .control-label {
-            display: block;
-            font-weight: 600;
-            margin-bottom: 8px;
-            color: #333;
+            margin-top: 30px;
+            text-align: center;
+            width: 100%;
             font-size: 1.1rem;
         }
-        .control-input {
+        .back-link a {
+            color: #ff65a3;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 8px 15px;
+            border-radius: 20px;
+            transition: background 0.2s, color 0.2s;
+        }
+        .back-link a:hover {
+            background: linear-gradient(90deg, #ff65a3 0%, #ff7eb3 100%);
+            color: #ffffff;
+        }
+        /* Booking Form Styles */
+        .admin-booking-form {
+            background-color: #fefcff;
+            border: 1px solid #ffe0ef;
+            border-radius: 12px;
+            padding: 25px;
+            margin-top: 30px;
+            box-shadow: 0 2px 10px rgba(255,101,163,0.05);
+        }
+        .admin-booking-form h3 {
+            text-align: center;
+            color: #ff65a3;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+        }
+        .admin-booking-form label {
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #333;
+            display: block;
+            font-size: 1.05rem;
+        }
+        .admin-booking-form input, 
+        .admin-booking-form select, 
+        .admin-booking-form textarea {
             width: 100%;
             padding: 10px 12px;
+            margin-bottom: 16px;
             border: 1px solid #eee;
-            border-radius: 8px;
+            border-radius: 7px;
             font-size: 1rem;
             background: #faf7fa;
             transition: border 0.2s;
         }
-        .control-input:focus {
-            border-color: #ff65a3;
+        .admin-booking-form input:focus,
+        .admin-booking-form select:focus,
+        .admin-booking-form textarea:focus {
+            border: 1.5px solid #ff65a3;
             outline: none;
         }
-        .btn {
-            display: inline-block;
+        .admin-booking-form button {
+            display: block;
+            width: 100%;
             padding: 12px 30px;
             background: linear-gradient(135deg, #ff7eb3, #ff65a3);
             color: white;
@@ -88,291 +231,280 @@
             border-radius: 50px;
             font-size: 1.1rem;
             cursor: pointer;
-            text-decoration: none;
             transition: transform 0.3s, box-shadow 0.3s;
             box-shadow: 0 4px 15px rgba(255,101,163,0.4);
-            font-family: 'Playfair Display', Arial, sans-serif;
-            margin-right: 10px;
+            font-family: 'Playfair Display', sans-serif;
             margin-top: 10px;
         }
-        .btn:hover {
+        .admin-booking-form button:hover {
             transform: translateY(-2px);
             box-shadow: 0 6px 30px rgba(255,101,163,0.5);
         }
-        .btn-secondary {
-            background: #f0f0f0;
-            color: #333;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        }
-        .btn-secondary:hover {
-            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
-        }
-        .timeslots-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 20px;
-            margin-top: 30px;
-        }
-        .date-section {
-            background: #fff;
-            border: 1px solid #ffe0ef;
-            border-radius: 12px;
-            padding: 20px;
-            box-shadow: 0 2px 8px rgba(255,101,163,0.08);
-        }
-        .date-header {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: #ff65a3;
-            margin-bottom: 15px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid #ffe0ef;
-        }
-        .timeslot-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        .form-message {
+            text-align: center;
             padding: 10px;
-            margin-bottom: 8px;
-            background: #f9f6fa;
-            border-radius: 8px;
-            transition: background 0.2s;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            font-weight: bold;
         }
-        .timeslot-item:hover {
-            background: #ffe6f3;
+        .form-message.success {
+            background-color: #d4edda;
+            color: #155724;
         }
-        .timeslot-time {
-            font-weight: 600;
-            color: #333;
+        .form-message.error {
+            background-color: #f8d7da;
+            color: #721c24;
         }
-        .timeslot-status {
-            font-size: 0.9rem;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-weight: 600;
-        }
-        .status-available {
-            background: #d4f4dd;
-            color: #1b8838;
-        }
-        .status-booked {
-            background: #ffd4d4;
-            color: #d32f2f;
-        }
-        .remove-btn {
-            background: none;
-            border: none;
-            color: #ff65a3;
-            cursor: pointer;
-            font-size: 1.2rem;
-            padding: 4px 8px;
-            transition: color 0.2s;
-            font-family: 'Playfair Display', Arial, sans-serif;
-        }
-        .remove-btn:hover {
-            color: #ff3366;
-        }
-        .message {
-            padding: 15px 20px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            font-weight: 600;
-            text-align: center;
-        }
-        .message-success {
-            background: #d4f4dd;
-            color: #1b8838;
-            border: 1px solid #a8e6b8;
-        }
-        .message-error {
-            background: #ffd4d4;
-            color: #d32f2f;
-            border: 1px solid #ffb3b3;
-        }
-        .stats-section {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-        .stat-card {
-            background: linear-gradient(135deg, #fff0f6 0%, #ffe6f3 100%);
-            border: 1px solid #ffe0ef;
-            border-radius: 12px;
-            padding: 20px;
-            text-align: center;
-        }
-        .stat-number {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: #ff65a3;
-            margin-bottom: 5px;
-        }
-        .stat-label {
-            font-size: 1.1rem;
-            color: #666;
-        }
-        .no-slots {
-            text-align: center;
-            color: #999;
-            font-style: italic;
-            padding: 40px;
-        }
-        @media (max-width: 768px) {
-            .admin-container {
+        @media (max-width: 600px) {
+            .container {
+                margin: 20px;
                 padding: 20px;
             }
-            .admin-title {
+            h1 {
                 font-size: 2rem;
             }
-            .timeslots-grid {
-                grid-template-columns: 1fr;
+            .timeslot-grid {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+                gap: 10px;
             }
-        }
-        #singleSlotControls, #multipleSlotControls, #rangeControls {
-            margin-top: 15px;
-            padding: 15px;
-            background: #f9f4f7;
-            border-radius: 8px;
-            border: 1px solid #ffe0ef;
-        }
-        .booking-mode-info {
-            font-size: 0.9rem;
-            color: #666;
-            margin-top: 5px;
-            font-style: italic;
+            .timeslot-item {
+                font-size: 1rem;
+                padding: 10px;
+            }
+            .calendar-nav h2 {
+                font-size: 1.5rem;
+            }
+            .calendar-nav button {
+                padding: 8px 15px;
+                font-size: 0.9rem;
+            }
+            .admin-booking-form h3 {
+                font-size: 1.5rem;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="admin-container">
-        <a href="index.html" class="back-link">← Back to Website</a>
+    <div class="container">
+        <h1>Admin Timeslots</h1>
+
+        <div class="calendar-nav">
+            <button id="prevMonth">Previous</button>
+            <h2 id="currentMonthYear"></h2>
+            <button id="nextMonth">Next</button>
+        </div>
+        <div class="calendar-grid" id="calendarGrid"></div>
+
+        <div class="date-selector">
+            <label for="adminDate">Selected Date:</label>
+            <input type="date" id="adminDate" readonly>
+        </div>
+
+        <div id="loadingMessage" class="loading-message">Loading time slots...</div>
+        <div id="timeslotGrid" class="timeslot-grid">
+            <!-- Timeslots will be loaded here -->
+        </div>
         
-        <div class="admin-header">
-            <h1 class="admin-title">Booked Timeslot Management</h1>
-            <p class="admin-subtitle">Manage booked timeslots for The Orchid booking system</p>
-        </div>
+        <div class="admin-booking-form">
+            <h3>Manually Book a Slot</h3>
+            <div id="adminFormMessage" class="form-message" style="display:none;"></div>
+            <form id="manualBookingForm">
+                <label for="manualName">Client Name *</label>
+                <input type="text" id="manualName" required placeholder="Client Name">
 
-        <div id="messageArea"></div>
+                <label for="manualEmail">Client Email *</label>
+                <input type="email" id="manualEmail" required placeholder="client@example.com">
 
-        <div class="stats-section" id="statsSection">
-            <div class="stat-card">
-                <div class="stat-number" id="totalBooked">0</div>
-                <div class="stat-label">Total Booked Slots</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number" id="todayBooked">0</div>
-                <div class="stat-label">Booked Today</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number" id="upcomingBooked">0</div>
-                <div class="stat-label">Upcoming Bookings</div>
-            </div>
-        </div>
+                <label for="manualPhone">Client Phone <span class="optional">(optional)</span></label>
+                <input type="tel" id="manualPhone" placeholder="(123) 456-7890">
 
-        <div class="controls-section">
-            <h2 style="font-size: 1.5rem; color: #ff65a3; margin-bottom: 20px;">Add Booked Timeslot</h2>
-            
-            <div class="control-group">
-                <label class="control-label" for="bookDate">Date</label>
-                <input type="date" id="bookDate" class="control-input" min="">
-            </div>
-            
-            <div class="control-group">
-                <label class="control-label" for="bookingMode">Booking Mode</label>
-                <select id="bookingMode" class="control-input" onchange="toggleBookingMode()">
-                    <option value="single">Single Timeslot</option>
-                    <option value="multiple">Multiple Consecutive Slots</option>
-                    <option value="range">Time Range</option>
+                <label for="manualService">Service *</label>
+                <select id="manualService" required>
+                    <option value="">Select Service</option>
+                    <option value="NAILS">Nails</option>
+                    <option value="EYELASH EXTENSIONS">Eyelash Extensions</option>
+                    <option value="BODY MASSAGE">Body Massage</option>
+                    <option value="FACE TREATMENTS">Face Treatments</option>
                 </select>
-            </div>
-            
-            <div id="singleSlotControls">
-                <div class="control-group">
-                    <label class="control-label" for="bookTime">Time</label>
-                    <select id="bookTime" class="control-input">
-                        <option value="">Select Time</option>
-                    </select>
-                    <div class="booking-mode-info">Book a single 30-minute timeslot</div>
-                </div>
-            </div>
-            
-            <div id="multipleSlotControls" style="display: none;">
-                <div class="control-group">
-                    <label class="control-label" for="startTime">Start Time</label>
-                    <select id="startTime" class="control-input">
-                        <option value="">Select Start Time</option>
-                    </select>
-                </div>
-                <div class="control-group">
-                    <label class="control-label" for="numSlots">Number of 30-min Slots</label>
-                    <select id="numSlots" class="control-input">
-                        <option value="2">2 slots (1 hour)</option>
-                        <option value="3">3 slots (1.5 hours)</option>
-                        <option value="4">4 slots (2 hours)</option>
-                        <option value="5">5 slots (2.5 hours)</option>
-                        <option value="6">6 slots (3 hours)</option>
-                        <option value="8">8 slots (4 hours)</option>
-                    </select>
-                    <div class="booking-mode-info">Book consecutive timeslots starting from the selected time</div>
-                </div>
-            </div>
-            
-            <div id="rangeControls" style="display: none;">
-                <div class="control-group">
-                    <label class="control-label" for="rangeStart">Start Time</label>
-                    <select id="rangeStart" class="control-input">
-                        <option value="">Select Start Time</option>
-                    </select>
-                </div>
-                <div class="control-group">
-                    <label class="control-label" for="rangeEnd">End Time</label>
-                    <select id="rangeEnd" class="control-input">
-                        <option value="">Select End Time</option>
-                    </select>
-                    <div class="booking-mode-info">Book all timeslots between start and end time (end time not included)</div>
-                </div>
-            </div>
-            
-            <div class="control-group">
-                <label class="control-label" for="bookCustomer">Customer Name (Optional)</label>
-                <input type="text" id="bookCustomer" class="control-input" placeholder="e.g., Jane Doe">
-            </div>
-            
-            <button class="btn" onclick="addBookedSlot()">Mark as Booked</button>
-            <button class="btn btn-secondary" onclick="clearAllBooked()">Clear All Bookings</button>
-            <button class="btn btn-secondary" onclick="exportData()">Export Data</button>
+
+                <label for="manualTechnician">Technician <span class="optional">(optional)</span></label>
+                <select id="manualTechnician">
+                    <option value="">Any Available</option>
+                    <option value="Shey">Shey</option>
+                    <option value="Hua-ni">Hua-ni</option>
+                    <option value="Setni">Setni</option>
+                    <option value="Sanaz">Sanaz</option>
+                    <option value="Diya">Diya</option>
+                </select>
+
+                <label for="manualTime">Time Slot *</label>
+                <select id="manualTime" required>
+                    <option value="">Select Time Slot</option>
+                </select>
+
+                <label for="manualNotes">Notes <span class="optional">(optional)</span></label>
+                <textarea id="manualNotes" rows="2" placeholder="Any additional notes for this booking?"></textarea>
+
+                <button type="submit">Book Manually</button>
+            </form>
         </div>
 
-        <h2 style="font-size: 1.8rem; color: #ff65a3; margin-bottom: 20px; text-align: center;">Booked Timeslots</h2>
-        
-        <div class="timeslots-grid" id="timeslotsGrid">
-            <div class="no-slots">No booked timeslots yet.</div>
+        <div class="back-link">
+            <a href="index.html">← Back to Main Site</a>
         </div>
     </div>
 
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    <!-- Your Firebase Config -->
+    <script src="firebase-config.js"></script>
+
     <script>
-        // Initialize booked slots from localStorage
-        let bookedSlots = JSON.parse(localStorage.getItem('orchidBookedSlots') || '{}');
+        document.addEventListener('DOMContentLoaded', function() {
+            const adminDateInput = document.getElementById('adminDate');
+            const timeslotGrid = document.getElementById('timeslotGrid');
+            const loadingMessage = document.getElementById('loadingMessage');
+            const currentMonthYearHeader = document.getElementById('currentMonthYear');
+            const prevMonthBtn = document.getElementById('prevMonth');
+            const nextMonthBtn = document.getElementById('nextMonth');
+            const calendarGrid = document.getElementById('calendarGrid');
 
-        // Set min date to today
-        function setMinDate() {
-            const today = new Date();
-            const yyyy = today.getFullYear();
-            const mm = String(today.getMonth() + 1).padStart(2, '0');
-            const dd = String(today.getDate()).padStart(2, '0');
-            document.getElementById('bookDate').min = `${yyyy}-${mm}-${dd}`;
-        }
+            const manualBookingForm = document.getElementById('manualBookingForm');
+            const manualNameInput = document.getElementById('manualName');
+            const manualEmailInput = document.getElementById('manualEmail');
+            const manualPhoneInput = document.getElementById('manualPhone');
+            const manualServiceSelect = document.getElementById('manualService');
+            const manualTechnicianSelect = document.getElementById('manualTechnician');
+            const manualTimeSelect = document.getElementById('manualTime');
+            const manualNotesInput = document.getElementById('manualNotes');
+            const adminFormMessage = document.getElementById('adminFormMessage');
 
-        // Populate time slots
-        function populateTimeSlots() {
-            const selects = ['bookTime', 'startTime', 'rangeStart', 'rangeEnd'];
+            let currentCalendarDate = new Date(); // Stores the currently displayed month in the calendar
+            let selectedDate = null; // Stores the date selected by the user
+            let currentFirebaseListenerRef = null; // MOVED: Stores reference to current Firebase listener
+
+            // Set min date to today for the hidden input (for initial load consistency)
+            function setMinDateForInput() {
+                const today = new Date();
+                const yyyy = today.getFullYear();
+                const mm = String(today.getMonth() + 1).padStart(2, '0');
+                const dd = String(today.getDate()).padStart(2, '0');
+                adminDateInput.min = `${yyyy}-${mm}-${dd}`;
+            }
+            setMinDateForInput();
+
+            function displayMessage(message, type) {
+                adminFormMessage.textContent = message;
+                adminFormMessage.className = `form-message ${type}`;
+                adminFormMessage.style.display = 'block';
+                setTimeout(() => {
+                    adminFormMessage.style.display = 'none';
+                }, 3000);
+            }
+
+            function renderCalendar() {
+                calendarGrid.innerHTML = '';
+                const year = currentCalendarDate.getFullYear();
+                const month = currentCalendarDate.getMonth();
+                currentMonthYearHeader.textContent = new Date(year, month).toLocaleString('en-US', { month: 'long', year: 'numeric' });
+
+                const firstDayOfMonth = new Date(year, month, 1).getDay(); // 0 for Sunday, 1 for Monday, etc.
+                const daysInMonth = new Date(year, month + 1, 0).getDate();
+
+                // Day headers
+                const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+                days.forEach(day => {
+                    const dayHeader = document.createElement('div');
+                    dayHeader.classList.add('calendar-day-header');
+                    dayHeader.textContent = day;
+                    calendarGrid.appendChild(dayHeader);
+                });
+
+                // Empty cells for days before the 1st
+                for (let i = 0; i < firstDayOfMonth; i++) {
+                    const emptyCell = document.createElement('div');
+                    emptyCell.classList.add('calendar-date', 'empty');
+                    calendarGrid.appendChild(emptyCell);
+                }
+
+                // Dates
+                for (let day = 1; day <= daysInMonth; day++) {
+                    const dateCell = document.createElement('div');
+                    dateCell.classList.add('calendar-date');
+                    dateCell.textContent = day;
+
+                    const fullDate = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+                    dateCell.dataset.date = fullDate;
+
+                    if (fullDate === new Date().toISOString().split('T')[0]) {
+                        dateCell.classList.add('today');
+                    }
+
+                    dateCell.addEventListener('click', () => {
+                        selectDate(fullDate);
+                    });
+                    calendarGrid.appendChild(dateCell);
+                }
+                selectDate(selectedDate || new Date().toISOString().split('T')[0]); // Re-select current or default to today
+            }
+
+            function selectDate(date) {
+                selectedDate = date;
+                adminDateInput.value = date; // Update hidden input
+                
+                // Remove previous selection highlight
+                document.querySelectorAll('.calendar-date.selected').forEach(cell => {
+                    cell.classList.remove('selected');
+                });
+                // Add new selection highlight
+                const selectedCell = document.querySelector(`.calendar-date[data-date="${date}"]`);
+                if (selectedCell) {
+                    selectedCell.classList.add('selected');
+                }
+
+                loadTimeslots(date);
+            }
+
+            prevMonthBtn.addEventListener('click', () => {
+                currentCalendarDate.setMonth(currentCalendarDate.getMonth() - 1);
+                renderCalendar();
+            });
+
+            nextMonthBtn.addEventListener('click', () => {
+                currentCalendarDate.setMonth(currentCalendarDate.getMonth() + 1);
+                renderCalendar();
+            });
             
-            selects.forEach(selectId => {
-                const timeSelect = document.getElementById(selectId);
-                if (timeSelect) {
-                    timeSelect.innerHTML = '<option value="">Select Time</option>';
-                    
+            // Initial calendar render
+            renderCalendar();
+
+            function loadTimeslots(date) {
+                if (!date) {
+                    timeslotGrid.innerHTML = '';
+                    loadingMessage.textContent = 'Please select a date.';
+                    return;
+                }
+
+                loadingMessage.textContent = 'Loading time slots...';
+                timeslotGrid.innerHTML = '';
+
+                // Detach previous listener if any
+                if (currentFirebaseListenerRef) {
+                    currentFirebaseListenerRef.off('value');
+                }
+
+                const dateRef = database.ref('bookedSlots/' + date);
+                currentFirebaseListenerRef = dateRef; // Store reference to current listener
+
+                dateRef.on('value', (snapshot) => {
+                    console.log('Firebase snapshot received for date:', date);
+                    const dateBookedSlots = snapshot.val() || {};
+                    console.log('Parsed booked slots data:', dateBookedSlots);
+                    timeslotGrid.innerHTML = ''; // Clear previous slots
+                    loadingMessage.textContent = ''; // Hide loading message
+
+                    const allTimeSlots = [];
                     for (let h = 10; h <= 21; h++) {
                         for (let m = 0; m < 60; m += 30) {
                             if (h === 21 && m > 0) continue;
@@ -383,300 +515,145 @@
                             if (displayHour === 0) displayHour = 12;
                             let label = `${displayHour}:${min} ${ampm}`;
                             let value = `${hour}:${min}`;
-                            timeSelect.innerHTML += `<option value="${value}">${label}</option>`;
+                            allTimeSlots.push({ label, value });
                         }
                     }
-                }
-            });
-        }
 
-        // Toggle booking mode
-        function toggleBookingMode() {
-            const mode = document.getElementById('bookingMode').value;
-            const singleControls = document.getElementById('singleSlotControls');
-            const multipleControls = document.getElementById('multipleSlotControls');
-            const rangeControls = document.getElementById('rangeControls');
-            
-            // Hide all controls first
-            singleControls.style.display = 'none';
-            multipleControls.style.display = 'none';
-            rangeControls.style.display = 'none';
-            
-            // Show relevant controls
-            if (mode === 'single') {
-                singleControls.style.display = 'block';
-            } else if (mode === 'multiple') {
-                multipleControls.style.display = 'block';
-            } else if (mode === 'range') {
-                rangeControls.style.display = 'block';
-            }
-        }
+                    // Populate manual booking form time slots
+                    manualTimeSelect.innerHTML = '';
+                    const defaultOption = document.createElement('option');
+                    defaultOption.value = '';
+                    defaultOption.textContent = 'Select Time Slot';
+                    manualTimeSelect.appendChild(defaultOption);
 
-        // Show message
-        function showMessage(text, type = 'success') {
-            const messageArea = document.getElementById('messageArea');
-            messageArea.innerHTML = `<div class="message message-${type}">${text}</div>`;
-            setTimeout(() => {
-                messageArea.innerHTML = '';
-            }, 3000);
-        }
+                    allTimeSlots.forEach(slot => {
+                        const isBooked = dateBookedSlots[slot.value] && dateBookedSlots[slot.value].booked;
+                        const bookingInfo = isBooked ? dateBookedSlots[slot.value] : null;
 
-        // Add booked slot
-        function addBookedSlot() {
-            const date = document.getElementById('bookDate').value;
-            const mode = document.getElementById('bookingMode').value;
-            const customer = document.getElementById('bookCustomer').value;
-            let timesToBook = [];
+                        const timeslotItem = document.createElement('div');
+                        timeslotItem.classList.add('timeslot-item');
+                        timeslotItem.classList.add(isBooked ? 'booked' : 'available');
+                        timeslotItem.dataset.time = slot.value;
+                        timeslotItem.innerHTML = `
+                            <div>${slot.label}</div>
+                            ${isBooked ? `
+                                <div class="timeslot-info">
+                                    <strong>Service:</strong> ${bookingInfo.service || 'N/A'}<br>
+                                    <strong>Client:</strong> ${bookingInfo.name || 'N/A'}<br>
+                                    <strong>Tech:</strong> ${bookingInfo.technician || 'Any'}<br>
+                                    <span style="font-size:0.8em;">(${bookingInfo.phone || 'N/A'})</span>
+                                </div>
+                            ` : '<div class="timeslot-info">Available</div>'}
+                        `;
+                        timeslotGrid.appendChild(timeslotItem);
 
-            if (!date) {
-                showMessage('Please select a date', 'error');
-                return;
-            }
+                        timeslotItem.addEventListener('click', () => {
+                            toggleTimeslotStatus(date, slot.value, isBooked, bookingInfo);
+                        });
 
-            if (mode === 'single') {
-                const time = document.getElementById('bookTime').value;
-                if (!time) {
-                    showMessage('Please select a time', 'error');
-                    return;
-                }
-                timesToBook.push(time);
-            } else if (mode === 'multiple') {
-                const startTime = document.getElementById('startTime').value;
-                const numSlots = parseInt(document.getElementById('numSlots').value);
-                if (!startTime) {
-                    showMessage('Please select start time', 'error');
-                    return;
-                }
-                
-                // Parse start time
-                const [startHour, startMin] = startTime.split(':').map(Number);
-                
-                // Add consecutive slots
-                for (let i = 0; i < numSlots; i++) {
-                    const totalMinutes = (startHour * 60 + startMin) + (i * 30);
-                    const hour = Math.floor(totalMinutes / 60);
-                    const min = totalMinutes % 60;
-                    
-                    // Skip if beyond operating hours
-                    if (hour > 21 || (hour === 21 && min > 0)) break;
-                    
-                    const timeValue = `${hour.toString().padStart(2, '0')}:${min.toString().padStart(2, '0')}`;
-                    timesToBook.push(timeValue);
-                }
-            } else if (mode === 'range') {
-                const rangeStart = document.getElementById('rangeStart').value;
-                const rangeEnd = document.getElementById('rangeEnd').value;
-                if (!rangeStart || !rangeEnd) {
-                    showMessage('Please select both start and end time', 'error');
-                    return;
-                }
-                
-                // Parse times
-                const [startHour, startMin] = rangeStart.split(':').map(Number);
-                const [endHour, endMin] = rangeEnd.split(':').map(Number);
-                
-                // Validate range
-                if (startHour > endHour || (startHour === endHour && startMin >= endMin)) {
-                    showMessage('End time must be after start time', 'error');
-                    return;
-                }
-                
-                // Add all slots in range
-                let currentHour = startHour;
-                let currentMin = startMin;
-                
-                while (currentHour < endHour || (currentHour === endHour && currentMin < endMin)) {
-                    const timeValue = `${currentHour.toString().padStart(2, '0')}:${currentMin.toString().padStart(2, '0')}`;
-                    timesToBook.push(timeValue);
-                    
-                    // Increment by 30 minutes
-                    currentMin += 30;
-                    if (currentMin >= 60) {
-                        currentMin = 0;
-                        currentHour++;
+                        // Add to manual booking form only if available
+                        if (!isBooked) {
+                            const option = document.createElement('option');
+                            option.value = slot.value;
+                            option.textContent = slot.label;
+                            manualTimeSelect.appendChild(option);
+                        }
+                    });
+
+                    if (allTimeSlots.length === 0) {
+                        loadingMessage.textContent = 'No time slots available for this date.';
                     }
-                    
-                    // Stop if beyond operating hours
-                    if (currentHour > 21 || (currentHour === 21 && currentMin > 0)) break;
-                }
-            }
 
-            if (!bookedSlots[date]) {
-                bookedSlots[date] = {};
-            }
-
-            // Book all selected timeslots
-            timesToBook.forEach(time => {
-                bookedSlots[date][time] = {
-                    booked: true,
-                    customer: customer || 'Customer',
-                    addedAt: new Date().toISOString()
-                };
-            });
-
-            localStorage.setItem('orchidBookedSlots', JSON.stringify(bookedSlots));
-            
-            // Reset form
-            document.getElementById('bookDate').value = '';
-            document.getElementById('bookTime').value = '';
-            document.getElementById('startTime').value = '';
-            document.getElementById('rangeStart').value = '';
-            document.getElementById('rangeEnd').value = '';
-            document.getElementById('bookCustomer').value = '';
-            document.getElementById('bookingMode').value = 'single';
-            toggleBookingMode();
-            
-            const slotsText = timesToBook.length > 1 ? `${timesToBook.length} timeslots` : '1 timeslot';
-            showMessage(`Successfully booked ${slotsText}`);
-            updateDisplay();
-        }
-
-        // Remove booked slot
-        function removeBookedSlot(date, time) {
-            if (bookedSlots[date] && bookedSlots[date][time]) {
-                delete bookedSlots[date][time];
-                
-                // Remove date if no more slots
-                if (Object.keys(bookedSlots[date]).length === 0) {
-                    delete bookedSlots[date];
-                }
-                
-                localStorage.setItem('orchidBookedSlots', JSON.stringify(bookedSlots));
-                showMessage('Timeslot marked as available');
-                updateDisplay();
-            }
-        }
-
-        // Clear all booked slots
-        function clearAllBooked() {
-            if (confirm('Are you sure you want to clear all booked timeslots?')) {
-                bookedSlots = {};
-                localStorage.setItem('orchidBookedSlots', JSON.stringify(bookedSlots));
-                showMessage('All booked timeslots cleared');
-                updateDisplay();
-            }
-        }
-
-        // Export data
-        function exportData() {
-            const dataStr = JSON.stringify(bookedSlots, null, 2);
-            const dataBlob = new Blob([dataStr], { type: 'application/json' });
-            const url = URL.createObjectURL(dataBlob);
-            const link = document.createElement('a');
-            link.href = url;
-            link.download = `orchid-booked-slots-${new Date().toISOString().split('T')[0]}.json`;
-            link.click();
-            URL.revokeObjectURL(url);
-            showMessage('Data exported successfully');
-        }
-
-        // Format time for display
-        function formatTime(time) {
-            const [h, m] = time.split(':');
-            const hour = parseInt(h);
-            const ampm = hour < 12 ? 'AM' : 'PM';
-            const displayHour = hour > 12 ? hour - 12 : hour;
-            return `${displayHour}:${m} ${ampm}`;
-        }
-
-        // Format date for display
-        function formatDate(dateStr) {
-            const date = new Date(dateStr + 'T00:00:00');
-            const options = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };
-            return date.toLocaleDateString('en-US', options);
-        }
-
-        // Update stats
-        function updateStats() {
-            const today = new Date().toISOString().split('T')[0];
-            let totalCount = 0;
-            let todayCount = 0;
-            let upcomingCount = 0;
-
-            Object.keys(bookedSlots).forEach(date => {
-                const slotCount = Object.keys(bookedSlots[date]).length;
-                totalCount += slotCount;
-                
-                if (date === today) {
-                    todayCount = slotCount;
-                } else if (date > today) {
-                    upcomingCount += slotCount;
-                }
-            });
-
-            document.getElementById('totalBooked').textContent = totalCount;
-            document.getElementById('todayBooked').textContent = todayCount;
-            document.getElementById('upcomingBooked').textContent = upcomingCount;
-        }
-
-        // Update display
-        function updateDisplay() {
-            updateStats();
-            
-            const grid = document.getElementById('timeslotsGrid');
-            const sortedDates = Object.keys(bookedSlots).sort();
-            
-            if (sortedDates.length === 0) {
-                grid.innerHTML = '<div class="no-slots">No booked timeslots yet.</div>';
-                return;
-            }
-
-            grid.innerHTML = '';
-            
-            sortedDates.forEach(date => {
-                const dateSection = document.createElement('div');
-                dateSection.className = 'date-section';
-                
-                const dateHeader = document.createElement('div');
-                dateHeader.className = 'date-header';
-                dateHeader.textContent = formatDate(date);
-                dateSection.appendChild(dateHeader);
-                
-                const sortedTimes = Object.keys(bookedSlots[date]).sort();
-                
-                sortedTimes.forEach(time => {
-                    const slot = bookedSlots[date][time];
-                    const slotItem = document.createElement('div');
-                    slotItem.className = 'timeslot-item';
-                    
-                    slotItem.innerHTML = `
-                        <div>
-                            <div class="timeslot-time">${formatTime(time)}</div>
-                            <div style="font-size: 0.85rem; color: #666; margin-top: 2px;">${slot.customer}</div>
-                        </div>
-                        <button class="remove-btn" onclick="removeBookedSlot('${date}', '${time}')" title="Mark as Available">×</button>
-                    `;
-                    
-                    dateSection.appendChild(slotItem);
+                }, (errorObject) => {
+                    console.error('The read failed: ' + errorObject.name);
+                    loadingMessage.textContent = 'Error loading time slots.';
                 });
-                
-                grid.appendChild(dateSection);
-            });
-        }
-
-        // Clean up old dates on load
-        function cleanupOldDates() {
-            const today = new Date().toISOString().split('T')[0];
-            let cleaned = false;
-            
-            Object.keys(bookedSlots).forEach(date => {
-                if (date < today) {
-                    delete bookedSlots[date];
-                    cleaned = true;
-                }
-            });
-            
-            if (cleaned) {
-                localStorage.setItem('orchidBookedSlots', JSON.stringify(bookedSlots));
             }
-        }
 
-        // Initialize
-        document.addEventListener('DOMContentLoaded', function() {
-            setMinDate();
-            populateTimeSlots();
-            cleanupOldDates();
-            updateDisplay();
+            function toggleTimeslotStatus(date, time, currentlyBooked, bookingInfo) {
+                const timeslotPath = 'bookedSlots/' + date + '/' + time;
+                const confirmMessage = currentlyBooked ? 
+                    `Are you sure you want to mark ${time} as AVAILABLE? (This will remove the booking details)` : 
+                    `Are you sure you want to mark ${time} as BOOKED?`;
+
+                if (confirm(confirmMessage)) {
+                    if (currentlyBooked) {
+                        // Mark as available (remove from Firebase)
+                        database.ref(timeslotPath).remove()
+                            .then(() => {
+                                console.log(`Timeslot ${time} on ${date} marked as AVAILABLE.`);
+                                displayMessage(`Timeslot ${time} on ${date} marked as AVAILABLE.`, 'success');
+                            })
+                            .catch((error) => {
+                                console.error("Error marking timeslot as available:", error);
+                                displayMessage("Error updating timeslot. Please try again.", 'error');
+                            });
+                    } else {
+                        // Mark as booked (add to Firebase with minimal info for admin view)
+                        // You could add a prompt here for admin to enter details if needed
+                        database.ref(timeslotPath).set({
+                            booked: true,
+                            service: bookingInfo ? bookingInfo.service : 'Manual', // Use existing if available, else manual
+                            name: bookingInfo ? bookingInfo.name : 'Admin', // Use existing if available, else Admin
+                            phone: bookingInfo ? bookingInfo.phone : '',
+                            email: bookingInfo ? bookingInfo.email : '',
+                            technician: bookingInfo ? bookingInfo.technician : '',
+                            timestamp: new Date().toISOString()
+                        })
+                        .then(() => {
+                            console.log(`Timeslot ${time} on ${date} marked as BOOKED.`);
+                            displayMessage(`Timeslot ${time} on ${date} marked as BOOKED.`, 'success');
+                        })
+                        .catch((error) => {
+                            console.error("Error marking timeslot as booked:", error);
+                            displayMessage("Error updating timeslot. Please try again.", 'error');
+                        });
+                    }
+                }
+            }
+
+            // Handle manual booking form submission
+            manualBookingForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                const name = manualNameInput.value.trim();
+                const email = manualEmailInput.value.trim();
+                const phone = manualPhoneInput.value.trim();
+                const service = manualServiceSelect.value;
+                const technician = manualTechnicianSelect.value;
+                const time = manualTimeSelect.value;
+                const notes = manualNotesInput.value.trim();
+                const date = adminDateInput.value; // Get the currently selected date from the calendar
+
+                if (!name || !email || !service || !time || !date) {
+                    displayMessage('Please fill in all required fields.', 'error');
+                    return;
+                }
+
+                const bookedSlotRef = database.ref('bookedSlots/' + date + '/' + time);
+                bookedSlotRef.set({
+                    booked: true,
+                    name: name,
+                    email: email,
+                    phone: phone,
+                    service: service,
+                    technician: technician,
+                    notes: notes,
+                    timestamp: new Date().toISOString()
+                })
+                .then(() => {
+                    displayMessage('Manual booking added successfully!', 'success');
+                    manualBookingForm.reset();
+                    // No need to call loadTimeslots, Firebase listener will handle it
+                })
+                .catch((error) => {
+                    console.error("Error adding manual booking:", error);
+                    displayMessage('Error adding manual booking. Please try again.', 'error');
+                });
+            });
+
+            // Initial load of timeslots for the current date
+            selectDate(new Date().toISOString().split('T')[0]);
         });
     </script>
 </body>
