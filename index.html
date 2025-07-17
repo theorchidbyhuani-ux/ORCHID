@@ -1316,6 +1316,16 @@
                     <option value="FACE TREATMENTS">Face Treatments</option>
                 </select>
 
+                <label for="bookingTechnician">Preferred Technician <span class="optional">(optional)</span></label>
+                <select id="bookingTechnician" name="Technician">
+                    <option value="">Any Available</option>
+                    <option value="Shey">Shey</option>
+                    <option value="Hua-ni">Hua-ni</option>
+                    <option value="Setni">Setni</option>
+                    <option value="Sanaz">Sanaz</option>
+                    <option value="Diya">Diya</option>
+                </select>
+
                 <label for="bookingNotes">Notes</label>
                 <select id="bookingNotes" name="Notes">
                     <option value="">Select</option>
@@ -1587,37 +1597,44 @@
             function populateTimeSlots() {
                 bookingTime.innerHTML = '<option value="">Select Time</option>';
                 
-                // Get booked slots from localStorage
-                // Note: Booking slots are still managed by localStorage.
-                // For live updates on booking slots, you'd need a backend.
-                // This is beyond the scope of a static CMS for content.
-                const bookedSlots = JSON.parse(localStorage.getItem('orchidBookedSlots') || '{}');
+                // Fetch booked slots from Firebase
                 const selectedDate = bookingDate.value;
-                const dateBookedSlots = bookedSlots[selectedDate] || {};
-                
-                for (let h = 10; h <= 21; h++) {
-                    for (let m = 0; m < 60; m += 30) {
-                        if (h === 21 && m > 0) continue;
-                        let hour = h < 10 ? '0' + h : h;
-                        let min = m === 0 ? '00' : '30';
-                        let ampm = h < 12 ? 'AM' : 'PM';
-                        let displayHour = h > 12 ? h - 12 : h;
-                        if (displayHour === 0) displayHour = 12;
-                        let label = `${displayHour}:${min} ${ampm}`;
-                        let value = `${hour}:${min}`;
-                        
-                        // Check if this timeslot is booked
-                        const isBooked = dateBookedSlots[value] && dateBookedSlots[value].booked;
-                        
-                        if (isBooked) {
-                            bookingTime.innerHTML += `<option value="${value}" disabled>${label} - Unavailable</option>`;
-                        } else {
-                            bookingTime.innerHTML += `<option value="${value}">${label}</option>`;
+                if (!selectedDate) {
+                    return; // No date selected, so no time slots to populate
+                }
+
+                // Path to the selected date's booked slots in Firebase
+                const dateRef = database.ref('bookedSlots/' + selectedDate);
+
+                dateRef.once('value', (snapshot) => {
+                    const dateBookedSlots = snapshot.val() || {};
+                    
+                    for (let h = 10; h <= 21; h++) {
+                        for (let m = 0; m < 60; m += 30) {
+                            if (h === 21 && m > 0) continue;
+                            let hour = h < 10 ? '0' + h : h;
+                            let min = m === 0 ? '00' : '30';
+                            let ampm = h < 12 ? 'AM' : 'PM';
+                            let displayHour = h > 12 ? h - 12 : h;
+                            if (displayHour === 0) displayHour = 12;
+                            let label = `${displayHour}:${min} ${ampm}`;
+                            let value = `${hour}:${min}`;
+                            
+                            // Check if this timeslot is booked in Firebase
+                            const isBooked = dateBookedSlots[value] && dateBookedSlots[value].booked;
+                            
+                            if (isBooked) {
+                                bookingTime.innerHTML += `<option value="${value}" disabled>${label} - Unavailable</option>`;
+                            } else {
+                                bookingTime.innerHTML += `<option value="${value}">${label}</option>`;
+                            }
                         }
                     }
-                }
+                }, (errorObject) => {
+                    console.log('The read failed: ' + errorObject.name);
+                    bookingFormMessages.innerHTML = '<div class="booking-error">Could not load time slots. Please try again.</div>';
+                });
             }
-            populateTimeSlots();
 
             // When Book Now is clicked, open booking modal and set service
             bookBtns.forEach(btn => {
@@ -1692,6 +1709,7 @@
                 const date = bookingForm.bookingDate.value;
                 const time = bookingForm.bookingTime.value;
                 const message = bookingForm.bookingMessage.value.trim();
+                const technician = bookingForm.bookingTechnician.value; // Capture technician
                 const timestamp = new Date().toISOString();
 
                 // Basic validation
@@ -1703,8 +1721,22 @@
                 // Show waiting message
                 bookingFormMessages.innerHTML = '<div class="booking-wait">Submitting your booking...</div>';
 
-                // Prepare email content
-                const emailBody = `
+                // Mark the time slot as booked in Firebase
+                const bookedSlotRef = database.ref('bookedSlots/' + date + '/' + time);
+                bookedSlotRef.set({ booked: true, name: name, phone: phone, email: email, service: service, notes: notes, message: message, technician: technician, timestamp: timestamp })
+                .then(() => {
+                    console.log("Time slot marked as booked in Firebase!");
+                    // Now, send the email
+                    sendEmail();
+                })
+                .catch((error) => {
+                    console.error("Error marking time slot as booked:", error);
+                    bookingFormMessages.innerHTML = '<div class="booking-error">Error booking time slot. Please try again.</div>';
+                });
+
+                function sendEmail() {
+                    // Prepare email content
+                    const emailBody = `
 Booking Request from The Orchid Website
 
 Timestamp: ${timestamp}
@@ -1716,55 +1748,53 @@ Service: ${service}
 Notes: ${notes}
 Date: ${date}
 Time: ${time}
+Preferred Technician: ${technician || '(Any Available)'}
 Message: ${message || '(none)'}
-                `;
+                    `;
 
-                // Send email using EmailJS (client-side) or your own backend
-                // For this example, we'll use EmailJS (https://www.emailjs.com/)
-                // You must set up an EmailJS account and replace the following with your own service/template/user IDs
-                // This will send the email to rubansingh126@gmail.com
-
-                // Remove Google Apps Script submission
-                // Instead, send via EmailJS
-                emailjs.send('service_psng4kg', 'template_w4r2wfc', {
-                    to_email: 'rubansingh126@gmail.com',
-                    from_name: name,
-                    from_email: email,
-                    phone: phone,
-                    dob: dob,
-                    service: service,
-                    notes: notes,
-                    date: date,
-                    time: time,
-                    message: message,
-                    timestamp: timestamp,
-                    email_body: emailBody
-                })
-                .then(function(response) {
-                    // Reset form
-                    bookingForm.reset();
-                    setMinDate();
-                    populateTimeSlots();
-                    bookingFormMessages.innerHTML = '';
-                    
-                    // Close booking modal immediately
-                    bookingModalOverlay.classList.remove('active');
-                    document.body.style.overflow = 'auto';
-                    updateAllModalVisibility();
-                    
-                    // Show confirmation overlay after a brief delay
-                    setTimeout(() => {
-                        const confirmationOverlay = document.getElementById('confirmationOverlay');
-                        confirmationOverlay.classList.add('active');
+                    // Send email using EmailJS (client-side) or your own backend
+                    emailjs.send('service_psng4kg', 'template_w4r2wfc', {
+                        to_email: 'rubansingh126@gmail.com',
+                        from_name: name,
+                        from_email: email,
+                        phone: phone,
+                        dob: dob,
+                        service: service,
+                        notes: notes,
+                        date: date,
+                        time: time,
+                        message: message,
+                        timestamp: timestamp,
+                        technician: technician, // Add technician to email params
+                        email_body: emailBody
+                    })
+                    .then(function(response) {
+                        // Reset form
+                        bookingForm.reset();
+                        setMinDate();
+                        populateTimeSlots();
+                        bookingFormMessages.innerHTML = '';
                         
-                        // Auto-close confirmation after 5 seconds
+                        // Close booking modal immediately
+                        bookingModalOverlay.classList.remove('active');
+                        document.body.style.overflow = 'auto';
+                        updateAllModalVisibility();
+                        
+                        // Show confirmation overlay after a brief delay
                         setTimeout(() => {
-                            confirmationOverlay.classList.remove('active');
-                        }, 5000);
-                    }, 300);
-                }, function(error) {
-                    bookingFormMessages.innerHTML = '<div class="booking-error">Sorry, there was an error. Please try again or contact us.</div>';
-                });
+                            const confirmationOverlay = document.getElementById('confirmationOverlay');
+                            confirmationOverlay.classList.add('active');
+                            
+                            // Auto-close confirmation after 5 seconds
+                            setTimeout(() => {
+                                confirmationOverlay.classList.remove('active');
+                            }, 5000);
+                        }, 300);
+                    }, function(error) {
+                        bookingFormMessages.innerHTML = '<div class="booking-error">Sorry, there was an error sending the confirmation. Please try again or contact us.</div>';
+                        console.error("EmailJS error:", error);
+                    });
+                }
             });
 
             // Set copyright year
@@ -1773,10 +1803,26 @@ Message: ${message || '(none)'}
             // Set min date on load
             setMinDate();
 
-            // When date is changed, optionally filter time slots (future: check for conflicts)
-            // For now, always show all slots
+            // When date is changed, populate time slots from Firebase
             bookingDate.addEventListener('change', function() {
-                populateTimeSlots(); // Repopulate time slots to check for blocked slots on the selected date
+                populateTimeSlots(); 
+            });
+
+            // Listen for changes in Firebase Realtime Database for the selected date
+            // This enables real-time updates for time slots
+            bookingDate.addEventListener('change', function() {
+                const selectedDate = bookingDate.value;
+                // Detach previous listener if any
+                if (window.firebaseDateListener) {
+                    database.ref('bookedSlots/' + window.firebaseDateListener).off('value');
+                }
+                if (selectedDate) {
+                    const dateRef = database.ref('bookedSlots/' + selectedDate);
+                    dateRef.on('value', (snapshot) => {
+                        populateTimeSlots(); // Repopulate on any change to the selected date's bookings
+                    });
+                    window.firebaseDateListener = selectedDate; // Store the current date being listened to
+                }
             });
 
             // Floating Book Button click logic
@@ -2123,6 +2169,11 @@ Message: ${message || '(none)'}
     </script>
     <!-- EmailJS SDK -->
     <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    <!-- Your Firebase Config -->
+    <script src="firebase-config.js"></script>
     <script>
       (function(){
         emailjs.init("Pd-yRlYBJ_aOkUhOS"); // Replace with your EmailJS user ID
