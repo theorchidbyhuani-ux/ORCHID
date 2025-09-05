@@ -1,7 +1,7 @@
 const globalPromoData = {
-  "text": "JULY SPECIAL! NAIL & EYELASHES SERVICES 10% OFF",
-  "startDate": "2025-07-01",
-  "endDate": "2025-07-31",
+  "text": "September Back to School NAIL & EYELASHES SERVICES 10% OFF",
+  "startDate": "2025-09-01",
+  "endDate": "2025-09-30",
   "status": "active",
   "color": "pink",
   "lastUpdated": "2025-07-06T20:26:23.192Z"
@@ -98,3 +98,4 @@ const globalGalleryData = {
         { name: "Service Price List 4", path: "services/4.jpeg", category: "pricelist", alt: "Service Price List 4", description: "Complete service menu" }
     ]
 };
+
