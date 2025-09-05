@@ -8,16 +8,12 @@ const globalPromoData = {
 };
 const globalServicesData = {
     eyelash: [
-        { name: "Natural Classic Set", price: 65, description: "Natural looking classic lash extensions", category: "classic", duration: 120 },
-        { name: "Elegant Classic Set", price: 75, description: "Elegant classic lash extensions", category: "classic", duration: 120 },
         { name: "Full Glam Classic Set", price: 85, description: "Full glam classic lash extensions", category: "classic", duration: 120 },
         { name: "Natural Hybrid Set", price: 100, description: "Natural hybrid lash extensions", category: "hybrid", duration: 150 },
         { name: "Elegant Hybrid Set", price: 110, description: "Elegant hybrid lash extensions", category: "hybrid", duration: 150 },
         { name: "Glam Hybrid Set", price: 120, description: "Glam hybrid lash extensions", category: "hybrid", duration: 150 },
         { name: "Volume Full Set", price: 130, description: "Volume lash extensions", category: "volume", duration: 180 },
         { name: "Mega Volume Full Set", price: 150, description: "Mega volume lash extensions", category: "volume", duration: 180 },
-        { name: "Natural Classic Refill", price: 55, description: "2-week refill for Natural Classic", category: "refill", duration: 75 },
-        { name: "Elegant Classic Refill", price: 65, description: "2-week refill for Elegant Classic", category: "refill", duration: 75 },
         { name: "Full Glam Classic Refill", price: 75, description: "2-week refill for Full Glam Classic", category: "refill", duration: 75 },
         { name: "Natural Hybrid Refill", price: 70, description: "2-week refill for Natural Hybrid", category: "refill", duration: 90 },
         { name: "Elegant Hybrid Refill", price: 80, description: "2-week refill for Elegant Hybrid", category: "refill", duration: 90 },
@@ -31,7 +27,6 @@ const globalServicesData = {
         { name: "Shellac Manicure", price: 35, description: "Shellac nail polish application", category: "natural", duration: 45 },
         { name: "BIAB (Builder in a Bottle)", price: 60, description: "Builder in a bottle application", category: "natural", duration: 90 },
         { name: "BIAB Refill", price: 55, description: "BIAB refill service", category: "natural", duration: 75, perFingerPrice: 6 },
-        { name: "Shellac Removal", price: 8, description: "Shellac removal service", category: "removal", duration: 15 },
         { name: "Bio Gel Extensions - XS/Small", price: 65, refillPrice: 7, description: "Bio gel nail extensions", category: "extensions", duration: 120 },
         { name: "Bio Gel Extensions - Medium", price: 65, refillPrice: 7, description: "Bio gel nail extensions", category: "extensions", duration: 120 },
         { name: "Bio Gel Extensions - Long", price: 70, refillPrice: 8, description: "Bio gel nail extensions", category: "extensions", duration: 120 },
@@ -49,9 +44,9 @@ const globalServicesData = {
         { name: "3D Design (per finger)", price: 3, description: "3D design per finger", category: "addons", duration: 0 },
         { name: "Simple Art (per finger)", price: 2, description: "Simple art per finger", category: "addons", duration: 0 },
         { name: "Chrome (per finger)", price: 2, description: "Chrome per finger", category: "addons", duration: 0 },
-        { name: "Stickers (per finger)", price: 1, description: "Stickers per finger", category: "addons", duration: 0 },
+        { name: "Stickers (per finger)", price: 0.3, description: "Stickers per finger", category: "addons", duration: 0 },
         { name: "Glitters (per finger)", price: 2, description: "Glitters per finger", category: "addons", duration: 0 },
-        { name: "Gems (per stone)", price: 1, description: "Gems per stone", category: "addons", duration: 0 },
+        { name: "Gems (per stone)", price: 0.3, description: "Gems per stone", category: "addons", duration: 0 },
         { name: "Mirror (per finger)", price: 2, description: "Mirror per finger", category: "addons", duration: 0 },
         { name: "Cat Eye (per finger)", price: 2, description: "Cat Eye per finger", category: "addons", duration: 0 },
         { name: "Extension Removal", price: 15, description: "Extension removal", category: "removal", duration: 30 },
@@ -62,6 +57,7 @@ const globalServicesData = {
         { name: "Swedish Massage – 60 min", price: 90, description: "Swedish massage technique", category: "massage", duration: 60 },
         { name: "Relaxation Massage – 45 min", price: 70, description: "Relaxing full body massage", category: "massage", duration: 45 },
         { name: "Swedish Massage – 45 min", price: 70, description: "Swedish massage technique", category: "massage", duration: 45 },
+        { name: "Back Massage – 30 min", price: 45, description: "Back massage technique", category: "massage", duration: 45 },
         { name: "Upper Lip Waxing", price: 10, description: "Upper lip hair removal", category: "waxing", duration: 15 },
         { name: "Brows Waxing", price: 15, description: "Eyebrow shaping and waxing", category: "waxing", duration: 20 },
         { name: "Underarms Waxing", price: 25, description: "Underarm hair removal", category: "waxing", duration: 20 },
@@ -78,6 +74,7 @@ const globalServicesData = {
         { name: "Dermaplaning Facial", price: 120, description: "Dermaplaning treatment", category: "advanced", duration: 75 },
         { name: "Custom Facial", price: 90, description: "Customized facial treatment", category: "basic", duration: 60 },
         { name: "Microneedling", price: 150, description: "Microneedling treatment per session", category: "advanced", duration: 90 }
+        { name: "Lymph Drainage Points Facial", price: 60, description: "Lymph treatment per session", category: "advanced", duration: 30 }
     ]
 };
 const globalGalleryData = {
@@ -98,4 +95,5 @@ const globalGalleryData = {
         { name: "Service Price List 4", path: "services/4.jpeg", category: "pricelist", alt: "Service Price List 4", description: "Complete service menu" }
     ]
 };
+
 
