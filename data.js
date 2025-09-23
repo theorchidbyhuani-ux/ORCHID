@@ -8,8 +8,6 @@ const globalPromoData = {
 };
 const globalServicesData = {
     eyelash: [
-        { name: "Natural Classic Set", price: 65, description: "Natural looking classic lash extensions", category: "classic", duration: 120 },
-        { name: "Elegant Classic Set", price: 75, description: "Elegant classic lash extensions", category: "classic", duration: 120 },
         { name: "Full Glam Classic Set", price: 85, description: "Full glam classic lash extensions", category: "classic", duration: 120 },
         { name: "Natural Hybrid Set", price: 100, description: "Natural hybrid lash extensions", category: "hybrid", duration: 150 },
         { name: "Elegant Hybrid Set", price: 110, description: "Elegant hybrid lash extensions", category: "hybrid", duration: 150 },
@@ -98,3 +96,4 @@ const globalGalleryData = {
         { name: "Service Price List 4", path: "services/4.jpeg", category: "pricelist", alt: "Service Price List 4", description: "Complete service menu" }
     ]
 };
+
