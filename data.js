@@ -1,5 +1,5 @@
 const globalPromoData = {
-  "text": "GET NAILS 10% OFF, LIMITED OFFER TILL 31 OCTOBER!!",
+  "text": "Enjoy a relaxing Massage or Facial — choose one, only $75 per hour 💆‍♀️",
   "startDate": "2025-09-01",
   "endDate": "2025-09-30",
   "status": "active",
@@ -97,6 +97,7 @@ const globalGalleryData = {
         { name: "Service Price List 4", path: "services/4.jpeg", category: "pricelist", alt: "Service Price List 4", description: "Complete service menu" }
     ]
 };
+
 
 
 
