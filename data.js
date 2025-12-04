@@ -1,5 +1,5 @@
 const globalPromoData = {
-  "text": "🌟 Black Friday Deals Are Here — 10 Days Only!",
+  "text": "First visit Massage or Facial Choose one $75/Hour",
   "startDate": "2025-11-20",
   "endDate": "2025-11-30",
   "status": "active",
@@ -97,6 +97,7 @@ const globalGalleryData = {
         { name: "Service Price List 4", path: "services/4.jpeg", category: "pricelist", alt: "Service Price List 4", description: "Complete service menu" }
     ]
 };
+
 
 
 
