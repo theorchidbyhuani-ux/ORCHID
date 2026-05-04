@@ -1,10 +1,10 @@
 const globalPromoData = {
-  "text": "First visit Massage or Facial Choose one $75/Hour",
-  "startDate": "2025-11-20",
-  "endDate": "2025-11-30",
+  "text": "New Location Open:222 Spadina Ave, Toronto, ON M5T 3B3 (Inside Ylang Ylang Authentic Thai Spa)",
+  "startDate": "2026-05-5",
+  "endDate": "2026-05-31",
   "status": "active",
   "color": "pink",
-  "lastUpdated": "2025-07-06T20:26:23.192Z"
+  "lastUpdated": "2026-05-04T20:26:23.192Z"
 };
 const globalServicesData = {
     eyelash: [
