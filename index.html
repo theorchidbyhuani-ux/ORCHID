@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Orchid | Spa, Massage & Beauty in Toronto</title>
     <meta name="description" content="The Orchid offers luxury spa treatments, and beauty services in a serene, modern environment. Book your facial and massage in Toronto today!">
-    <meta name="keywords" content="spa, manicure, massage, eyelash extensions, face treatments, body massage, beauty, The Orchid, Toronto">
+    <meta name="keywords" content="spa, massage, eyelash extensions, face treatments, body massage, beauty, The Orchid, Toronto">
     <meta name="author" content="The Orchid">
     <link rel="canonical" href="https://shoporchid.ca/">
     <meta property="og:title" content="The Orchid | Spa, Massage & Beauty in Toronto">
@@ -41,7 +41,7 @@
     }
     </script>
     <style>
-        html, body, .promo-banner, .hero-content, .services-nav, .service-btn, .btn, .section-title, .modal-title, .nails-section-title, .price-name, .price-value, .modal-btn, footer, h1, h2, h3, p, span, a, button, input, label, .coming-soon-label, .coming-soon-banner {
+        html, body, .promo-banner, .hero-content, .services-nav, .service-btn, .btn, .section-title, .modal-title, .price-name, .price-value, .modal-btn, footer, h1, h2, h3, p, span, a, button, input, label, .coming-soon-label, .coming-soon-banner {
             font-family: 'Playfair Display', Arial, sans-serif;
         }
         .price-name, .nails-section-title {
@@ -1190,12 +1190,11 @@
         <div class="hero-content">
             <img src="logo.jpg" alt="THE ORCHID Spa & Nail Salon Logo" class="logo">
             <h1>The Orchid</h1>
-            <p>Experience luxury nail care and spa treatments in a serene environment in Toronto</p>
+            <p>Experience luxury spa treatments in a serene environment in Toronto</p>
             <div class="services-nav">
                 <button class="service-btn" data-service="eyelash" id="eyelashServiceBtn">EYELASH EXTENSIONS</button>
                 <button class="service-btn" data-service="bodymassage" id="bodymassageServiceBtn">BODY MASSAGE</button>
                 <button class="service-btn" data-service="facetreatments" id="facetreatmentsServiceBtn">FACE TREATMENTS</button>
-                <button class="service-btn nails-center" data-service="nails" id="nailsServiceBtn">NAILS</button>
             </div>
         </div>
     </section>
@@ -1267,23 +1266,7 @@
         </div>
     </div>
 
-    <div class="modal-overlay" id="nails-modal">
-        <div class="modal">
-            <button class="modal-close">&times;</button>
-            <h3 class="modal-title">NAILS</h3>
-            <div class="modal-gallery" id="nails-modal-gallery">
-                <!-- Nails modal gallery images will be dynamically loaded here -->
-            </div>
-            <div class="price-list" id="nails-price-list">
-                <!-- Nails prices will be dynamically loaded here -->
-            </div>
-            <a href="#" class="btn modal-btn book-btn" data-service="NAILS" style="position:relative;overflow:visible;">Book Now
-                <span class="flower-burst"></span>
-            </a>
-        </div>
-    </div>
-    </div>
-    <!-- Floating Book Button -->
+        <!-- Floating Book Button -->
     <button class="floating-book-btn" id="floatingBookBtn" title="Book Now" aria-label="Book Now">
         <span style="font-size:0.8rem;line-height:1;font-weight:600;">Book Now</span>
         <span class="flower-burst"></span>
@@ -1310,7 +1293,6 @@
                 <label for="bookingService">Service *</label>
                 <select id="bookingService" name="Service" required>
                     <option value="">Select Service</option>
-                    <option value="NAILS">Nails</option>
                     <option value="EYELASH EXTENSIONS">Eyelash Extensions</option>
                     <option value="BODY MASSAGE">Body Massage</option>
                     <option value="FACE TREATMENTS">Face Treatments</option>
@@ -1319,16 +1301,11 @@
                 <label for="bookingTechnician">Preferred Technician <span class="optional">(optional)</span></label>
                 <select id="bookingTechnician" name="Technician">
                     <option value="Hua-ni">Hua-ni</option>
-                    <option value="Setni">Setni</option>
-                    <option value="Yuliia">Yuliia</option>
                 </select>
 
                 <label for="bookingNotes">Notes</label>
                 <select id="bookingNotes" name="Notes">
                     <option value="">Select</option>
-                    <option value="Nails - Manicure">Nails - Manicure</option>
-                    <option value="Nails - Pedicure">Nails - Pedicure</option>
-                    <option value="Nails - Art/Design">Nails - Art/Design</option>
                     <option value="Eyelash - Classic">Eyelash - Classic</option>
                     <option value="Eyelash - Volume">Eyelash - Volume</option>
                     <option value="Massage - Swedish">Massage - Swedish</option>
@@ -2055,8 +2032,7 @@ Message: ${message || '(none)'}
             renderServiceModal('eyelash', 'EYELASH EXTENSIONS', globalServicesData.eyelash, globalGalleryData.gallery.filter(img => img.category === 'eyelashes'));
             renderServiceModal('bodymassage', 'BODY MASSAGE & WAXING', globalServicesData.massage, globalGalleryData.gallery.filter(img => img.category === 'waxing' || img.category === 'threading' || img.category === 'massage'));
             renderServiceModal('facetreatments', '🧖 Facial Services', globalServicesData.facial, globalGalleryData.gallery.filter(img => img.category === 'facials'));
-            renderServiceModal('nails', 'NAILS', globalServicesData.nails, globalGalleryData.gallery.filter(img => img.category === 'nails'));
-        }
+ }
 
         function renderServiceModal(idPrefix, title, services, galleryImages) {
             const modal = document.getElementById(`${idPrefix}-modal`);
@@ -2095,12 +2071,6 @@ Message: ${message || '(none)'}
                     if (categoryName === 'volume') displayCategoryName = '🌸 Hybrid/Volume Lash Extensions';
                     if (categoryName === 'refill') displayCategoryName = '🔁 Refills (2 Weeks)';
                     if (categoryName === 'removal') displayCategoryName = '❌ Lash Removal';
-                } else if (idPrefix === 'nails') {
-                    if (categoryName === 'natural') displayCategoryName = '🌿 Natural Nails';
-                    if (categoryName === 'extensions') displayCategoryName = '💅 Nail Extensions';
-                    if (categoryName === 'designs') displayCategoryName = '🎨 Nail Designs <span style="font-size:0.95em; color:#b48b6c;">(per set)</span>';
-                    if (categoryName === 'addons') displayCategoryName = '✨ Add-Ons <span style="font-size:0.95em; color:#b48b6c;">(per finger)</span>';
-                    if (categoryName === 'removal') displayCategoryName = '🧼 Removals';
                 } else if (idPrefix === 'massage') {
                     if (categoryName === 'massage') displayCategoryName = '💆 Massage Services';
                     if (categoryName === 'waxing') displayCategoryName = '🧖 Waxing Services';
@@ -2114,7 +2084,7 @@ Message: ${message || '(none)'}
                 priceListContainer.innerHTML += `<div class="nails-section-title" style="font-size:1.25em; margin:${categoryName === 'classic' || categoryName === 'natural' || categoryName === 'massage' || categoryName === 'basic' ? '0' : '1.5em'} 0 0.7em 0;">${displayCategoryName}</div>`;
 
                 // Render services for the current category
-                if (['eyelash', 'nails'].includes(idPrefix) && ['refill', 'removal', 'extensions', 'addons'].includes(categoryName)) {
+                if (['eyelash'].includes(idPrefix) && ['refill', 'removal', 'extensions'].includes(categoryName)) {
                     // Render as a table for specific categories
                     let tableHtml = `<div style="overflow-x:auto; margin-bottom:1.2em;"><table style="width:100%; border-radius:12px; border-collapse:separate; border-spacing:0; background:linear-gradient(90deg,#fff0fa 0%,#f9f9f9 100%); box-shadow:0 2px 12px #ffb2d133;">`;
                     tableHtml += `<thead><tr style="background:#ffe6f3;">`;
@@ -2122,11 +2092,7 @@ Message: ${message || '(none)'}
                     // Determine table headers based on category
                     if (categoryName === 'removal' && idPrefix === 'eyelash') {
                         tableHtml += `<th style="padding:10px 12px; text-align:left; border-top-left-radius:12px; color:#ff65a3; font-weight:700;">Service</th><th style="padding:10px 12px; text-align:left; color:#ff65a3; font-weight:700;">Removal Only</th><th style="padding:10px 12px; text-align:left; border-top-right-radius:12px; color:#ff65a3; font-weight:700;">With New Set</th>`;
-                    } else if (categoryName === 'extensions' && idPrefix === 'nails') {
-                        tableHtml += `<th style="padding:10px 12px; text-align:left; border-top-left-radius:12px; color:#ff65a3; font-weight:700;">Size</th><th style="padding:10px 12px; text-align:left; color:#ff65a3; font-weight:700;">Full Set</th><th style="padding:10px 12px; text-align:left; border-top-right-radius:12px; color:#ff65a3; font-weight:700;">Refill <span style="font-size:0.95em; color:#b48b6c;">(per finger)</span></th>`;
-                    } else if (categoryName === 'addons' && idPrefix === 'nails') {
-                        tableHtml += `<th style="padding:10px 12px; text-align:left; border-top-left-radius:12px; color:#ff65a3; font-weight:700;">Add-On</th><th style="padding:10px 12px; text-align:left; color:#ff65a3; font-weight:700;">Price</th>`;
-                    }
+                    } 
                     else {
                         tableHtml += `<th style="padding:10px 12px; text-align:left; border-top-left-radius:12px; color:#ff65a3; font-weight:700;">Style</th><th style="padding:10px 12px; text-align:left; border-top-right-radius:12px; color:#ff65a3; font-weight:700;">Price</th>`;
                     }
@@ -2139,9 +2105,7 @@ Message: ${message || '(none)'}
                             tableHtml += `<td style="padding:9px 12px;">${service.name}</td><td style="padding:9px 12px;">$${service.price}</td><td style="padding:9px 12px;">$${service.priceWithNewSet || 'N/A'}</td>`;
                         } else if (categoryName === 'extensions' && idPrefix === 'nails') {
                             tableHtml += `<td style="padding:9px 12px;">${service.name}</td><td style="padding:9px 12px;">$${service.price}</td><td style="padding:9px 12px;">$${service.refillPrice || 'N/A'}</td>`;
-                        } else if (categoryName === 'addons' && idPrefix === 'nails') {
-                            tableHtml += `<td style="padding:9px 12px;">${service.name}</td><td style="padding:9px 12px;">$${service.price}</td>`;
-                        }
+                        } 
                         else {
                             tableHtml += `<td style="padding:9px 12px;">${service.name}</td><td style="padding:9px 12px;">$${service.price}</td>`;
                         }
