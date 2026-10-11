@@ -299,58 +299,6 @@
             </div>
         </div>
         
-        <!-- Nails -->
-        <div class="service-category">
-            <div class="category-header">
-                <h2 class="category-title">💅 Nails</h2>
-                <button class="btn" onclick="toggleAddForm('nails')">Add Service</button>
-            </div>
-            
-            <div class="services-grid" id="nails-services">
-                <!-- Services will be loaded here -->
-            </div>
-            
-            <div class="add-service-form" id="nails-form">
-                <h3>Add New Nail Service</h3>
-                <form onsubmit="addService(event, 'nails')">
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="nails-name">Service Name *</label>
-                            <input type="text" id="nails-name" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="nails-price">Price *</label>
-                            <input type="number" id="nails-price" min="0" step="0.01" required>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="nails-description">Description</label>
-                        <textarea id="nails-description" rows="2"></textarea>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="nails-category">Subcategory</label>
-                            <select id="nails-category">
-                                <option value="natural">Natural Nails</option>
-                                <option value="extensions">Extensions</option>
-                                <option value="designs">Designs</option>
-                                <option value="addons">Add-ons</option>
-                                <option value="removal">Removal</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="nails-duration">Duration (minutes)</label>
-                            <input type="number" id="nails-duration" min="0">
-                        </div>
-                    </div>
-                    <div class="service-actions">
-                        <button type="submit" class="btn">Add Service</button>
-                        <button type="button" class="btn btn-secondary" onclick="toggleAddForm('nails')">Cancel</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-        
         <!-- Massage -->
         <div class="service-category">
             <div class="category-header">
@@ -482,38 +430,6 @@
                 { name: "Mega Volume Refill", price: 150, description: "2-week refill for Mega Volume", category: "refill", duration: 120 },
                 { name: "Classic Lash Removal", price: 20, priceWithNewSet: 10, description: "Classic lash extension removal", category: "removal", duration: 30 },
                 { name: "Hybrid/Volume Foreign Removal", price: 30, priceWithNewSet: 20, description: "Hybrid/Volume foreign lash removal", category: "removal", duration: 45 }
-            ],
-            nails: [
-                { name: "Manicure + Pedicure", price: 35, description: "Cleaning application", category: "natural", duration: 45 },
-                { name: "Shellac Manicure", price: 35, description: "Shellac nail polish application", category: "natural", duration: 45 },
-                { name: "Shellac Pedicure", price: 45, description: "Shellac nail polish application", category: "natural", duration: 45 },
-                { name: "BIAB (Builder in a Bottle)", price: 60, description: "Builder in a bottle application", category: "natural", duration: 90 },
-                { name: "BIAB Refill", price: 55, description: "BIAB refill service", category: "natural", duration: 75, perFingerPrice: 6 },
-                { name: "Shellac Removal", price: 8, description: "Shellac removal service", category: "removal", duration: 15 },
-                { name: "Bio Gel Extensions - XS/Small", price: 65, refillPrice: 7, description: "Bio gel nail extensions", category: "extensions", duration: 120 },
-                { name: "Bio Gel Extensions - Medium", price: 65, refillPrice: 7, description: "Bio gel nail extensions", category: "extensions", duration: 120 },
-                { name: "Bio Gel Extensions - Long", price: 70, refillPrice: 8, description: "Bio gel nail extensions", category: "extensions", duration: 120 },
-                { name: "Bio Gel Extensions - XL", price: 75, refillPrice: 9, description: "Bio gel nail extensions", category: "extensions", duration: 120 },
-                { name: "GelX Extensions - XS/Small", price: 60, description: "GelX nail extensions", category: "extensions", duration: 90 },
-                { name: "GelX Extensions - Medium", price: 60, description: "GelX nail extensions", category: "extensions", duration: 90 },
-                { name: "GelX Extensions - Long", price: 65, description: "GelX nail extensions", category: "extensions", duration: 90 },
-                { name: "GelX Extensions - XL", price: 75, description: "GelX nail extensions", category: "extensions", duration: 90 },
-                { name: "French Tip (per set)", price: 15, description: "French tip design for full set", category: "designs", duration: 15 },
-                { name: "Ombre/Aura (per set)", price: 20, description: "Ombre or Aura design for full set", category: "designs", duration: 20 },
-                { name: "Mirror (per set)", price: 18, description: "Mirror effect design for full set", category: "designs", duration: 15 },
-                { name: "Cat Eye (per set)", price: 15, description: "Cat Eye design for full set", category: "designs", duration: 15 },
-                { name: "French Tip (per finger)", price: 2, description: "French tip per finger", category: "addons", duration: 0 },
-                { name: "Ombre/Aura (per finger)", price: 3, description: "Ombre/Aura per finger", category: "addons", duration: 0 },
-                { name: "3D Design (per finger)", price: 3, description: "3D design per finger", category: "addons", duration: 0 },
-                { name: "Simple Art (per finger)", price: 2, description: "Simple art per finger", category: "addons", duration: 0 },
-                { name: "Chrome (per finger)", price: 2, description: "Chrome per finger", category: "addons", duration: 0 },
-                { name: "Stickers (per finger)", price: 0.3, description: "Stickers per finger", category: "addons", duration: 0 },
-                { name: "Glitters (per finger)", price: 2, description: "Glitters per finger", category: "addons", duration: 0 },
-                { name: "Gems (per stone)", price: 0.3, description: "Gems per stone", category: "addons", duration: 0 },
-                { name: "Mirror (per finger)", price: 2, description: "Mirror per finger", category: "addons", duration: 0 },
-                { name: "Cat Eye (per finger)", price: 2, description: "Cat Eye per finger", category: "addons", duration: 0 },
-                { name: "Extension Removal", price: 15, description: "Extension removal", category: "removal", duration: 30 },
-                { name: "Foreign Removal", price: 20, description: "Foreign extension removal", category: "removal", duration: 45 }
             ],
             massage: [
                 { name: "Relaxation Massage – 60 min", price: 90, description: "Relaxing full body massage", category: "massage", duration: 60 },
