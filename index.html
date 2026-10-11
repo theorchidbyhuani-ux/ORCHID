@@ -286,10 +286,6 @@
             display: flex; align-items: center; justify-content: center; /* Center horizontally */
             font-family: 'Playfair Display', Arial, sans-serif;
         }
-        .service-btn.nails-center {
-            justify-content: center;
-            text-align: center;
-        }
         .service-btn[disabled] {
             color: #aaa;
             cursor: not-allowed;
@@ -559,7 +555,6 @@
             .hero-content { padding: 20px; align-items: center; text-align: center; }
             .services-nav { margin-top: 30px; align-items: center; }
             .service-btn { text-align: center; width: 220px; }
-            .service-btn.nails-center { width: 220px; }
             .modal { padding: 20px; width: 95%; }
             .modal-title { font-size: 1.5rem; }
             .price-item {
@@ -2028,7 +2023,7 @@ Message: ${message || '(none)'}
                 });
             }
 
-            // Render Service Modals (Eyelash, Body Massage, Facial, Nails)
+            // Render Service Modals (Eyelash, Body Massage, Facial)
             renderServiceModal('eyelash', 'EYELASH EXTENSIONS', globalServicesData.eyelash, globalGalleryData.gallery.filter(img => img.category === 'eyelashes'));
             renderServiceModal('bodymassage', 'BODY MASSAGE & WAXING', globalServicesData.massage, globalGalleryData.gallery.filter(img => img.category === 'waxing' || img.category === 'threading' || img.category === 'massage'));
             renderServiceModal('facetreatments', '🧖 Facial Services', globalServicesData.facial, globalGalleryData.gallery.filter(img => img.category === 'facials'));
@@ -2103,7 +2098,7 @@ Message: ${message || '(none)'}
                         tableHtml += `<tr style="background:${rowBg};">`;
                         if (categoryName === 'removal' && idPrefix === 'eyelash') {
                             tableHtml += `<td style="padding:9px 12px;">${service.name}</td><td style="padding:9px 12px;">$${service.price}</td><td style="padding:9px 12px;">$${service.priceWithNewSet || 'N/A'}</td>`;
-                        } else if (categoryName === 'extensions' && idPrefix === 'nails') {
+                        } else if (categoryName === 'extensions') {
                             tableHtml += `<td style="padding:9px 12px;">${service.name}</td><td style="padding:9px 12px;">$${service.price}</td><td style="padding:9px 12px;">$${service.refillPrice || 'N/A'}</td>`;
                         } 
                         else {
